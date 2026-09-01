@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La cervesa · Història, química i ciència</title>
+<style>
+:root{
+  --bg:#0b1020; --panel:#121a2d; --panel2:#18233b; --text:#f4f7fb;
+  --muted:#aeb9cc; --accent:#f4b942; --accent2:#ffd978; --line:#293650;
+  --ok:#62d99b; --bad:#ff7b7b;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(180deg,#080d18,#0d1425 45%,#10182a);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,92%);margin:auto}
+nav{position:sticky;top:0;z-index:10;background:rgba(8,13,24,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.navin{display:flex;align-items:center;justify-content:space-between;min-height:64px}
+.logo{font-weight:800;letter-spacing:.3px}.logo span{color:var(--accent)}
+.navlinks{display:flex;gap:22px;font-size:.92rem;color:var(--muted)}
+.navlinks a:hover{color:#fff}
+.hero{padding:92px 0 72px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:500px;height:500px;background:#f4b94218;filter:blur(90px);border-radius:50%;right:-180px;top:-150px}
+.eyebrow{color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:2px;font-size:.78rem}
+h1{font-size:clamp(2.7rem,7vw,5.7rem);line-height:.98;margin:15px 0 24px;max-width:850px}
+h2{font-size:2rem;margin:0 0 12px} h3{margin-top:0}
+.lead{font-size:1.15rem;color:var(--muted);max-width:760px}
+.btn{display:inline-block;background:var(--accent);color:#17120a;padding:12px 18px;border-radius:12px;font-weight:800;margin-top:18px}
+.btn:hover{background:var(--accent2)}
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sectionhead{margin-bottom:30px}.sectionhead p{color:var(--muted);max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:linear-gradient(145deg,var(--panel),#0f1729);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 12px 35px #00000020}
+.card p{color:var(--muted)}
+.icon{font-size:2rem;margin-bottom:10px}.tag{display:inline-block;padding:4px 9px;border:1px solid #47536c;border-radius:99px;color:var(--accent2);font-size:.75rem}
+.timeline{position:relative;margin-top:25px}.timeline:before{content:"";position:absolute;left:13px;top:0;bottom:0;width:2px;background:var(--line)}
+.event{position:relative;padding-left:48px;margin:0 0 28px}.dot{position:absolute;left:6px;top:7px;width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px #f4b94220}
+.year{color:var(--accent);font-weight:900}
+.process{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:25px}
+.step{padding:18px 12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;text-align:center}
+.step b{display:block;color:var(--accent);margin-bottom:5px}.step small{color:var(--muted)}
+.game{max-width:850px;margin:auto}.question{font-size:1.2rem;font-weight:800;margin-bottom:16px}
+.answers{display:grid;gap:10px}.answer{border:1px solid var(--line);background:var(--panel);color:#fff;padding:13px 15px;border-radius:12px;text-align:left;cursor:pointer;font-size:1rem}
+.answer:hover{border-color:var(--accent)}.answer.correct{border-color:var(--ok);background:#62d99b14}.answer.wrong{border-color:var(--bad);background:#ff7b7b12}
+.feedback{min-height:28px;margin-top:12px;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
+.stat{background:var(--panel2);padding:18px;border-radius:14px;border:1px solid var(--line)}.stat strong{font-size:1.8rem;color:var(--accent)}
+input{width:100%;padding:12px;background:#0a1120;border:1px solid var(--line);color:white;border-radius:10px;margin:6px 0 12px}
+.result{font-size:1.15rem;margin-top:8px}.formula{font-family:ui-monospace,SFMono-Regular,monospace;background:#080e1b;padding:14px;border-radius:10px;color:var(--accent2);overflow:auto}
+footer{padding:35px 0;color:var(--muted);border-top:1px solid var(--line);font-size:.9rem}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.process{grid-template-columns:repeat(2,1fr)}.navlinks{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="container navin">
+  <div class="logo">CERVESA<span>.</span></div>
+  <div class="navlinks">
+    <a href="#historia">Història</a><a href="#quimica">Química</a><a href="#procés">Procés</a><a href="#jocs">Minijocs</a><a href="#curiositats">Curiositats</a>
+  </div>
+</div></nav>
+
+<header class="hero"><div class="container">
+  <div class="eyebrow">Àlex López</div>
+  <h1>La cervesa,<br><span style="color:var(--accent)">més que una beguda.</span></h1>
+  <p class="lead">Un recorregut interactiu per descobrir la història, la química i el procés d'elaboració de la cervesa, convertint la recerca en una experiència visual i participativa.</p>
+  <a class="btn" href="#jocs">Explora els minijocs ↓</a>
+</div></header>
+
+<section id="historia"><div class="container">
+  <div class="sectionhead"><div class="eyebrow">01 · Història</div><h2>Una història de milers d'anys</h2>
+  <p>La cervesa acompanya la humanitat des de les primeres societats agrícoles i ha evolucionat amb la cultura, la ciència i la tecnologia.</p></div>
+  <div class="timeline">
+    <div class="event"><div class="dot"></div><div class="year">Prehistòria</div><h3>Els primers processos de fermentació</h3><p>Amb el cultiu de cereals, l'ordi i el blat van començar a formar part de processos naturals de fermentació. Les primeres cerveses eren espesses, poc filtrades i diferents de les actuals.</p></div>
+    <div class="event"><div class="dot"></div><div class="year">≈ 4.000 aC</div><h3>Sumeris i Egipte</h3><p>La cervesa tenia importància econòmica, social i religiosa. A Sumer existia la deessa Ninkasi i a Egipte formava part de l'alimentació quotidiana.</p></div>
+    <div class="event"><div class="dot"></div><div class="year">Edat mitjana</div><h3>Monestirs, gruit i llúpol</h3><p>Els monestirs van perfeccionar l'elaboració. El gruit, una barreja d'herbes, va anar sent substituït pel llúpol, que aporta amargor, aroma i ajuda a conservar la cervesa.</p></div>
+    <div class="event"><div class="dot"></div><div class="year">1516</div><h3>Reinheitsgebot</h3><p>A Baviera es va promulgar una llei de puresa que establia aigua, ordi i llúpol com a ingredients permesos.</p></div>
+    <div class="event"><div class="dot"></div><div class="year">Segles XIX–XX</div><h3>La ciència transforma la cervesa</h3><p>La microbiologia, la industrialització i la refrigeració van permetre controlar millor la fermentació i produir cervesa a gran escala.</p></div>
+  </div>
+</div></section>
+
+<section id="quimica"><div class="container">
+  <div class="sectionhead"><div class="eyebrow">02 · Química</div><h2>Quatre ingredients, moltes reaccions</h2>
+  <p>Segons el treball, l'aigua, la malta, el llúpol i el llevat són les quatre matèries primeres principals.</p></div>
+  <div class="grid">
+    <div class="card"><div class="icon">💧</div><span class="tag">AIGUA</span><h3>La base</h3><p>Representa aproximadament el 90–95% de la composició final. Els minerals poden influir en el gust i en les reaccions del procés.</p></div>
+    <div class="card"><div class="icon">🌾</div><span class="tag">MALTA</span><h3>Font de sucres</h3><p>Els enzims de la malta transformen el midó en sucres que posteriorment podrà utilitzar el llevat.</p></div>
+    <div class="card"><div class="icon">🌿</div><span class="tag">LLÚPOL</span><h3>Amargor i aroma</h3><p>Aporta amargor, aromes i propietats que ajuden a conservar la cervesa.</p></div>
+    <div class="card"><div class="icon">🧫</div><span class="tag">LLEVAT</span><h3>El motor de la fermentació</h3><p>Transforma els sucres fermentables en etanol, CO₂ i altres compostos aromàtics.</p></div>
+    <div class="card"><div class="icon">⚗️</div><span class="tag">ENZIMS</span><h3>Maceració</h3><p>La beta-amilasa és més activa aproximadament entre 60–65 °C i l'alfa-amilasa entre 68–72 °C.</p></div>
+    <div class="card"><div class="icon">🧪</div><span class="tag">FERMENTACIÓ</span><h3>La reacció clau</h3><div class="formula">C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂ + energia</div></div>
+  </div>
+</div></section>
+
+<section id="procés"><div class="container">
+  <div class="sectionhead"><div class="eyebrow">03 · Procés</div><h2>Del cereal al most fermentat</h2>
+  <p>Una visió simplificada de les principals etapes estudiades en el treball.</p></div>
+  <div class="process">
+    <div class="step"><b>01</b>Selecció<small>Ingredients</small></div>
+    <div class="step"><b>02</b>Mòlta<small>Obrir el gra</small></div>
+    <div class="step"><b>03</b>Maceració<small>62–72 °C</small></div>
+    <div class="step"><b>04</b>Cocció<small>60–90 min</small></div>
+    <div class="step"><b>05</b>Refredament<small>Preparar el llevat</small></div>
+    <div class="step"><b>06</b>Fermentació<small>Sucre → etanol + CO₂</small></div>
+  </div>
+</div></section>
+
+<section id="jocs"><div class="container">
+  <div class="sectionhead"><div class="eyebrow">04 · Minijocs</div><h2>Posa a prova el que saps</h2><p>Activitats educatives basades en els continguts del treball.</p></div>
+
+  <div class="card game">
+    <h3>🧠 Quiz de cervesa</h3>
+    <div id="quiz"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn" id="next" style="border:0;cursor:pointer;display:none">Següent pregunta</button>
+  </div>
+
+  <br>
+
+  <div class="card game">
+    <h3>📏 Joc de densitats</h3>
+    <p>Introdueix una densitat inicial i una densitat final per obtenir una estimació orientativa de l'alcohol format durant la fermentació.</p>
+    <label>Densitat inicial (OG)</label><input id="og" type="number" step="0.001" placeholder="Ex. 1.050">
+    <label>Densitat final (FG)</label><input id="fg" type="number" step="0.001" placeholder="Ex. 1.010">
+    <button class="btn" onclick="density()">Calcular</button>
+    <div class="result" id="densityResult"></div>
+    <p style="font-size:.85rem;color:var(--muted)">Fórmula aproximada: ABV ≈ (OG − FG) × 131,25. És una estimació educativa.</p>
+  </div>
+</div></section>
+
+<section id="curiositats"><div class="container">
+  <div class="sectionhead"><div class="eyebrow">05 · Curiositats</div><h2>Sabies que...?</h2></div>
+  <div class="grid">
+    <div class="card"><h3>🏺 Ninkasi</h3><p>Els sumeris tenien una deessa relacionada amb la cervesa: Ninkasi. Un himne dedicat a ella descriu part del procés d'elaboració.</p></div>
+    <div class="card"><h3>🌿 Abans del llúpol</h3><p>Abans de generalitzar-se el llúpol, s'utilitzava el gruit, una barreja d'herbes que variava segons la regió.</p></div>
+    <div class="card"><h3>🔬 Pasteur</h3><p>Els estudis de Louis Pasteur sobre microorganismes van ajudar a entendre millor què provocava la fermentació i les contaminacions.</p></div>
+    <div class="card"><h3>❄️ Refrigeració</h3><p>La refrigeració artificial va facilitar el control de la temperatura i va afavorir especialment les cerveses lager.</p></div>
+    <div class="card"><h3>📉 La densitat baixa</h3><p>Quan el llevat consumeix sucres durant la fermentació, la densitat del líquid disminueix.</p></div>
+    <div class="card"><h3>🌍 Expansió global</h3><p>Durant els segles XIX i XX, els transports, la refrigeració i la industrialització van facilitar la distribució internacional.</p></div>
+  </div>
+</div></section>
+
+<section><div class="container">
+  <div class="sectionhead"><div class="eyebrow">06 · Paràmetres</div><h2>Què controla un cerveser?</h2></div>
+  <div class="stats">
+    <div class="stat"><strong>62–72 °C</strong><br>Interval aproximat de maceració</div>
+    <div class="stat"><strong>5,2–5,6</strong><br>pH aproximat durant la maceració</div>
+    <div class="stat"><strong>1–2 setmanes</strong><br>Durada habitual de la fermentació</div>
+  </div>
+  <p style="color:var(--muted)">La temperatura, el pH, la densitat i la turbidesa són paràmetres útils per seguir l'evolució del procés.</p>
+</div></section>
+
+<footer><div class="container">
+  <strong>CERVESA · Història, química i ciència</strong><br>Projecte educatiu basat en el Treball de Recerca d'Àlex López.</div></footer>
+
+<script>
+const questions=[
+ {q:"Quins són els quatre ingredients principals?",a:["Aigua, malta, llúpol i llevat","Aigua, sucre, sal i llevat","Ordi, cafè, llúpol i mel"],c:0,e:"Són les quatre matèries primeres principals estudiades."},
+ {q:"Què transforma el llevat durant la fermentació?",a:["Proteïnes en greixos","Sucres en etanol i CO₂","Aigua en maltosa"],c:1,e:"El llevat consumeix sucres fermentables i produeix etanol i CO₂."},
+ {q:"Quin ingredient aporta especialment amargor i aroma?",a:["Aigua","Malta","Llúpol"],c:2,e:"El llúpol aporta amargor, aroma i ajuda a la conservació."},
+ {q:"Què passa amb la densitat durant la fermentació?",a:["Normalment disminueix","Sempre augmenta","No canvia mai"],c:0,e:"A mesura que el llevat consumeix sucres, la densitat va disminuint."},
+ {q:"Quina reacció representa la fermentació alcohòlica de la glucosa?",a:["Glucosa → etanol + CO₂","Etanol → glucosa + oxigen","CO₂ → glucosa + aigua"],c:0,e:"La reacció simplificada és C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂ + energia."}
+];
+let qi=0,score=0,answered=false;
+function renderQuiz(){
+ answered=false;
+ const x=questions[qi];
+ document.getElementById("quiz").innerHTML=`<div class="question">${qi+1}/${questions.length}. ${x.q}</div><div class="answers">${x.a.map((a,i)=>`<button class="answer" onclick="answer(${i})">${a}</button>`).join("")}</div>`;
+ document.getElementById("feedback").textContent="";
+ document.getElementById("next").style.display="none";
+}
+function answer(i){
+ if(answered)return; answered=true;
+ const x=questions[qi], btns=document.querySelectorAll(".answer");
+ btns[i].classList.add(i===x.c?"correct":"wrong");
+ if(i===x.c){score++;document.getElementById("feedback").textContent="✅ Correcte! "+x.e}
+ else{btns[x.c].classList.add("correct");document.getElementById("feedback").textContent="❌ No exactament. "+x.e}
+ const n=document.getElementById("next");n.style.display="inline-block";n.textContent=qi===questions.length-1?"Veure resultat":"Següent pregunta";
+}
+document.getElementById("next").onclick=()=>{
+ if(qi<questions.length-1){qi++;renderQuiz()}
+ else{document.getElementById("quiz").innerHTML=`<div class="question">🎉 Has acabat!</div><p>Has encertat <strong>${score}/${questions.length}</strong> preguntes.</p>`;document.getElementById("feedback").textContent="";document.getElementById("next").style.display="none";qi=0;score=0;}
+};
+function density(){
+ const og=parseFloat(document.getElementById("og").value),fg=parseFloat(document.getElementById("fg").value),r=document.getElementById("densityResult");
+ if(!Number.isFinite(og)||!Number.isFinite(fg)||og<=fg){r.textContent="Introdueix valors vàlids: l'OG ha de ser superior a la FG.";return}
+ const abv=(og-fg)*131.25;
+ r.innerHTML=`Estimació: <strong>${abv.toFixed(2)}% ABV</strong>`;
+}
+renderQuiz();
+</script>
+</body>
+</html>
