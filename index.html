@@ -3570,7 +3570,7 @@
             gain.gain.exponentialRampToValueAtTime(.0001,end);
             overtoneGain.gain.setValueAtTime(.0001,start);
             overtoneGain.gain.exponentialRampToValueAtTime(.009,start+.04);
-            overtoneGain.gain.exponentialRampToValueAtTime(.0001,end*.999);
+            overtoneGain.gain.exponentialRampToValueAtTime(.0001,end-.001);
             osc.connect(gain); gain.connect(context.destination);
             overtone.connect(overtoneGain); overtoneGain.connect(context.destination);
             osc.start(start); osc.stop(end+.02);
