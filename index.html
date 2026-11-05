@@ -7,8 +7,9 @@
   <meta name="description" content="Un recorregut educatiu per la història, la química i la ciència relacionades amb la cervesa.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&family=Young+Serif&display=swap" rel="stylesheet">
   <title>La cervesa, més que una beguda · Versió 4.1</title>
+  <noscript><style>.reveal, .ingredient-icon { opacity: 1 !important; translate: none !important; scale: 1 !important; }</style></noscript>
   <style>
     :root {
       color-scheme: dark;
@@ -62,14 +63,15 @@
     .brand span:last-child { color: var(--accent); }
     .navlinks { display: flex; align-items: center; gap: clamp(12px,2vw,25px); color: var(--muted); font-size: .88rem; }
     .navlinks a { transition: color .2s ease; }
-    .navlinks a:hover, .navlinks a.active { color: var(--accent-2); }
+    .navlinks a.active { color: var(--accent-2); }
+@media (hover: hover) and (pointer: fine) { .navlinks a:hover { color: var(--accent-2); } }
     .nav-actions { display: flex; align-items: center; gap: 9px; }
     .icon-btn, .menu-btn { background: transparent; border: 1px solid var(--line); border-radius: 12px; width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer; }
     .menu-btn { display: none; }
     .mobile-panel { display: none; padding: 0 0 18px; }
     .mobile-panel.open { display: grid; gap: 4px; }
     .mobile-panel a { padding: 10px 12px; color: var(--muted); border-radius: 10px; }
-    .mobile-panel a:hover { background: var(--panel); color: var(--accent-2); }
+    @media (hover: hover) and (pointer: fine) { .mobile-panel a:hover { background: var(--panel); color: var(--accent-2); } }
 
     .hero { position: relative; overflow: hidden; padding: clamp(68px,9vw,118px) 0 84px; isolation: isolate; }
     .hero::before, .hero::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; filter: blur(3px); pointer-events: none; }
@@ -83,11 +85,11 @@
     .lead { color: var(--muted); max-width: 670px; font-size: clamp(1.02rem,1.6vw,1.18rem); line-height: 1.8; }
     .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
     .btn { display: inline-flex; justify-content: center; align-items: center; gap: 9px; border: 1px solid transparent; border-radius: 13px; padding: 12px 18px; font-weight: 800; font-size: .92rem; cursor: pointer; transition: transform .2s ease, background .2s ease, border-color .2s ease; }
-    .btn:hover { transform: translateY(-2px); }
+    @media (hover: hover) and (pointer: fine) { .btn:hover { transform: translateY(-2px); } }
     .btn-primary { background: var(--accent); color: #1b1a16; }
-    .btn-primary:hover { background: var(--accent-2); }
+    @media (hover: hover) and (pointer: fine) { .btn-primary:hover { background: var(--accent-2); } }
     .btn-secondary { border-color: var(--line); color: var(--text); background: rgba(255,255,255,.025); }
-    .btn-secondary:hover { border-color: rgba(233,180,91,.55); }
+    @media (hover: hover) and (pointer: fine) { .btn-secondary:hover { border-color: rgba(233,180,91,.55); } }
     .hero-note { margin-top: 22px; font-size: .82rem; color: var(--muted-2); }
     .hero-art { min-height: 385px; display: grid; place-items: center; position: relative; }
     .art-orbit { width: min(100%,400px); aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(233,180,91,.22); display: grid; place-items: center; position: relative; background: radial-gradient(circle at 50% 52%, rgba(233,180,91,.12), transparent 62%); }
@@ -119,7 +121,7 @@
     .ingredients { display: grid; grid-template-columns: repeat(4,1fr); gap: 15px; }
     .ingredient { padding: 23px; min-height: 245px; display: flex; flex-direction: column; }
     .ingredient-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; color: var(--accent); background: rgba(233,180,91,.1); border: 1px solid rgba(233,180,91,.18); font-size: 1.45rem; margin-bottom: 22px; }
-    .ingredient .small-label { color: var(--accent-2); font-size: .7rem; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 7px; }
+    .ingredient .small-label { color: var(--accent-2); font-size: .75rem; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 7px; }
     .ingredient h3 { font-size: 1.15rem; margin-bottom: 8px; }
     .ingredient p { margin: 0; color: var(--muted); font-size: .88rem; }
     .science-panel { display: grid; grid-template-columns: 1fr .9fr; gap: 20px; }
@@ -155,7 +157,7 @@
     .question { font-size: clamp(1.2rem,2.5vw,1.65rem); line-height: 1.3; letter-spacing: -.025em; margin: 0 0 22px; }
     .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .answer { border: 1px solid var(--line); border-radius: 13px; background: rgba(11,19,25,.42); color: var(--text); padding: 14px 15px; text-align: left; cursor: pointer; min-height: 62px; transition: border-color .2s ease, background .2s ease; }
-    .answer:hover:not(:disabled) { border-color: rgba(233,180,91,.65); background: rgba(233,180,91,.06); }
+    @media (hover: hover) and (pointer: fine) { .answer:hover:not(:disabled) { border-color: rgba(233,180,91,.65); background: rgba(233,180,91,.06); } }
     .answer.correct { border-color: var(--success); background: rgba(159,213,174,.1); }
     .answer.incorrect { border-color: var(--danger); background: rgba(240,161,154,.08); }
     .answer:disabled { cursor: default; opacity: 1; }
@@ -186,7 +188,7 @@
 
     .sources { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
     .source-card { padding: 22px; display: flex; flex-direction: column; gap: 8px; }
-    .source-type { color: var(--accent); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 850; }
+    .source-type { color: var(--accent); font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 850; }
     .source-card h3 { margin: 0; font-size: 1rem; }.source-card p { margin: 0; color: var(--muted); font-size: .85rem; }
     .source-card a { color: var(--accent-2); text-decoration: underline; text-underline-offset: 3px; font-size: .85rem; margin-top: 5px; width: fit-content; }
     .method-note { border-left: 3px solid var(--accent); padding: 12px 17px; margin-top: 22px; color: var(--muted); font-size: .83rem; background: rgba(233,180,91,.045); }
@@ -195,9 +197,10 @@
     .footer-brand { color: var(--text); font-weight: 850; letter-spacing: .1em; }
     .backtop { color: var(--accent-2); }
 
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } .reveal { opacity: 1; transform: none; } }
+    /* Entrada en scroll: usa `translate` (no `transform`) para no pisar las rotaciones de notas/tarjetas */
+    .reveal { opacity: 0; translate: 0 16px; transition: opacity .5s cubic-bezier(.23,1,.32,1) var(--reveal-delay,0ms), translate .5s cubic-bezier(.23,1,.32,1) var(--reveal-delay,0ms); }
+    .reveal.visible { opacity: 1; translate: 0 0; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } .reveal { opacity: 1; translate: none; } }
     @media (max-width: 980px) {
       .navlinks { display: none; }.menu-btn { display: grid; }
       .hero-grid { grid-template-columns: 1fr .78fr; gap: 20px; }.hero-art { min-height: 310px; }
@@ -273,7 +276,8 @@
     .brand span:last-child span { color: var(--accent); }
     .navlinks { color: var(--muted); font-weight: 700; }
     .navlinks a { padding: 7px 9px; border-radius: 999px; }
-    .navlinks a:hover, .navlinks a.active { color: var(--text); background: #f4e6c5; }
+    .navlinks a.active { color: var(--text); background: #f4e6c5; }
+@media (hover: hover) and (pointer: fine) { .navlinks a:hover { color: var(--text); background: #f4e6c5; } }
     .icon-btn, .menu-btn {
       color: var(--text);
       background: var(--panel);
@@ -283,7 +287,7 @@
       font-weight: 850;
     }
     .mobile-panel a { color: var(--muted); font-weight: 700; }
-    .mobile-panel a:hover { background: var(--panel-2); color: var(--text); }
+    @media (hover: hover) and (pointer: fine) { .mobile-panel a:hover { background: var(--panel-2); color: var(--text); } }
 
     .hero {
       background: linear-gradient(135deg, #eaf3e9 0%, #f7f2df 100%);
@@ -300,7 +304,7 @@
     }
     h1 em { color: var(--accent); }
     .lead { color: #49645f; }
-    .hero-note { color: #647d75; }
+    .hero-note { color: #52665f; }
     .btn {
       border: 2px solid var(--text);
       border-radius: 999px;
@@ -310,9 +314,9 @@
     }
     .btn:active { transform: translate(2px, 3px); box-shadow: 1px 1px 0 rgba(24,62,59,.14); }
     .btn-primary { background: var(--accent); color: #fffdf7; }
-    .btn-primary:hover { background: #da664e; }
+    @media (hover: hover) and (pointer: fine) { .btn-primary:hover { background: #da664e; } }
     .btn-secondary { color: var(--text); background: var(--panel); border-color: var(--text); }
-    .btn-secondary:hover { background: #f4e6c5; border-color: var(--text); }
+    @media (hover: hover) and (pointer: fine) { .btn-secondary:hover { background: #f4e6c5; border-color: var(--text); } }
     .hero-art { min-height: 400px; }
     .art-orbit {
       width: min(100%, 410px);
@@ -326,10 +330,10 @@
       border: 3px solid var(--text);
       border-radius: 46% 54% 48% 52% / 50% 42% 58% 50%;
       box-shadow: 7px 8px 0 rgba(24,62,59,.16);
-      transition: transform .38s cubic-bezier(.2,.75,.25,1.2), box-shadow .38s ease, filter .38s ease;
+      transition: transform .38s cubic-bezier(.22,1,.36,1), box-shadow .38s ease, filter .38s ease;
     }
-    .art-orbit { transition: transform .5s cubic-bezier(.2,.75,.25,1.2), filter .5s ease; }
-    .art-center svg { transition: transform .38s cubic-bezier(.2,.75,.25,1.2); }
+    .art-orbit { transition: transform .5s cubic-bezier(.22,1,.36,1), filter .5s ease; }
+    .art-center svg { transition: transform .38s cubic-bezier(.22,1,.36,1); }
     .hero-mascot { transform-box:fill-box; transform-origin:center; }
     @media (hover:hover) and (pointer:fine) {
       .hero-art:hover .art-orbit { transform: scale(1.035) rotate(2deg); filter: drop-shadow(0 10px 15px rgba(24,62,59,.12)); }
@@ -354,7 +358,7 @@
     .orbit-label.four { background: #d9d0ed; transform: rotate(-5deg); }
     .hero-foot {
       border-top: 2px dashed rgba(24,62,59,.22);
-      color: #617b73;
+      color: #52665f;
       font-weight: 800;
     }
 
@@ -372,7 +376,7 @@
       box-shadow: 4px 5px 0 rgba(24,62,59,.11);
       transition: transform .2s ease, box-shadow .2s ease;
     }
-    .card:hover { transform: translateY(-3px) rotate(-.25deg); box-shadow: 6px 8px 0 rgba(24,62,59,.12); }
+    @media (hover: hover) and (pointer: fine) { .card:hover { transform: translateY(-3px) rotate(-.25deg); box-shadow: 6px 8px 0 rgba(24,62,59,.12); } }
     .event:nth-child(3n) { background: #fff8e8; }
     .event:nth-child(3n + 1) { background: #f7fcf5; }
     .event-date {
@@ -388,7 +392,7 @@
     .event h3, .card h3 { color: var(--text); }
     .event p, .card p { color: var(--muted); }
     .source-note { color: var(--muted-2); }
-    .source-note a, .source-card a { color: #32796d; font-weight: 800; }
+    .source-note a, .source-card a { color: #2a7066; font-weight: 800; }
 
     .ingredient { position: relative; overflow: hidden; }
     .ingredient:nth-child(1) { background: #e8f2f8; }
@@ -467,7 +471,7 @@
       box-shadow: 2px 3px 0 rgba(24,62,59,.07);
       font-weight: 700;
     }
-    .answer:hover:not(:disabled) { border-color: var(--text); background: #f7edcf; }
+    @media (hover: hover) and (pointer: fine) { .answer:hover:not(:disabled) { border-color: var(--text); background: #f7edcf; } }
     .answer.correct { border-color: #39866e; background: #e2f2e8; }
     .answer.incorrect { border-color: #d85e55; background: #fde9e4; }
     .quiz-feedback { color: var(--muted); }
@@ -482,7 +486,7 @@
     .curiosity p { color: var(--muted); }
     .glossary-intro { background: #f4eafa; }
     .term { background: #fffdf7; }
-    .term h3 { color: #32796d; }
+    .term h3 { color: #2a7066; }
     .term p { color: var(--muted); }
     .empty-state { color: var(--muted); border-color: var(--line); }
     .source-card { background: #fffdf7; }
@@ -497,13 +501,13 @@
     }
     footer { border-top: 2px solid var(--line); color: var(--muted-2); background: #f5f1e5; }
     .footer-brand { color: var(--text); }
-    .backtop { color: #32796d; font-weight: 900; }
+    .backtop { color: #2a7066; font-weight: 900; }
     .progress { height: 5px; background: var(--accent); }
 
     @media (max-width: 700px) {
       .hero { background: linear-gradient(160deg, #eaf3e9 0%, #f7f2df 100%); }
       .hero-art { min-height: 270px; }
-      .orbit-label { font-size: .72rem; padding: 7px 10px; }
+      .orbit-label { font-size: .75rem; padding: 7px 10px; }
       .event-date { margin-bottom: 2px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -540,19 +544,21 @@
     }
     .topbar { background: rgba(252,248,241,.94); border-color: rgba(38,53,74,.16); }
     .brand-mark { background: #edbf56; border-color: var(--text); color: var(--text); }
-    .brand span:last-child, .navlinks a:hover, .navlinks a.active { color: var(--text); }
-    .navlinks a:hover, .navlinks a.active { background: #e6efeb; }
+    .brand span:last-child, .navlinks a.active { color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .navlinks a:hover { color: var(--text); } }
+    .navlinks a.active { background: #e6efeb; }
+@media (hover: hover) and (pointer: fine) { .navlinks a:hover { background: #e6efeb; } }
     .icon-btn, .menu-btn { border-color: var(--text); color: var(--text); }
     .hero { background: linear-gradient(132deg, #e8f2ef 0%, #fff1da 57%, #f8e8e7 100%); }
     .hero::before { background: radial-gradient(circle, rgba(232,121,100,.19), transparent 68%); }
     .hero::after { background: radial-gradient(circle, rgba(67,143,134,.18), transparent 70%); }
     .eyebrow, .section-number { color: #367e77; }
-    h1 em { color: #df705e; }
+    h1 em { color: #d4573f; }
     .lead { color: #536477; }
-    .btn-primary { background: #e87964; color: #fffefa; }
-    .btn-primary:hover { background: #d96955; }
+    .btn-primary { background: #bf4a35; color: #fffefa; }
+    @media (hover: hover) and (pointer: fine) { .btn-primary:hover { background: #a63f2d; } }
     .btn-secondary { background: #fffefa; }
-    .btn-secondary:hover { background: #eaf1f1; }
+    @media (hover: hover) and (pointer: fine) { .btn-secondary:hover { background: #eaf1f1; } }
     .art-center { background: linear-gradient(145deg,#f5d37a,#efb64e); }
     .orbit-label { color: var(--text); background: #fffefa; }
     .orbit-label.one { background: #f7e1a4; }
@@ -562,7 +568,7 @@
     #ingredients, #laboratori, #curiositats, #fonts { background: #edf3f1; }
     #historia, #ciencia, #quiz, #glossari { background: #fffaf3; }
     .card { border-color: rgba(38,53,74,.72); box-shadow: 4px 5px 0 rgba(38,53,74,.10); }
-    .card:hover { box-shadow: 6px 8px 0 rgba(38,53,74,.12); }
+    @media (hover: hover) and (pointer: fine) { .card:hover { box-shadow: 6px 8px 0 rgba(38,53,74,.12); } }
     .event:nth-child(3n) { background: #fffaf0; }
     .event:nth-child(3n + 1) { background: #f6fbf8; }
     .source-note a, .source-card a { color: #337d75; }
@@ -570,9 +576,9 @@
     .ingredient:nth-child(2) { background: #fff2d7; }
     .ingredient:nth-child(3) { background: #e5f0e7; }
     .ingredient:nth-child(4) { background: #eee8f6; }
-    .ingredient .small-label, .term h3, .source-type { color: #347c75; }
+    .ingredient .small-label, .term h3, .source-type { color: #2a7066; }
     .equation, .formula-box { background: #f7edcf; color: #315b56; }
-    .concept-icon { background: #deede8; color: #347c75; }
+    .concept-icon { background: #deede8; color: #2a7066; }
     .lab-result { background: #e8f2ed; }
     .lab-result strong { color: #2f7668; }
     .quiz-main { background: #fffefa; }
@@ -580,7 +586,7 @@
     .quiz-track { background: #e6ece9; }
     .quiz-track span { background: #438f86; }
     .answer { background: #f7f8f4; }
-    .answer:hover:not(:disabled) { background: #eaf1ed; }
+    @media (hover: hover) and (pointer: fine) { .answer:hover:not(:disabled) { background: #eaf1ed; } }
     .answer.correct { border-color: #39856f; background: #e1f1e8; }
     .answer.incorrect { border-color: #c85f61; background: #fbe9e5; }
     .quiz-side .big-score { color: #d66f58; }
@@ -663,12 +669,12 @@
       align-items: center;
       justify-content: center;
       gap: 7px;
-      color: #347c75;
-      font-size: .69rem;
+      color: #2a7066;
+      font-size: .75rem;
       font-weight: 950;
       letter-spacing: .14em;
     }
-    .guide-spark { color: #e87964; font-size: 1rem; }
+    .guide-spark { color: #bf4a35; font-size: 1rem; }
     .guide-mascot-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 0; }
     .guide-mascot {
       display: block;
@@ -717,7 +723,7 @@
       border-left: 2px solid #26354a;
       transform: rotate(45deg);
     }
-    .bubble-label { display: block; margin-bottom: 5px; color: #8b6630; font-size: .63rem; font-weight: 950; letter-spacing: .13em; }
+    .bubble-label { display: block; margin-bottom: 5px; color: #8b6630; font-size: .75rem; font-weight: 950; letter-spacing: .13em; }
     .guide-bubble p { margin: 0; color: #354459; font-size: .84rem; line-height: 1.5; font-weight: 700; }
     .guide-score {
       width: 100%;
@@ -732,10 +738,10 @@
       box-shadow: 2px 3px 0 rgba(38,53,74,.08);
       text-align: left;
     }
-    .guide-score .section-number { font-size: .62rem; letter-spacing: .12em; }
+    .guide-score .section-number { font-size: .75rem; letter-spacing: .12em; }
     .guide-score .big-score { margin: 2px 0 0; color: #d66f58; font-size: 1.8rem; line-height: 1; }
-    .guide-score p { max-width: 115px; margin: 0; color: #536477; font-size: .72rem; line-height: 1.35; }
-    .guide-tip { color: #647b83; font-size: .7rem; font-weight: 750; line-height: 1.4; }
+    .guide-score p { max-width: 115px; margin: 0; color: #536477; font-size: .75rem; line-height: 1.35; }
+    .guide-tip { color: #647b83; font-size: .75rem; font-weight: 750; line-height: 1.4; }
     .quiz-guide[data-mood="correct"] .guide-bubble { background: #dff0e5; transform: rotate(-1deg); }
     .quiz-guide[data-mood="correct"] .bubble-label { color: #34765e; }
     .quiz-guide[data-mood="incorrect"] .guide-bubble { background: #f8dfd9; transform: rotate(1deg); }
@@ -752,7 +758,7 @@
     }
     @media (max-width: 700px) {
       .event { grid-template-columns: 88px minmax(0,1fr); gap: 14px; }
-      .event-date { width: 78px; min-height: 79px; margin-left: 0; padding: 14px 5px 8px; font-size: .72rem; }
+      .event-date { width: 78px; min-height: 79px; margin-left: 0; padding: 14px 5px 8px; font-size: .75rem; }
       .quiz-layout { grid-template-columns: 1fr; }
       .quiz-guide { display: grid; grid-template-columns: minmax(105px,.42fr) minmax(0,1fr); align-items: center; gap: 10px 13px; text-align: left; }
       .guide-kicker { grid-column: 1 / -1; justify-content: flex-start; }
@@ -770,7 +776,7 @@
       .guide-mascot { width: 96px; }
       .guide-score { padding: 10px; }
       .guide-score .big-score { font-size: 1.5rem; }
-      .guide-score p { font-size: .68rem; }
+      .guide-score p { font-size: .75rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       .guide-mascot, .guide-bubble { transition: none !important; }
@@ -802,7 +808,7 @@
       color: #26354a;
       font: 800 clamp(1rem,2vw,1.28rem) ui-monospace, SFMono-Regular, Menlo, monospace;
     }
-    .reaction-arrow { color: #438f86; font-size: 1.35rem; }
+    .reaction-arrow { color: #2a7066; font-size: 1.35rem; }
     .coefficient-field { display: inline-flex; }
     .coefficient-field input {
       width: 48px; height: 42px; padding: 5px;
@@ -913,7 +919,7 @@
       width: 100%; min-height: 100vh; margin: 0; padding: 15px 9px 18px;
       display: flex; flex-direction: column; justify-content: flex-start; align-items: center; gap: 12px;
     }
-    .brand { flex-direction: column; gap: 4px; justify-content: center; font-size: .55rem; letter-spacing: .06em; }
+    .brand { flex-direction: column; gap: 4px; justify-content: center; font-size: .75rem; letter-spacing: .06em; }
     .brand-mark { width: 48px; height: 48px; border-radius: 16px 16px 16px 6px; font-size: 1.2rem; }
     .brand > span:last-child { display: none; }
     .navlinks {
@@ -935,10 +941,14 @@
     .navlinks a:nth-child(6) { background: #f7efc9; }
     .navlinks a:nth-child(7) { background: #ece7f6; }
     .navlinks a:nth-child(8) { background: #e8edf0; }
-    .navlinks a:hover, .navlinks a.active {
+    .navlinks a.active {
       color: var(--text); transform: translateX(-3px) rotate(-2deg);
       border-color: var(--text); box-shadow: 4px 5px 0 rgba(38,53,74,.13);
     }
+@media (hover: hover) and (pointer: fine) { .navlinks a:hover {
+      color: var(--text); transform: translateX(-3px) rotate(-2deg);
+      border-color: var(--text); box-shadow: 4px 5px 0 rgba(38,53,74,.13);
+    } }
     .navlinks a::after {
       content: attr(data-label); position: absolute; right: calc(100% + 11px); top: 50%;
       transform: translate(5px,-50%); opacity: 0; pointer-events: none; white-space: nowrap;
@@ -946,7 +956,8 @@
       border-radius: 10px; box-shadow: 2px 3px 0 rgba(38,53,74,.15); font-size: .75rem;
       font-weight: 850; letter-spacing: .02em; transition: opacity .16s ease, transform .16s ease;
     }
-    .navlinks a:hover::after, .navlinks a:focus-visible::after { opacity: 1; transform: translate(0,-50%); }
+    .navlinks a:focus-visible::after { opacity: 1; transform: translate(0,-50%); }
+@media (hover: hover) and (pointer: fine) { .navlinks a:hover::after { opacity: 1; transform: translate(0,-50%); } }
     .nav-actions { margin-top: auto; flex-direction: column; gap: 10px; }
     .icon-btn { width: 48px; height: 44px; border-radius: 14px; background: #fffefa; }
     .menu-btn, .mobile-panel { display: none !important; }
@@ -989,12 +1000,12 @@
     .show-light { position: absolute; z-index: -1; width: 90px; height: 240px; top: -70px; transform: rotate(28deg); background: linear-gradient(180deg,rgba(255,255,255,.18),transparent); }
     .show-light-one { left: 56%; }.show-light-two { right: 9%; transform: rotate(-25deg); }
     .show-copy { position: relative; z-index: 1; }
-    .show-kicker { display: inline-flex; align-items: center; gap: 8px; color: #f8d77f; font-size: .68rem; font-weight: 950; letter-spacing: .15em; }
+    .show-kicker { display: inline-flex; align-items: center; gap: 8px; color: #f8d77f; font-size: .75rem; font-weight: 950; letter-spacing: .15em; }
     .live-dot { width: 8px; height: 8px; display: inline-block; border-radius: 50%; background: #e87964; box-shadow: 0 0 0 4px rgba(232,121,100,.18); }
     .quiz-show-banner h3 { margin: 8px 0 4px; color: #fffefa; font-size: clamp(1.35rem,3vw,2.2rem); line-height: 1.05; letter-spacing: -.035em; }
     .quiz-show-banner p { margin: 0; color: #e0e5ed; font-size: .88rem; font-weight: 650; }
     .show-trophy { display: grid; place-items: center; width: 88px; height: 88px; flex: 0 0 88px; font-size: 2.6rem; border: 3px solid #f3cc6c; border-radius: 25px 25px 25px 7px; background: linear-gradient(145deg,#f9df95,#eebf55); box-shadow: 4px 5px 0 rgba(0,0,0,.18); transform: rotate(5deg); }
-    .show-ribbon { position: absolute; right: 17px; bottom: 10px; color: rgba(255,255,255,.45); font-size: .58rem; font-weight: 950; letter-spacing: .24em; }
+    .show-ribbon { position: absolute; right: 17px; bottom: 10px; color: rgba(255,255,255,.45); font-size: .75rem; font-weight: 950; letter-spacing: .24em; }
     .quiz-layout { grid-template-columns: minmax(0,1fr) minmax(270px,320px); gap: 22px; align-items: stretch; }
     .quiz-main { padding: 28px; background: #fffefa; border: 3px solid #26354a; border-radius: 24px 24px 24px 8px; box-shadow: 5px 6px 0 rgba(38,53,74,.13); }
     .quiz-meta { color: #536477; font-weight: 900; }
@@ -1024,7 +1035,7 @@
     .guide-score { padding: 13px 14px; background: #fffefa; border: 2px solid #26354a; box-shadow: 3px 4px 0 rgba(38,53,74,.1); }
     .guide-score .big-score { color: #d66f58; font-size: 2rem; }
     .guide-score p { color: #536477; }
-    .guide-tip { color: #5c6170; font-size: .73rem; }
+    .guide-tip { color: #5c6170; font-size: .75rem; }
     .malt-face-happy, .malt-face-worried { display: none; }
     .quiz-guide[data-mood="correct"] .malt-face-neutral,
     .quiz-guide[data-mood="incorrect"] .malt-face-neutral { display: none; }
@@ -1080,7 +1091,7 @@
       .guide-mascot { width: 98px; }
       .guide-score { padding: 10px; }
       .guide-score .big-score { font-size: 1.55rem; }
-      .guide-score p { font-size: .68rem; }
+      .guide-score p { font-size: .75rem; }
       .quiz-show-banner { gap: 9px; padding: 17px 13px; }
       .quiz-show-banner h3 { font-size: 1.2rem; }
       .quiz-show-banner p { font-size: .76rem; }
@@ -1115,7 +1126,7 @@
 
     /* Història: només notes adhesives que s'obren en clicar */
     .history-section-head { margin-bottom: 24px; }
-    .history-notes { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); align-items: start; gap: 24px; }
+    .history-notes { position: relative; display: grid; grid-template-columns: minmax(0,1fr); align-items: start; gap: 0; padding: 14px 0 26px; }
     .history-note {
       position: relative; min-width: 0; min-height: 176px; padding: 0;
       border: 2px solid rgba(38,53,74,.68); border-radius: 4px 17px 5px 15px;
@@ -1125,7 +1136,8 @@
     }
     .history-note:nth-child(2n) { transform: rotate(1.1deg) translateY(8px); }
     .history-note:nth-child(3n) { transform: rotate(-.5deg) translateY(3px); }
-    .history-note:hover, .history-note[open] { z-index: 2; transform: translateY(-4px) rotate(0); box-shadow: 7px 10px 0 rgba(38,53,74,.15); }
+    .history-note[open] { z-index: 2; transform: translateY(-4px) rotate(0); box-shadow: 7px 10px 0 rgba(38,53,74,.15); }
+@media (hover: hover) and (pointer: fine) { .history-note:hover { z-index: 2; transform: translateY(-4px) rotate(0); box-shadow: 7px 10px 0 rgba(38,53,74,.15); } }
     .history-note--gold { background: #fff0b8; }
     .history-note--coral { background: #f9d9cf; }
     .history-note--green { background: #dcebd9; }
@@ -1159,6 +1171,39 @@
     .history-note-body p { margin: 0; padding-top: 14px; border-top: 1px dashed rgba(38,53,74,.35); color: #455d58; font-size: .9rem; line-height: 1.62; }
     @keyframes noteReveal { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
+    /* Història: una línia del temps de debò. La columna vertebral discontínua recorre els milers
+       d'anys, les notes s'alternen a banda i banda i la data passa a ser el gran protagonista. */
+    .history-notes::before {
+      content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-left: 4px dashed rgba(38,53,74,.38); transform: translateX(-2px);
+    }
+    .history-note { width: calc(50% - 58px); margin-top: -30px; }
+    .history-note:first-child { margin-top: 0; }
+    .history-note:nth-child(odd) { justify-self: start; }
+    .history-note:nth-child(even) { justify-self: end; }
+    .history-note::after {
+      content: ""; position: absolute; top: 40px; width: 28px; height: 28px; border-radius: 50%;
+      background: inherit; border: 3px solid #26354a; box-shadow: 3px 3px 0 rgba(38,53,74,.18);
+    }
+    .history-note:nth-child(odd)::after { right: -73px; }
+    .history-note:nth-child(even)::after { left: -73px; }
+    .history-note .event-date {
+      padding: 0; border: 0; border-radius: 0; background: none; transform: none;
+      font-family: var(--heading-font); font-size: clamp(1.7rem,2.9vw,2.4rem); font-weight: 700; line-height: .98; letter-spacing: -.03em; color: #26354a;
+    }
+    .history-note:first-child .event-date { font-size: clamp(2.2rem,4.4vw,3.4rem); }
+    .history-note .event-date { box-shadow: none; min-height: 0; width: fit-content; margin: 0; text-align: left; }
+    .history-note .event-date::before, .history-note .event-date::after { content: none; }
+    .history-note summary { min-height: 160px; }
+    @media (max-width: 760px) {
+      .history-notes { padding-left: 36px; }
+      .history-notes::before { left: 12px; transform: none; }
+      .history-note { width: auto; margin-top: 22px; }
+      .history-note:first-child { margin-top: 0; }
+      .history-note:nth-child(n) { justify-self: stretch; }
+      .history-note:nth-child(n)::after { left: -37px; right: auto; top: 30px; }
+      .history-note .event-date, .history-note:first-child .event-date { font-size: clamp(1.6rem,7vw,2.1rem); }
+    }
+
     /* Il·lustració SVG de la reacció de la glucosa */
     .reaction-visual-panel {
       display: grid; grid-template-columns: minmax(0,1.45fr) minmax(190px,.8fr); align-items: center; gap: 18px;
@@ -1175,8 +1220,8 @@
     .lab-explainer, .lab-tool { padding: 25px; border: 2px solid rgba(38,53,74,.22); border-radius: 23px 23px 23px 7px; box-shadow: 4px 5px 0 rgba(38,53,74,.08); }
     #laboratori .lab-explainer { background: #f8fcff; }
     #laboratori .lab-tool { background: #eef7fb; }
-    .lab-card-kicker { display: inline-flex; margin-bottom: 9px; padding: 5px 10px; border-radius: 999px; background: #dcebf2; color: #3e6573; font-size: .66rem; font-weight: 950; letter-spacing: .12em; }
-    .lab-tool .lab-card-kicker { background: #f8dfd4; color: #95584c; }
+    .lab-card-kicker { display: inline-flex; margin-bottom: 9px; padding: 5px 10px; border-radius: 999px; background: #dcebf2; color: #3e6573; font-size: .75rem; font-weight: 950; letter-spacing: .12em; }
+    .lab-tool .lab-card-kicker { background: #f8dfd4; color: #7d453a; }
     .lab-explainer h3, .lab-tool h3 { margin: 0 0 10px; color: #26354a; font-size: 1.35rem; }
     .density-illustration { display: block; width: 100%; height: auto; max-height: 225px; margin: 4px auto 7px; }
     .density-takeaway { margin: 4px 0 12px; color: #536477; font-size: .92rem; line-height: 1.5; }
@@ -1196,7 +1241,7 @@
       border: 2px solid rgba(38,53,74,.17); border-radius: 23px 23px 23px 7px; box-shadow: 4px 5px 0 rgba(38,53,74,.07);
     }
     .glossary-tools-main { display: grid; grid-template-columns: minmax(0,1fr) minmax(230px,.7fr); align-items: center; gap: 22px; }
-    .glossary-kicker { color: #8b6e9f; font-size: .68rem; font-weight: 950; letter-spacing: .15em; }
+    .glossary-kicker { color: #6e5483; font-size: .75rem; font-weight: 950; letter-spacing: .15em; }
     .glossary-tools h3 { margin: 5px 0 4px; color: #26354a; font-size: 1.38rem; }
     .glossary-tools-main p { margin: 0; color: #60716e; font-size: .87rem; }
     .glossary-searchbox { position: relative; display: block; }
@@ -1204,18 +1249,18 @@
     .glossary-searchbox input { width: 100%; padding: 13px 15px 13px 43px; border: 2px solid rgba(38,53,74,.2); border-radius: 14px; background: #f8f6fc; color: #26354a; outline-offset: 3px; }
     .glossary-filter-row { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-top: 19px; }
     .glossary-filter { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border: 1.5px solid rgba(38,53,74,.2); border-radius: 999px; background: #fffefa; color: #465c5b; font: inherit; font-size: .8rem; font-weight: 850; cursor: pointer; transition: background .18s ease, transform .18s ease, box-shadow .18s ease; }
-    .glossary-filter:hover { transform: translateY(-2px); }
+    @media (hover: hover) and (pointer: fine) { .glossary-filter:hover { transform: translateY(-2px); } }
     .glossary-filter.active { background: #26354a; color: #fffefa; border-color: #26354a; box-shadow: 2px 3px 0 rgba(38,53,74,.14); }
-    .glossary-filter span { min-width: 19px; padding: 2px 5px; border-radius: 99px; background: rgba(255,255,255,.2); font-size: .69rem; }
-    .glossary-count { margin-left: auto; color: #718781; font-size: .78rem; font-weight: 800; }
+    .glossary-filter span { min-width: 19px; padding: 2px 5px; border-radius: 99px; background: rgba(255,255,255,.2); font-size: .75rem; }
+    .glossary-count { margin-left: auto; color: #52665f; font-size: .78rem; font-weight: 800; }
     .glossary-cards { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 15px; }
     .term { min-height: 204px; display: flex; flex-direction: column; padding: 18px; border: 2px solid rgba(38,53,74,.16); border-radius: 19px 19px 19px 6px; background: #fffefa; box-shadow: 3px 4px 0 rgba(38,53,74,.06); transition: transform .18s ease, box-shadow .18s ease; }
-    .term:hover { transform: translateY(-4px) rotate(-.5deg); box-shadow: 5px 7px 0 rgba(38,53,74,.1); }
+    @media (hover: hover) and (pointer: fine) { .term:hover { transform: translateY(-4px) rotate(-.5deg); box-shadow: 5px 7px 0 rgba(38,53,74,.1); } }
     .term-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
     .term-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px 13px 13px 5px; background: #f0eafa; font-size: 1.35rem; }
-    .term-category { padding: 5px 8px; border-radius: 999px; font-size: .64rem; font-weight: 950; letter-spacing: .06em; text-transform: uppercase; }
+    .term-category { padding: 5px 8px; border-radius: 999px; font-size: .75rem; font-weight: 950; letter-spacing: .06em; text-transform: uppercase; }
     .category-chem { background: #e5eff8; color: #436a91; }
-    .category-bio { background: #e4f1e4; color: #4d8059; }
+    .category-bio { background: #e4f1e4; color: #3a6b46; }
     .category-physics { background: #fff0cf; color: #8a6925; }
     .term h3 { margin: 0 0 8px; color: #26354a; font-size: 1.06rem; }
     .term p { margin: 0; color: #5b6d69; font-size: .82rem; line-height: 1.55; }
@@ -1224,11 +1269,9 @@
     .glossary-empty { grid-column: 1/-1; background: #fffefa; }
 
     @media (max-width: 1050px) {
-      .history-notes { grid-template-columns: repeat(2,minmax(0,1fr)); }
       .glossary-cards { grid-template-columns: repeat(3,minmax(0,1fr)); }
     }
     @media (max-width: 760px) {
-      .history-notes { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
       .reaction-visual-panel { grid-template-columns: 1fr; gap: 5px; }
       .reaction-illustration { max-height: 125px; }
       .lab-grid { grid-template-columns: 1fr; }
@@ -1236,7 +1279,6 @@
       .glossary-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
     }
     @media (max-width: 480px) {
-      .history-notes { grid-template-columns: 1fr; gap: 15px; }
       .history-note, .history-note:nth-child(2n), .history-note:nth-child(3n) { transform: rotate(0); }
       .history-note summary { min-height: 145px; }
       .glossary-tools { padding: 18px 15px; }
@@ -1325,16 +1367,16 @@
       box-shadow: 0 12px 40px rgba(0,0,0,.35),0 0 45px rgba(255,220,145,.18),inset 0 1px 0 rgba(255,255,255,.14);
       cursor: pointer; transition: transform .25s ease,opacity .45s ease,filter .3s ease;
     }
-    .curtain-opening:hover { transform: translateY(-6px) scale(1.025); filter: brightness(1.1); }
+    @media (hover: hover) and (pointer: fine) { .curtain-opening:hover { transform: translateY(-6px) scale(1.025); filter: brightness(1.1); } }
     .curtain-opening:focus-visible { outline: 4px solid #f4cc70; outline-offset: 5px; }
-    .curtain-pretitle { color: #f4cc70; font-family: var(--heading-font); font-size: .72rem; font-weight: 900; letter-spacing: .2em; }
+    .curtain-pretitle { color: #f4cc70; font-family: var(--heading-font); font-size: .75rem; font-weight: 900; letter-spacing: .2em; }
     .curtain-beer { width: 128px; height: 145px; filter: drop-shadow(0 7px 6px rgba(0,0,0,.28)); transition: transform .28s cubic-bezier(.2,.8,.25,1.2); }
-    .curtain-opening:hover .curtain-beer { transform: rotate(-7deg) translateY(-4px); }
+    @media (hover: hover) and (pointer: fine) { .curtain-opening:hover .curtain-beer { transform: rotate(-7deg) translateY(-4px); } }
     .curtain-opening strong { color: #fff8e9; font-family: var(--heading-font); font-size: clamp(1.55rem,3vw,2rem); font-weight: 800; letter-spacing: -.035em; }
     .curtain-instruction { color: #d5d1d9; font-size: .84rem; text-align: center; line-height: 1.45; }
-    .curtain-cta { display: inline-flex; align-items: center; gap: 12px; margin-top: 5px; padding: 9px 16px; border-radius: 999px; background: #f4cc70; color: #34263a; font-size: .7rem; font-weight: 950; letter-spacing: .11em; box-shadow: 0 4px 0 #b47b42; }
+    .curtain-cta { display: inline-flex; align-items: center; gap: 12px; margin-top: 5px; padding: 9px 16px; border-radius: 999px; background: #f4cc70; color: #34263a; font-size: .75rem; font-weight: 950; letter-spacing: .11em; box-shadow: 0 4px 0 #b47b42; }
     .curtain-cta span { font-size: 1rem; }
-    .curtain-bottom-note { position: absolute; z-index: 4; bottom: 20px; left: 10px; right: 10px; color: rgba(255,244,219,.62); text-align: center; font-size: .64rem; font-weight: 900; letter-spacing: .19em; }
+    .curtain-bottom-note { position: absolute; z-index: 4; bottom: 20px; left: 10px; right: 10px; color: rgba(255,244,219,.62); text-align: center; font-size: .75rem; font-weight: 900; letter-spacing: .19em; }
     .quiz-theatre.curtains-open .curtain-panel.curtain-left { transform: translateX(-103%); }
     .quiz-theatre.curtains-open .curtain-panel.curtain-right { transform: translateX(103%); }
     .quiz-theatre.curtains-open .curtain-valance { transform: translateY(-115%); }
@@ -1392,7 +1434,7 @@
       .curtain-opening { min-height: 295px; width: min(290px,84%); padding: 16px; }
       .curtain-beer { width: 110px; height: 125px; }
       .curtain-valance { min-height: 62px; }
-      .curtain-bottom-note { bottom: 12px; font-size: .52rem; letter-spacing: .1em; }
+      .curtain-bottom-note { bottom: 12px; font-size: .75rem; letter-spacing: .1em; }
       .question-spotlight { top: 220px; left: 0; width: 100%; height: 720px; }
       .quiz-main { box-shadow: 0 0 0 3px rgba(242,206,123,.10),0 0 32px 5px rgba(255,226,163,.16),0 12px 25px rgba(0,0,0,.25); }
     }
@@ -1418,7 +1460,7 @@
     .story-progress-track span { display:block; width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg,#438f86,#edbf56); transition:width .3s ease; }
     .story-grid { grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; }
     .story-card { min-height:0; padding:0; overflow:hidden; background:#fffdf8; border:2px solid rgba(38,53,74,.68); border-radius:21px 21px 21px 7px; box-shadow:4px 5px 0 rgba(38,53,74,.09); transition:transform .2s ease,box-shadow .2s ease; }
-    .story-card:hover { transform:translateY(-3px); box-shadow:6px 8px 0 rgba(38,53,74,.12); }
+    @media (hover: hover) and (pointer: fine) { .story-card:hover { transform:translateY(-3px); box-shadow:6px 8px 0 rgba(38,53,74,.12); } }
     .story-card[open] { grid-row:span 1; box-shadow:5px 7px 0 rgba(38,53,74,.11); }
     .story-card:nth-child(3n+1) { background:#fff7e8; }
     .story-card:nth-child(3n+2) { background:#eef5ec; }
@@ -1427,50 +1469,51 @@
     .story-summary::-webkit-details-marker { display:none; }
     .story-summary::marker { content:''; }
     .story-icon { display:grid; place-items:center; width:51px; height:51px; margin-bottom:15px; border:2px solid rgba(38,53,74,.16); border-radius:17px 17px 17px 6px; background:rgba(255,255,255,.74); font-size:1.55rem; box-shadow:2px 3px 0 rgba(38,53,74,.07); }
-    .story-number { color:#438f86; font-size:.67rem; font-weight:950; letter-spacing:.13em; }
+    .story-number { color:#2a7066; font-size:.75rem; font-weight:950; letter-spacing:.13em; }
     .story-title { margin-top:8px; color:#26354a; font-family:Fredoka,'Nunito Sans',sans-serif; font-size:1.27rem; font-weight:700; line-height:1.13; }
-    .story-teaser { margin-top:9px; color:#68747a; font-size:.84rem; line-height:1.45; }
-    .story-open-label { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; margin-top:auto; padding-top:17px; color:#347c75; font-size:.78rem; font-weight:950; }
+    .story-teaser { margin-top:9px; color:#52665f; font-size:.84rem; line-height:1.45; }
+    .story-open-label { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; margin-top:auto; padding-top:17px; color:#2a7066; font-size:.78rem; font-weight:950; }
     .story-open-label b { display:grid; place-items:center; width:25px; height:25px; border-radius:50%; color:#fff; background:#347c75; font-size:1rem; transition:transform .2s ease; }
     .story-card[open] .story-open-label b { transform:rotate(45deg); }
     .story-detail { padding:0 22px 22px; border-top:1px dashed rgba(38,53,74,.22); animation:storyReveal .28s ease both; }
     .story-detail > p { margin:17px 0 13px; color:#46545d; font-size:.88rem; line-height:1.65; }
     .story-detail strong { color:#26354a; }
     .story-context { padding:12px 14px; border-left:4px solid #edbf56; border-radius:0 12px 12px 0; background:rgba(255,255,255,.65); }
-    .story-context span,.story-question-title { color:#347c75; font-size:.68rem; font-weight:950; letter-spacing:.1em; }
+    .story-context span,.story-question-title { color:#2a7066; font-size:.75rem; font-weight:950; letter-spacing:.1em; }
     .story-context p { margin:4px 0 0; color:#59676e; font-size:.81rem; }
     .story-question { margin-top:15px; padding:14px; border:1px solid rgba(38,53,74,.16); border-radius:14px; background:rgba(255,255,255,.76); }
     .story-question-title { margin:0 0 10px; letter-spacing:0; font-size:.81rem; }
     .story-options { display:grid; gap:7px; }
     .story-answer { width:100%; padding:9px 11px; text-align:left; cursor:pointer; border:1.5px solid rgba(38,53,74,.2); border-radius:10px 10px 10px 4px; background:#fffefa; color:#34445d; font-size:.77rem; font-weight:800; transition:background .16s ease,border-color .16s ease,transform .16s ease; }
-    .story-answer:hover:not(:disabled) { transform:translateX(2px); border-color:#438f86; background:#f2f8f3; }
+    @media (hover: hover) and (pointer: fine) { .story-answer:hover:not(:disabled) { transform:translateX(2px); border-color:#2a7066; background:#f2f8f3; } }
     .story-answer:disabled { cursor:default; opacity:1; }
     .story-answer.correct { border-color:#39866e; background:#dff1e5; color:#245d4d; }
     .story-answer.incorrect { border-color:#cf7166; background:#fbe8e3; color:#8c453f; }
     .story-feedback { min-height:0; margin:9px 0 0; color:#58666b; font-size:.76rem; font-weight:750; }
     .story-feedback.good { color:#276c54; }.story-feedback.bad { color:#9c4c45; }
-    .story-retry { margin-top:8px; padding:6px 10px; cursor:pointer; border:0; border-radius:9px; color:#fff; background:#26354a; font-size:.72rem; font-weight:850; }
+    .story-retry { margin-top:8px; padding:6px 10px; cursor:pointer; border:0; border-radius:9px; color:#fff; background:#26354a; font-size:.75rem; font-weight:850; }
     @keyframes storyReveal { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
 
     #fonts { background:linear-gradient(135deg,#f3ead8 0%,#fbf4e7 52%,#e9f0ec 100%); }
     .research-hero { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr); gap:25px; align-items:center; margin:0 0 23px; padding:clamp(24px,4vw,42px); overflow:hidden; border:3px solid #26354a; border-radius:27px 27px 27px 8px; color:#fff9ed; background:linear-gradient(112deg,#26354a 0%,#354a5b 60%,#466e68 100%); box-shadow:6px 7px 0 rgba(38,53,74,.13); }
-    .research-eyebrow,.research-kicker { color:#f3cf76; font-size:.68rem; font-weight:950; letter-spacing:.15em; }
+    .research-eyebrow,.research-kicker { color:#f9e3a6; font-size:.75rem; font-weight:950; letter-spacing:.15em; }
+    .research-workbench-head .research-kicker, .research-workbench .research-kicker { color:#2a7066; }
     .research-hero h2 { margin:10px 0 12px; color:#fff9ed; font-family:Fredoka,'Nunito Sans',sans-serif; font-size:clamp(2rem,4.2vw,3.1rem); line-height:1.02; }
     .research-hero h2::after { display:none; }
     .research-hero p { max-width:680px; margin:0; color:#e4e9e4; font-size:.92rem; }
-    .research-hero p.research-updated { margin-top:9px; color:#f3d990; font-size:.75rem; font-weight:800; }
+    .research-hero p.research-updated { margin-top:9px; color:#fbeabd; font-size:.75rem; font-weight:800; }
     .research-hero p strong { color:#fff2c7; }
     .research-facts { display:flex; flex-wrap:wrap; gap:8px; margin-top:19px; }
-    .research-facts span { padding:7px 11px; border:1px solid rgba(255,255,255,.18); border-radius:99px; color:#fff7e7; background:rgba(255,255,255,.08); font-size:.72rem; font-weight:850; }
+    .research-facts span { padding:7px 11px; border:1px solid rgba(255,255,255,.18); border-radius:99px; color:#fff7e7; background:rgba(255,255,255,.08); font-size:.75rem; font-weight:850; }
     .research-hero-art { display:grid; place-items:center; min-height:180px; padding:9px; border:1px solid rgba(255,255,255,.14); border-radius:24px; background:radial-gradient(circle at 50% 48%,rgba(255,231,169,.2),transparent 65%),rgba(255,255,255,.055); }
     .research-hero-art svg { width:min(100%,220px); height:auto; filter:drop-shadow(3px 5px 0 rgba(0,0,0,.17)); }
-    .research-hero-art span { color:#f3d990; font-size:.65rem; font-weight:950; letter-spacing:.15em; text-transform:uppercase; }
+    .research-hero-art span { color:#fbeabd; font-size:.75rem; font-weight:950; letter-spacing:.15em; text-transform:uppercase; }
     .research-workbench { padding:clamp(18px,3vw,27px); border:2px solid rgba(38,53,74,.2); border-radius:23px 23px 23px 7px; background:rgba(255,253,247,.84); box-shadow:4px 5px 0 rgba(38,53,74,.07); }
     .research-workbench-head { display:flex; align-items:center; justify-content:space-between; gap:20px; }
     .research-workbench-head h3 { margin:5px 0 4px; color:#26354a; font-family:Fredoka,'Nunito Sans',sans-serif; font-size:1.45rem; }
     .research-workbench-head p { margin:0; color:#6a7478; font-size:.82rem; }
     .research-progress-card { min-width:220px; padding:13px 15px; border:1px solid rgba(38,53,74,.13); border-radius:14px; background:#f7f0df; }
-    .research-progress-label { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#637078; font-size:.68rem; font-weight:800; }
+    .research-progress-label { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#637078; font-size:.75rem; font-weight:800; }
     .research-passport-title { display:inline-flex; align-items:center; gap:9px; min-width:0; color:#26354a; font-size:.82rem; font-weight:950; line-height:1.15; }
     .research-passport-emoji { display:inline-grid; place-items:center; flex:0 0 auto; width:47px; height:47px; border:2px solid rgba(38,53,74,.13); border-radius:13px 13px 13px 5px; background:#fff9e9; font-size:2rem; line-height:1; box-shadow:2px 3px 0 rgba(38,53,74,.10); }
     .research-progress-label strong { color:#26354a; white-space:nowrap; }
@@ -1483,7 +1526,7 @@
     .research-progress-track span { display:block; width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg,#438f86,#edbf56); transition:width .25s ease; }
     .research-filters { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 18px; }
     .research-filter { padding:9px 13px; border:1.5px solid rgba(38,53,74,.18); border-radius:999px; background:#fffefa; color:#536477; cursor:pointer; font-size:.78rem; font-weight:900; transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease; }
-    .research-filter:hover { transform:translateY(-2px); border-color:#438f86; }
+    @media (hover: hover) and (pointer: fine) { .research-filter:hover { transform:translateY(-2px); border-color:#2a7066; } }
     .research-filter.active { border-color:#26354a; color:#fff9ed; background:#26354a; box-shadow:2px 3px 0 rgba(38,53,74,.12); }
     .research-sources { grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
     .research-card { min-height:100%; padding:19px; border:2px solid rgba(38,53,74,.65); border-radius:19px 19px 19px 6px; background:#fffefa; box-shadow:3px 4px 0 rgba(38,53,74,.08); }
@@ -1496,11 +1539,11 @@
     .research-card h3 { margin:14px 0 2px; color:#26354a; font-family:Fredoka,'Nunito Sans',sans-serif; font-size:1.2rem; line-height:1.2; }
     .research-card > p { margin:0; color:#657078; font-size:.82rem; line-height:1.55; }
     .research-card-question { margin-top:14px; padding:12px; border-radius:12px; background:#f5f1e6; }
-    .research-card-question span { color:#438f86; font-size:.62rem; font-weight:950; letter-spacing:.1em; }
+    .research-card-question span { color:#2a7066; font-size:.75rem; font-weight:950; letter-spacing:.1em; }
     .research-card-question p { margin:4px 0 0; color:#52616a; font-size:.77rem; }
     .research-card-actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:auto; padding-top:16px; }
-    .research-card-actions a { display:inline-flex; align-items:center; gap:7px; padding:9px 11px; border:1.5px solid #26354a; border-radius:10px 10px 10px 4px; color:#fff9ed; background:#26354a; font-size:.74rem; font-weight:900; }
-    .research-card-actions a:hover { background:#3b5664; }
+    .research-card-actions a { display:inline-flex; align-items:center; gap:7px; padding:9px 11px; border:1.5px solid #26354a; border-radius:10px 10px 10px 4px; color:#fff9ed; background:#26354a; font-size:.75rem; font-weight:900; }
+    @media (hover: hover) and (pointer: fine) { .research-card-actions a:hover { background:#3b5664; } }
 .research-empty { padding:18px; border:1px dashed rgba(38,53,74,.3); border-radius:13px; color:#66737a; text-align:center; }
     #fonts .method-note { padding:16px 18px; border:2px dashed rgba(38,53,74,.24); border-radius:15px; background:#f6edcf; color:#626d70; }
     #fonts .method-note strong { color:#26354a; }
@@ -1529,8 +1572,8 @@
   
     /* Laboratori molecular interactiu 3.0 */
     .molecular-lab { padding: clamp(20px,3vw,34px); margin: 0 0 38px; overflow: hidden; background: linear-gradient(145deg,#fffdf7 0%,#f1f7f0 58%,#edf4f1 100%); border: 1px solid #d8e4dc; }
-    .mol-lab-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#47796e; font-size:.72rem; font-weight:950; letter-spacing:.13em; }
-    .mol-live-indicator { display:inline-flex; align-items:center; gap:7px; color:#74857d; font-size:.64rem; letter-spacing:.09em; }
+    .mol-lab-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#47796e; font-size:.75rem; font-weight:950; letter-spacing:.13em; }
+    .mol-live-indicator { display:inline-flex; align-items:center; gap:7px; color:#52665f; font-size:.75rem; letter-spacing:.09em; }
     .mol-live-indicator i { width:8px;height:8px;border-radius:50%;background:#65a98c;box-shadow:0 0 0 4px rgba(101,169,140,.16); }
     .mol-lab-heading { display:flex; justify-content:space-between; align-items:center; gap:18px; margin:14px 0 23px; }
     .mol-lab-heading h3 { margin:0 0 7px; font-size:clamp(1.35rem,2.7vw,1.9rem); color:#26354a; letter-spacing:-.035em; }
@@ -1542,18 +1585,18 @@
     .mol-panel-label { margin:0 0 13px;color:#526e64;font-size:.75rem;font-weight:950;letter-spacing:.08em;text-transform:uppercase; }
     .mol-selector { display:grid;gap:9px; }
     .molecule-choice { width:100%;display:grid;grid-template-columns:42px minmax(0,1fr) 18px;align-items:center;gap:11px;text-align:left;padding:11px 12px;border:1.5px solid transparent;border-radius:14px;background:rgba(255,255,255,.7);color:#26354a;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s; }
-    .molecule-choice:hover { transform:translateY(-2px);border-color:#91b9aa; }
-    .molecule-choice.active { background:#fffdf7;border-color:#438f86;box-shadow:0 4px 0 rgba(67,143,134,.16); }
+    @media (hover: hover) and (pointer: fine) { .molecule-choice:hover { transform:translateY(-2px);border-color:#91b9aa; } }
+    .molecule-choice.active { background:#fffdf7;border-color:#2a7066;box-shadow:0 4px 0 rgba(67,143,134,.16); }
     .molecule-choice strong,.molecule-choice small { display:block; }
     .molecule-choice strong { font-size:.9rem; }
-    .molecule-choice small { color:#75847d;font-size:.72rem;margin-top:2px; }
-    .molecule-choice-arrow { color:#438f86;font-size:1.4rem;font-weight:800; }
+    .molecule-choice small { color:#52665f;font-size:.75rem;margin-top:2px; }
+    .molecule-choice-arrow { color:#2a7066;font-size:1.4rem;font-weight:800; }
     .molecule-choice-icon { width:40px;height:40px;display:grid;place-items:center;border-radius:13px;font-size:1.55rem;font-weight:950; }
     .glucose-icon { background:#faedc8;color:#b47a1b; }.ethanol-icon { background:#f7ddd5;color:#bf6957; }.co2-icon { background:#dce9f6;color:#547eaa; }
-    .mol-selector-tip { margin-top:15px;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.56);color:#697a72;font-size:.76rem;line-height:1.45; }
+    .mol-selector-tip { margin-top:15px;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.56);color:#52665f;font-size:.76rem;line-height:1.45; }
     .mol-view-panel { background:#fffefa;border:1px solid #e5e8de;display:flex;flex-direction:column; }
     .mol-view-meta { display:flex;align-items:center;justify-content:space-between;gap:10px; }
-    .mol-view-meta>span:first-child { color:#648076;font-size:.68rem;font-weight:950;letter-spacing:.1em; }
+    .mol-view-meta>span:first-child { color:#52665f;font-size:.75rem;font-weight:950;letter-spacing:.1em; }
     .mol-formula-badge { display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#26354a;color:#fff9ed;font-family:ui-monospace,monospace;font-size:.83rem;font-weight:900; }
     .mol-view-panel h4 { margin:12px 0 0;color:#26354a;font-size:1.3rem; }
     .mol-structure-wrap { min-height:156px;display:grid;place-items:center;margin:3px 0 7px;padding:12px 4px;overflow:hidden; }
@@ -1566,36 +1609,36 @@
     .mol-composition { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px; }
     .mol-composition>span { display:grid;grid-template-columns:26px 1fr;align-items:center;column-gap:7px;padding:10px;border-radius:13px;background:#f1f5ef; }
     .mol-composition strong { color:#26354a;font-size:1.06rem;line-height:1; }
-    .mol-composition small { grid-column:2;color:#76847d;font-size:.66rem;margin-top:1px; }
-    .atom-dot { display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-size:.72rem;font-weight:950;font-style:normal; }
-    .atom-carbon { background:#26354a;color:#fff; }.atom-hydrogen { background:#dce9f6;color:#3e6b9b; }.atom-oxygen { background:#f7ddd5;color:#b95f4f; }
-    .mol-divider { display:flex;align-items:center;gap:13px;margin:28px 0 23px;color:#789087;font-size:.68rem;font-weight:950;letter-spacing:.13em; }
+    .mol-composition small { grid-column:2;color:#52665f;font-size:.75rem;margin-top:1px; }
+    .atom-dot { display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-size:.75rem;font-weight:950;font-style:normal; }
+    .atom-carbon { background:#26354a;color:#fff; }.atom-hydrogen { background:#dce9f6;color:#3e6b9b; }.atom-oxygen { background:#f7ddd5;color:#9a4636; }
+    .mol-divider { display:flex;align-items:center;gap:13px;margin:28px 0 23px;color:#789087;font-size:.75rem;font-weight:950;letter-spacing:.13em; }
     .mol-divider:before,.mol-divider:after { content:"";height:1px;flex:1;background:#d9e4dc; }
     .mol-reaction-lab { padding:22px;border-radius:20px;background:#26354a;color:#fff9ed;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07); }
     .mol-reaction-intro { display:flex;justify-content:space-between;align-items:center;gap:15px; }
-    .mol-step-number { color:#438f86;font-size:.67rem;letter-spacing:.12em;font-weight:950; }
+    .mol-step-number { color:#2a7066;font-size:.75rem;letter-spacing:.12em;font-weight:950; }
     .mol-reaction-intro .mol-step-number { color:#f2c45c; }
     .mol-reaction-intro h4,.mol-balance-heading h4 { margin:5px 0 5px;font-size:1.22rem; }
     .mol-reaction-intro p { margin:0;max-width:700px;color:#c8d2d1;font-size:.84rem;line-height:1.5; }
     .mol-flask-icon { width:50px;height:50px;flex:0 0 50px;display:grid;place-items:center;border-radius:16px;background:rgba(242,196,92,.14);font-size:1.7rem; }
     .mol-equation-stage { display:grid;grid-template-columns:minmax(125px,.75fr) 100px minmax(0,1.35fr);align-items:center;gap:13px;margin:20px 0 17px;padding:19px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:rgba(255,255,255,.055); }
     .mol-reactant,.mol-product { min-width:0;text-align:center; }
-    .mol-equation-label { display:block;margin-bottom:9px;color:#9eb5ad;font-size:.62rem;font-weight:950;letter-spacing:.13em; }
+    .mol-equation-label { display:block;margin-bottom:9px;color:#9eb5ad;font-size:.75rem;font-weight:950;letter-spacing:.13em; }
     .mol-formula-large { color:#f7d77e;font-family:ui-monospace,monospace;font-size:clamp(1.15rem,2.5vw,1.75rem);font-weight:950;white-space:nowrap; }
     .mol-reactant strong,.mol-product strong { display:block;margin-top:7px;color:#fff9ed;font-size:.83rem; }
-    .mol-reactant small,.mol-product small { color:#b1c1bc;font-size:.69rem; }
+    .mol-reactant small,.mol-product small { color:#b1c1bc;font-size:.75rem; }
     .mol-equation-arrow { display:grid;justify-items:center;color:#f2c45c; }
     .mol-equation-arrow span { font-size:2.5rem;line-height:1; }
-    .mol-equation-arrow small { margin-top:5px;color:#a9bab4;font-size:.65rem;text-align:center; }
+    .mol-equation-arrow small { margin-top:5px;color:#a9bab4;font-size:.75rem;text-align:center; }
     .mol-products { display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);align-items:center;gap:8px; }
     .mol-plus { color:#f2c45c;font-size:1.45rem;font-weight:900;text-align:center; }
     .mol-product-formula { display:flex;align-items:center;justify-content:center;gap:6px; }
     .coefficient-pill { min-width:23px;height:23px;padding:0 5px;display:inline-grid;place-items:center;border-radius:8px;background:#438f86;color:#fff;font-weight:950;font-size:.8rem; }
     .mol-coefficient-controls { display:grid;grid-template-columns:1fr 1fr minmax(170px,1.3fr);align-items:end;gap:12px; }
-    .mol-coefficient-controls label { display:block;margin-bottom:6px;color:#cbd6d2;font-size:.72rem;font-weight:800; }
+    .mol-coefficient-controls label { display:block;margin-bottom:6px;color:#cbd6d2;font-size:.75rem;font-weight:800; }
     .mol-coefficient-controls input { width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,.2);border-radius:11px;background:#17283d;color:#fff9ed;font:inherit;font-weight:850; }
     .mol-coefficient-controls input:focus-visible { outline:3px solid #f2c45c;outline-offset:2px; }
-    .mol-coefficient-controls p { margin:0;color:#aebeb9;font-size:.72rem;line-height:1.45; }
+    .mol-coefficient-controls p { margin:0;color:#aebeb9;font-size:.75rem;line-height:1.45; }
     .mol-action-row { display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:17px; }
     .mol-action-row .btn { min-height:42px; }
     .mol-action-row .btn-primary { background:#f2c45c;color:#26354a;border-color:#f2c45c; }
@@ -1611,11 +1654,11 @@
     .mol-balance-panel { margin-top:17px;padding:18px;border-radius:16px;background:#fffdf7;color:#26354a; }
     .mol-balance-heading { display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px; }
     .mol-balance-heading h4 { color:#26354a;font-size:1.08rem; }
-    .mol-balance-total { padding:7px 10px;border-radius:999px;background:#e8f1e8;color:#47796e;font-size:.73rem;font-weight:950;white-space:nowrap; }
+    .mol-balance-total { padding:7px 10px;border-radius:999px;background:#e8f1e8;color:#47796e;font-size:.75rem;font-weight:950;white-space:nowrap; }
     .mol-balance-table-wrap { overflow-x:auto; }
     .mol-balance-table { width:100%;border-collapse:collapse;font-size:.82rem; }
     .mol-balance-table th,.mol-balance-table td { padding:10px 9px;border-bottom:1px solid #e8ece5;text-align:left;white-space:nowrap; }
-    .mol-balance-table thead th { color:#76847d;font-size:.67rem;text-transform:uppercase;letter-spacing:.07em; }
+    .mol-balance-table thead th { color:#52665f;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em; }
     .mol-balance-table tbody th { color:#3e514a;font-weight:800; }
     .mol-balance-table tbody th .atom-dot { margin-right:6px;vertical-align:middle; }
     .balance-ok { color:#3e8a68;font-weight:900; }.balance-diff { color:#b65e4b;font-weight:900; }
@@ -1630,7 +1673,7 @@
       .mol-explorer-grid { grid-template-columns:1fr; }
       .mol-selector { grid-template-columns:repeat(3,minmax(0,1fr)); }
       .molecule-choice { grid-template-columns:1fr;justify-items:center;text-align:center;gap:5px;padding:10px 5px; }
-      .molecule-choice small { font-size:.63rem; }.molecule-choice-arrow { display:none; }
+      .molecule-choice small { font-size:.75rem; }.molecule-choice-arrow { display:none; }
       .mol-equation-stage { grid-template-columns:1fr;gap:13px; }
       .mol-equation-arrow span { transform:rotate(90deg);font-size:1.8rem; }
       .mol-products { width:100%; }
@@ -1647,7 +1690,7 @@
       .mol-products { grid-template-columns:minmax(0,1fr) 14px minmax(0,1fr);gap:3px; }
       .mol-product-formula { gap:3px; }.mol-formula-large { font-size:1.1rem; }.coefficient-pill { min-width:20px;height:20px; }
       .mol-balance-heading { align-items:flex-start;flex-direction:column;gap:5px; }
-      .mol-balance-table th,.mol-balance-table td { padding:8px 5px;font-size:.72rem; }
+      .mol-balance-table th,.mol-balance-table td { padding:8px 5px;font-size:.75rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       .mol-structure.is-animating .bond-line,.mol-equation-stage.is-animating .mol-reactant,.mol-equation-stage.is-animating .mol-equation-arrow span,.mol-equation-stage.is-animating .mol-product { animation:none !important; }
@@ -1665,58 +1708,58 @@
     .mol-atom-counter { padding:13px; border:1px solid #dfe8df; border-radius:15px; background:#fffefa; min-width:0; }
     .mol-atom-counter label { display:flex; align-items:center; justify-content:space-between; gap:7px; margin-bottom:10px; color:#526e64; font-size:.76rem; font-weight:850; }
     .mol-atom-counter label b { width:27px; height:27px; display:grid; place-items:center; border-radius:9px; font-size:.9rem; color:#fff; }
-    .carbon-counter label b { background:#26354a; }.hydrogen-counter label b { background:#6596c5; }.oxygen-counter label b { background:#d87561; }
+    .carbon-counter label b { background:#26354a; }.hydrogen-counter label b { background:#3f74a6; }.oxygen-counter label b { background:#b9533f; }
     .mol-counter-row { display:grid; grid-template-columns:32px minmax(0,1fr) 32px; align-items:center; gap:5px; }
     .mol-counter-row button { width:32px; height:34px; border:0; border-radius:10px; background:#e8f0e9; color:#315e51; font-size:1.15rem; font-weight:900; cursor:pointer; }
-    .mol-counter-row button:hover { background:#d7e8dc; }
+    @media (hover: hover) and (pointer: fine) { .mol-counter-row button:hover { background:#d7e8dc; } }
     .mol-counter-row input { min-width:0; width:100%; height:34px; border:1px solid #dce5dc; border-radius:9px; background:#f8faf6; color:#26354a; font:inherit; font-weight:900; text-align:center; }
     .mol-counter-row input:focus-visible,.mol-counter-row button:focus-visible,.mol-builder-search:focus-visible { outline:3px solid #e8b94f; outline-offset:2px; }
     .mol-builder-preview { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:13px 15px; border-radius:15px; background:#26354a; color:#fff9ed; text-align:center; }
-    .mol-builder-overline { color:#c7d5ce; font-size:.62rem; font-weight:900; letter-spacing:.1em; }
+    .mol-builder-overline { color:#c7d5ce; font-size:.75rem; font-weight:900; letter-spacing:.1em; }
     .mol-builder-preview>strong { display:block; margin:3px 0 8px; color:#f2c45c; font-family:ui-monospace,monospace; font-size:clamp(1.8rem,3vw,2.35rem); letter-spacing:.03em; }
     .mol-builder-search { padding:10px 13px; border:0; border-radius:999px; background:#f2c45c; color:#26354a; font:inherit; font-size:.77rem; font-weight:950; cursor:pointer; }
-    .mol-builder-search:hover { background:#ffda79; transform:translateY(-1px); }
-    .mol-builder-preview p { min-height:30px; margin:8px 0 0; color:#d5dfda; font-size:.69rem; line-height:1.4; }
+    @media (hover: hover) and (pointer: fine) { .mol-builder-search:hover { background:#ffda79; transform:translateY(-1px); } }
+    .mol-builder-preview p { min-height:30px; margin:8px 0 0; color:#d5dfda; font-size:.75rem; line-height:1.4; }
     .mol-builder-results { min-height:88px; }
     .mol-builder-empty { display:flex; align-items:center; gap:11px; padding:14px; border:1px dashed #cbd9cf; border-radius:14px; background:rgba(255,255,255,.55); color:#61736d; }
     .mol-builder-empty>span { font-size:1.55rem; }
     .mol-builder-empty strong { color:#344d43; font-size:.84rem; }
     .mol-builder-empty p { margin:2px 0 0; font-size:.75rem; }
-    .mol-builder-results-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:4px 0 9px; color:#526e64; font-size:.72rem; font-weight:900; }
-    .mol-builder-results-head span { color:#7a8b82; font-size:.65rem; font-weight:750; }
+    .mol-builder-results-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:4px 0 9px; color:#526e64; font-size:.75rem; font-weight:900; }
+    .mol-builder-results-head span { color:#7a8b82; font-size:.75rem; font-weight:750; }
     .mol-builder-result-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:9px; }
     .mol-builder-result { padding:13px; border:1px solid #dfe8df; border-radius:14px; background:#fffefa; }
     .mol-builder-result-top { display:flex; justify-content:space-between; align-items:flex-start; gap:7px; }
     .mol-builder-result h5 { margin:0 0 3px; color:#26354a; font-size:.93rem; }
-    .mol-builder-result .result-formula { padding:4px 7px; border-radius:8px; background:#26354a; color:#fff9ed; font-family:ui-monospace,monospace; font-size:.72rem; font-weight:900; white-space:nowrap; }
-    .mol-builder-result .result-family { display:inline-block; margin:5px 0 6px; color:#4f8272; font-size:.62rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
-    .mol-builder-result p { margin:0; color:#68796f; font-size:.74rem; line-height:1.5; }
-    .mol-builder-result .result-warning { display:block; margin-top:7px; padding:7px 8px; border-radius:9px; background:#fff0e8; color:#9c4f3e; font-size:.68rem; font-weight:750; line-height:1.4; }
+    .mol-builder-result .result-formula { padding:4px 7px; border-radius:8px; background:#26354a; color:#fff9ed; font-family:ui-monospace,monospace; font-size:.75rem; font-weight:900; white-space:nowrap; }
+    .mol-builder-result .result-family { display:inline-block; margin:5px 0 6px; color:#4f8272; font-size:.75rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
+    .mol-builder-result p { margin:0; color:#68796f; font-size:.75rem; line-height:1.5; }
+    .mol-builder-result .result-warning { display:block; margin-top:7px; padding:7px 8px; border-radius:9px; background:#fff0e8; color:#9c4f3e; font-size:.75rem; font-weight:750; line-height:1.4; }
     .discovery-list { margin-top:16px; padding:16px; border:1px solid #d7e4dc; border-radius:16px; background:#fffefa; }
     .discovery-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px; }
     .discovery-head h5 { margin:0; color:#26354a; font-size:.98rem; }
     .discovery-progress { color:#47796e; font-size:.76rem; font-weight:900; white-space:nowrap; }
-    .discovery-help { margin:0 0 12px; color:#68796f; font-size:.73rem; line-height:1.5; }
-    .discovery-reset { padding:5px 9px; border:1px solid #d7e4dc; border-radius:9px; background:#f4f8f1; color:#526e64; font:inherit; font-size:.68rem; font-weight:800; cursor:pointer; }
+    .discovery-help { margin:0 0 12px; color:#68796f; font-size:.75rem; line-height:1.5; }
+    .discovery-reset { padding:5px 9px; border:1px solid #d7e4dc; border-radius:9px; background:#f4f8f1; color:#526e64; font:inherit; font-size:.75rem; font-weight:800; cursor:pointer; }
     .discovery-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:7px; max-height:340px; overflow:auto; padding:2px 4px 2px 1px; }
-    .discovery-item { display:grid; grid-template-columns:20px minmax(0,1fr); align-items:start; gap:8px; padding:9px 10px; border:1px solid #e5ebe3; border-radius:11px; background:#f8faf6; color:#46594f; font-size:.74rem; line-height:1.35; }
-    .discovery-item input { width:16px; height:16px; margin:1px 0 0; accent-color:#438f86; }
-    .discovery-item strong { display:block; color:#26354a; font-size:.73rem; }
+    .discovery-item { display:grid; grid-template-columns:20px minmax(0,1fr); align-items:start; gap:8px; padding:9px 10px; border:1px solid #e5ebe3; border-radius:11px; background:#f8faf6; color:#46594f; font-size:.75rem; line-height:1.35; }
+    .discovery-item input { width:16px; height:16px; margin:1px 0 0; accent-color:#2a7066; }
+    .discovery-item strong { display:block; color:#26354a; font-size:.75rem; }
     .discovery-item.is-discovered { border-color:#b9d9c4; background:#edf6ee; }
     .discovery-item.is-discovered strong { text-decoration:line-through; text-decoration-thickness:2px; color:#527861; }
     .discovery-item.just-discovered { animation:discoveryPop .72s cubic-bezier(.2,.8,.25,1.25); }
-    .discovery-item.just-discovered::after { content:"✦ Descoberta!"; grid-column:2; color:#3e8a68; font-size:.67rem; font-weight:950; animation:discoverySpark .9s ease-out both; }
+    .discovery-item.just-discovered::after { content:"✦ Descoberta!"; grid-column:2; color:#3e8a68; font-size:.75rem; font-weight:950; animation:discoverySpark .9s ease-out both; }
     @keyframes discoveryPop { 0% { transform:scale(.96); background:#fff3bd; box-shadow:0 0 0 0 rgba(242,196,92,.5); } 55% { transform:scale(1.025); box-shadow:0 0 0 7px rgba(242,196,92,0); } 100% { transform:scale(1); } }
     @keyframes discoverySpark { 0% { opacity:0; transform:translateY(6px); } 30% { opacity:1; transform:translateY(0); } 100% { opacity:.72; } }
-    .discovery-item small { display:block; margin-top:3px; color:#75847d; font-size:.66rem; }
+    .discovery-item small { display:block; margin-top:3px; color:#52665f; font-size:.75rem; }
     .transform-card { padding:20px; border:1px solid rgba(255,255,255,.13); border-radius:18px; background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.025)); }
     .transform-progress { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0 0 17px; }
-    .transform-progress button { padding:9px 7px; border:1px solid rgba(255,255,255,.18); border-radius:12px; background:rgba(255,255,255,.05); color:#d4dfda; font:inherit; font-size:.72rem; font-weight:850; cursor:pointer; }
+    .transform-progress button { padding:9px 7px; border:1px solid rgba(255,255,255,.18); border-radius:12px; background:rgba(255,255,255,.05); color:#d4dfda; font:inherit; font-size:.75rem; font-weight:850; cursor:pointer; }
     .transform-progress button[aria-current="step"] { background:#f2c45c; border-color:#f2c45c; color:#26354a; }
     .transform-visual { min-height:290px; display:grid; grid-template-columns:1fr; align-items:center; gap:12px; padding:20px; border:2px solid rgba(242,196,92,.28); border-radius:22px; background:radial-gradient(ellipse at 50% 0%,#314761 0%,#17283d 72%); box-shadow:inset 0 0 0 4px rgba(255,255,255,.025),0 8px 0 rgba(12,24,38,.22); }
     .transform-molecule { text-align:center; }
     .transform-molecule b { display:inline-block; padding:11px 13px; border-radius:13px; background:#f2c45c; color:#26354a; font:900 clamp(1rem,3vw,1.55rem) ui-monospace,monospace; }
-    .transform-molecule small { display:block; margin-top:8px; color:#c8d2d1; font-size:.72rem; }
+    .transform-molecule small { display:block; margin-top:8px; color:#c8d2d1; font-size:.75rem; }
     .transform-arrow { color:#f2c45c; font-size:2rem; font-weight:900; }
     .transform-svg { display:block; width:min(100%,680px); height:auto; margin:0 auto; overflow:visible; filter:drop-shadow(0 8px 4px rgba(0,0,0,.2)); }
     .transform-svg .atom { transform-box:fill-box; transform-origin:center; }
@@ -1735,9 +1778,9 @@
     .transform-controls { display:flex; justify-content:space-between; gap:10px; margin-top:13px; }
     .transform-controls button { padding:9px 13px; border:1px solid rgba(255,255,255,.2); border-radius:10px; background:rgba(255,255,255,.08); color:#fff9ed; font:inherit; font-size:.76rem; font-weight:850; cursor:pointer; }
     .transform-controls button:disabled { opacity:.42; cursor:default; }
-    @media(max-width:520px) { .discovery-head { align-items:flex-start; flex-wrap:wrap; }.discovery-grid { grid-template-columns:1fr; max-height:290px; }.transform-visual { grid-template-columns:1fr; }.transform-arrow { transform:rotate(90deg); text-align:center; }.transform-progress button { font-size:.65rem; } }
+    @media(max-width:520px) { .discovery-head { align-items:flex-start; flex-wrap:wrap; }.discovery-grid { grid-template-columns:1fr; max-height:290px; }.transform-visual { grid-template-columns:1fr; }.transform-arrow { transform:rotate(90deg); text-align:center; }.transform-progress button { font-size:.75rem; } }
     @media (max-width:760px) { .mol-builder-workspace { grid-template-columns:1fr; }.mol-builder-preview { min-height:150px; } }
-    @media (max-width:520px) { .mol-builder-heading { gap:8px; }.mol-builder-icon { flex-basis:42px; width:42px; height:42px; font-size:1.5rem; }.mol-builder-controls { gap:6px; }.mol-atom-counter { padding:9px 6px; }.mol-atom-counter label { align-items:flex-start; flex-direction:column-reverse; gap:5px; font-size:.68rem; }.mol-counter-row { grid-template-columns:36px minmax(0,1fr) 36px; gap:3px; }.mol-counter-row button { width:36px; height:40px; }.mol-counter-row input { height:40px; font-size:.8rem; }.mol-builder-result-grid { grid-template-columns:1fr; }.mol-builder-empty { align-items:flex-start; } }
+    @media (max-width:520px) { .mol-builder-heading { gap:8px; }.mol-builder-icon { flex-basis:42px; width:42px; height:42px; font-size:1.5rem; }.mol-builder-controls { gap:6px; }.mol-atom-counter { padding:9px 6px; }.mol-atom-counter label { align-items:flex-start; flex-direction:column-reverse; gap:5px; font-size:.75rem; }.mol-counter-row { grid-template-columns:36px minmax(0,1fr) 36px; gap:3px; }.mol-counter-row button { width:36px; height:40px; }.mol-counter-row input { height:40px; font-size:.8rem; }.mol-builder-result-grid { grid-template-columns:1fr; }.mol-builder-empty { align-items:flex-start; } }
 
 
     /* Versió 3.5 · Paleta clara i llegible */
@@ -1749,7 +1792,7 @@
       --panel-2: #edf3ee;
       --text: #26354a;
       --muted: #586b70;
-      --muted-2: #78888a;
+      --muted-2: #5b6d69;
       --accent: #bd6b43;
       --accent-2: #c58c2e;
       --green: #438f76;
@@ -1777,16 +1820,17 @@
     }
     .mobile-panel { background: #fffefa; }
     .mobile-panel a { color: var(--muted); }
-    .mobile-panel a:hover { background: var(--panel-2); color: var(--text); }
+    @media (hover: hover) and (pointer: fine) { .mobile-panel a:hover { background: var(--panel-2); color: var(--text); } }
     .hero {
       background: linear-gradient(135deg, #e7f1e9 0%, #fff4dc 58%, #f8e9e3 100%) !important;
       color: var(--text) !important;
     }
     .hero .lead, .section-intro, .event p, .card p { color: var(--muted); }
-    .eyebrow, .section-number, .event-date { color: #a65e32; }
+    .eyebrow, .section-number, .event-date { color: #8f4f26; }
     h1, h2, h3, h4, h5 { color: var(--text); }
     .topbar a { color: var(--muted); }
-    .topbar a:hover, .topbar a.active { color: var(--text); }
+    .topbar a.active { color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .topbar a:hover { color: var(--text); } }
     .card {
       background: #fffefa !important;
       color: var(--text);
@@ -1818,7 +1862,7 @@
       color: var(--text) !important;
       border-color: rgba(38,53,74,.22) !important;
     }
-    .answer:hover:not(:disabled) { background: #f7edcf !important; }
+    @media (hover: hover) and (pointer: fine) { .answer:hover:not(:disabled) { background: #f7edcf !important; } }
     .answer.correct { background: #e2f2e8 !important; }
     .answer.incorrect { background: #fde9e4 !important; }
 
@@ -1829,7 +1873,7 @@
       border: 1px solid rgba(38,53,74,.16);
     }
     .mol-builder-overline, .mol-builder-preview p { color: var(--muted) !important; }
-    .mol-builder-preview > strong { color: #a65e32 !important; }
+    .mol-builder-preview > strong { color: #8f4f26 !important; }
     .mol-builder-search { background: #edbf56 !important; color: #26354a !important; }
     .mol-science-note { color: var(--muted) !important; }
 
@@ -1858,7 +1902,7 @@
       color: #26354a !important;
     }
     .transform-molecule small, .transform-copy { color: var(--muted) !important; }
-    .transform-arrow { color: #a65e32 !important; }
+    .transform-arrow { color: #8f4f26 !important; }
     .transform-products b { color: #26354a !important; }
     .transform-atoms span {
       background: #e5f0e8 !important;
@@ -1885,7 +1929,7 @@
     .bubble-heading { display:flex; align-items:center; justify-content:space-between; gap:9px; margin-bottom:6px; }
     .bubble-heading .bubble-label { margin:0; }
     #guideMessage.is-typing::after {
-      content:"▍"; display:inline-block; margin-left:2px; color:#a65e32;
+      content:"▍"; display:inline-block; margin-left:2px; color:#8f4f26;
       animation:maltCursor .8s steps(2,end) infinite;
     }
     @keyframes maltCursor { 50% { opacity:0; } }
@@ -1948,10 +1992,10 @@
       border:3px solid #edbf56; border-radius:29px 29px 29px 9px;
       background:linear-gradient(155deg,#fffdf5 0%,#fff3d3 58%,#f5e5c5 100%);
       color:#26354a; box-shadow:0 0 0 7px rgba(237,191,86,.13),0 25px 90px rgba(0,0,0,.38);
-      animation:victoryCardIn .7s cubic-bezier(.18,.82,.25,1.18) both;
+      animation:victoryCardIn .7s cubic-bezier(.22,1,.36,1) both;
     }
     @keyframes victoryCardIn { from{opacity:0;transform:translateY(28px) scale(.88)} to{opacity:1;transform:translateY(0) scale(1)} }
-    .victory-kicker { position:relative; z-index:2; color:#a76c27; font-size:.72rem; font-weight:950; letter-spacing:.17em; }
+    .victory-kicker { position:relative; z-index:2; color:#a76c27; font-size:.75rem; font-weight:950; letter-spacing:.17em; }
     .victory-trophy { position:relative; z-index:2; width:164px; height:154px; margin:12px auto 14px; display:grid; place-items:center; }
     .trophy-glow {
       position:absolute; inset:7px; border-radius:50%;
@@ -1994,6 +2038,445 @@
       .quiz-victory-overlay,.victory-card,.trophy-glow,.trophy-emoji,.victory-stars span { animation:none !important; }
     }
 
+
+    /* ===== Motion polish ===== */
+    :root {
+      --ease-out: cubic-bezier(.23, 1, .32, 1);
+      --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+    }
+
+    /* Barra de lectura: transform en vez de width (sin layout en cada scroll) */
+    .progress { width: 100%; transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
+
+    /* .card / .story-card / .history-note redefinían `transition` y anulaban la del .reveal:
+       se unen aquí para que la entrada y el hover convivan. El retardo solo afecta a la entrada. */
+    main .reveal.reveal {
+      transition: opacity 500ms var(--ease-out) var(--reveal-delay, 0ms),
+                  translate 500ms var(--ease-out) var(--reveal-delay, 0ms),
+                  transform 200ms var(--ease-out),
+                  box-shadow 200ms var(--ease-out);
+    }
+
+    /* Curva más expresiva que `ease` en los componentes interactivos existentes */
+    .btn, .card, .term, .story-card, .history-note, .glossary-filter, .research-filter,
+    .story-answer, .molecule-choice, .navlinks a, .navlinks a::after, .story-open-label b,
+    .history-note summary, .answer { transition-timing-function: var(--ease-out); }
+
+    /* Feedback al pulsar: la interfaz "oye" al usuario */
+    .answer { transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out), background 180ms var(--ease-out), transform 140ms var(--ease-out); }
+    .answer:active:not(:disabled), .story-answer:active:not(:disabled), .glossary-filter:active,
+    .research-filter:active, .molecule-choice:active, .icon-btn:active, .menu-btn:active,
+    .transform-progress button:active, .mol-counter-row button:active, .mol-builder-search:active {
+      transform: scale(.97);
+    }
+    .icon-btn, .menu-btn, .transform-progress button, .mol-counter-row button, .mol-builder-search {
+      transition: transform 140ms var(--ease-out), background-color 160ms var(--ease-out), background 160ms var(--ease-out);
+    }
+
+    /* Hover "pegajoso" en táctil: los levantamientos solo en dispositivos con ratón */
+    @media (hover: none), (pointer: coarse) {
+      .card:hover, .term:hover, .story-card:hover, .btn:hover, .glossary-filter:hover,
+      .research-filter:hover, .molecule-choice:hover, .story-answer:hover:not(:disabled),
+      .curtain-opening:hover { transform: none; }
+      .curtain-opening:hover .curtain-beer { transform: none; }
+    }
+
+    /* Respuestas del concurso: confirmación breve y silenciosa */
+    .answer.incorrect { animation: answerNudge 320ms var(--ease-out); }
+    .answer.correct { animation: answerPop 300ms var(--ease-out); }
+    @keyframes answerNudge { 20% { transform: translateX(-5px); } 45% { transform: translateX(4px); } 70% { transform: translateX(-2px); } }
+    @keyframes answerPop { 40% { transform: scale(1.025); } }
+
+    /* Menú móvil: aparece desde arriba en vez de saltar */
+    .mobile-panel.open { animation: panelIn 220ms var(--ease-out); }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(-6px); } }
+
+    /* Entrada del hero al cargar (solo con movimiento permitido) */
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-copy > *, .hero-art, .hero-foot { animation: heroIn 650ms var(--ease-out) backwards; }
+      .hero-copy > :nth-child(2) { animation-delay: 70ms; }
+      .hero-copy > :nth-child(3) { animation-delay: 140ms; }
+      .hero-copy > :nth-child(4) { animation-delay: 210ms; }
+      .hero-copy > :nth-child(n+5) { animation-delay: 280ms; }
+      .hero-art { animation-delay: 160ms; }
+      .hero-foot { animation-delay: 360ms; }
+    }
+    @keyframes heroIn { from { opacity: 0; transform: translateY(14px); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .answer.incorrect, .answer.correct, .mobile-panel.open { animation: none; }
+      .progress { will-change: auto; }
+    }
+
+    /* ===== Design polish ===== */
+    /* Las <section> internas (niveles del reto, constructor, cuaderno) heredaban
+       el padding de 92px y la línea superior de las secciones de página */
+    section section { padding: 0; border-top: 0; }
+
+    /* Tipografía: tracking menos agresivo (las palabras se pegaban), sin viudas */
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    h1 { letter-spacing: -.04em; text-wrap: balance; }
+    h2 { letter-spacing: -.035em; }
+    p, li, dd { text-wrap: pretty; }
+    ::selection { background: #f5d98f; color: #26354a; }
+
+    /* Cifras que cambian: ancho fijo para que no "bailen" */
+    .big-score, .lab-result strong, .discovery-progress, .story-progress-copy span,
+    .research-progress-label strong, .quiz-meta, .atom-table td, .atom-table output,
+    .mol-builder-preview > strong { font-variant-numeric: tabular-nums; }
+
+    /* Iconos de ingredientes: los cuatro ilustrados con el mismo lenguaje */
+    .ingredient-icon--water { background: #dcf0f2; border-color: #26354a; }
+    .ingredient-icon--yeast { background: #fbebc8; border-color: #26354a; }
+
+    /* Cuaderno de descubrimientos: degradado que indica que hay más para hacer scroll */
+    .discovery-grid {
+      padding-bottom: 22px;
+      -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent);
+              mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent);
+    }
+
+    /* Molécula de glucosa en móvil: se leía diminuta; ahora conserva tamaño y se desliza */
+    @media (max-width: 560px) {
+      .mol-structure-wrap { overflow-x: auto; place-items: center start; scrollbar-width: thin; }
+      .mol-structure.glucose-structure { min-width: 500px; }
+    }
+
+    /* ===== Visual layer ===== */
+    :root { --ease-spring: cubic-bezier(.34, 1.36, .64, 1); }
+
+    /* Barra de lectura con el degradado de la marca */
+    .progress { background: linear-gradient(90deg, #438f86, #edbf56 55%, #e9775d); }
+
+    /* Hero: subrayado de rotulador que se dibuja una vez al cargar */
+    h1 em {
+      background: linear-gradient(transparent 70%, rgba(242,196,92,.55) 70% 90%, transparent 90%) no-repeat 0 0 / 100% 100%;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      h1 em { background-size: 0% 100%; animation: markerDraw 900ms var(--ease-out) 550ms forwards; }
+    }
+    @keyframes markerDraw { to { background-size: 100% 100%; } }
+
+    /* Hero: profundidad 3D. El JS inclina la órbita con un muelle que sigue al ratón;
+       las etiquetas y la mascota flotan a distintas alturas (parallax) */
+    .hero-art.has-tilt .art-orbit { transform-style: preserve-3d; transition: filter .5s ease; will-change: transform; }
+    .hero-art.has-tilt .orbit-label { translate: 0 0 46px; }
+    .hero-art.has-tilt .art-center { translate: 0 0 24px; }
+    @media (prefers-reduced-motion: no-preference) {
+      .art-orbit::before { animation: orbitSpin 70s linear infinite; }
+    }
+    @keyframes orbitSpin { to { transform: rotate(360deg); } }
+
+    /* Titulares de sección: revelado con clip-path + subrayado que se traza */
+    .has-head-reveal .section-head h2 {
+      clip-path: inset(-12px -12px 100% -12px); translate: 0 .3em;
+      transition: clip-path 750ms var(--ease-out), translate 750ms var(--ease-out);
+    }
+    .has-head-reveal .section-head.is-in h2 { clip-path: inset(-12px -12px -16px -12px); translate: 0 0; }
+    .has-head-reveal .section-head h2::after {
+      transform: rotate(-2deg) scaleX(0); transform-origin: left center;
+      transition: transform 600ms var(--ease-out) 320ms;
+    }
+    .has-head-reveal .section-head.is-in h2::after { transform: rotate(-2deg) scaleX(1); }
+    .has-head-reveal .section-head .section-number,
+    .has-head-reveal .section-head .section-intro {
+      opacity: 0; translate: 0 8px;
+      transition: opacity 500ms var(--ease-out), translate 500ms var(--ease-out);
+    }
+    .has-head-reveal .section-head .section-intro { transition-delay: 180ms; }
+    .has-head-reveal .section-head.is-in .section-number,
+    .has-head-reveal .section-head.is-in .section-intro { opacity: 1; translate: 0 0; }
+
+    /* Pestañas del reto: una sola pastilla que se desliza entre niveles */
+    @supports selector(:has(*)) {
+      .reaction-level-switch { position: relative; isolation: isolate; }
+      .reaction-level-tab { flex: 1 1 0; position: relative; transition: color 200ms ease, transform 140ms var(--ease-out); }
+      .reaction-level-tab, .reaction-level-tab[aria-selected="true"] { background: transparent !important; box-shadow: none !important; }
+      .reaction-level-tab[aria-selected="false"] { color: var(--muted); }
+      .reaction-level-switch::before {
+        content: ""; position: absolute; z-index: -1; top: 6px; bottom: 6px; left: 6px;
+        width: calc((100% - 21px) / 2); border-radius: 11px;
+        background: var(--accent); box-shadow: 0 3px 0 rgba(38,53,74,.14), inset 0 1px 0 rgba(255,255,255,.28);
+        transition: transform 280ms var(--ease-in-out);
+      }
+      .reaction-level-switch:has(#hardReactionTab[aria-selected="true"])::before { transform: translateX(calc(100% + 9px)); }
+      @media (max-width: 520px) {
+        .reaction-level-switch::before { right: 6px; bottom: auto; width: auto; height: calc((100% - 21px) / 2); }
+        .reaction-level-switch:has(#hardReactionTab[aria-selected="true"])::before { transform: translateY(calc(100% + 9px)); }
+      }
+    }
+
+    /* Ingredientes: el icono "brota" tras la tarjeta y se inclina al pasar el ratón */
+    .ingredient.reveal .ingredient-icon {
+      opacity: 0; scale: .9;
+      transition: opacity 300ms ease calc(var(--reveal-delay, 0ms) + 160ms),
+                  scale 520ms var(--ease-spring) calc(var(--reveal-delay, 0ms) + 160ms),
+                  rotate 260ms var(--ease-spring);
+    }
+    .ingredient.reveal.visible .ingredient-icon { opacity: 1; scale: 1; }
+    @media (hover: hover) and (pointer: fine) {
+      .ingredient:hover .ingredient-icon { rotate: -6deg; }
+    }
+
+    /* Botones con relieve: brillo superior sutil, como una pieza física */
+    .btn-primary { box-shadow: inset 0 1px 0 rgba(255,255,255,.32), 3px 4px 0 rgba(24,62,59,.14); }
+    .btn-primary:active { box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 1px 1px 0 rgba(24,62,59,.14); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .has-head-reveal .section-head h2 { clip-path: none; translate: none; }
+    }
+
+    /* ===== Layout ===== */
+    /* Pantallas grandes: algo más de ancho útil para las rejillas */
+    @media (min-width: 1600px) { :root { --width: 1240px; } }
+    /* Móvil: ingredientes como fichas horizontales (icono a la izquierda), menos scroll */
+    @media (max-width: 520px) {
+      .ingredients .ingredient {
+        display: grid; grid-template-columns: 64px minmax(0, 1fr); column-gap: 15px;
+        align-content: start; min-height: 0;
+      }
+      .ingredients .ingredient .ingredient-icon { grid-row: 1 / span 3; width: 64px; height: 64px; margin: 2px 0 0; }
+      .ingredients .ingredient h3 { margin-bottom: 4px; }
+    }
+    /* Márgenes laterales proporcionales: a 1280px el contenido iba casi pegado al borde */
+    @media (min-width: 701px) { .wrap { width: min(var(--width), calc(100% - clamp(44px, 8vw, 128px))); } }
+
+    /* Medida de lectura: ningún párrafo largo por encima de ~72 caracteres por línea */
+    .science-copy > p, .science-copy > .tiny-note, .reaction-challenge-head p,
+    .reaction-level-intro p, .science-footnote, .mol-builder-heading p,
+    .discovery-help, .research-workbench-head p, .glossary-intro p { max-width: 72ch; }
+
+    @media (min-width: 981px) {
+      /* Hero: ocupa la primera pantalla y centra su contenido */
+      .hero {
+        min-height: min(100svh, 1000px);
+        display: flex; flex-direction: column; justify-content: center;
+        padding-block: clamp(48px, 7vh, 96px) clamp(32px, 5vh, 56px);
+      }
+      .hero-foot { margin-top: clamp(36px, 6vh, 64px); }
+
+      /* Encabezados editoriales: título a la izquierda, entradilla a la derecha */
+      .section-head > div:first-child {
+        flex: 1; max-width: none;
+        display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+        column-gap: clamp(32px, 5vw, 80px); align-items: end;
+      }
+      .section-head .section-number { grid-column: 1 / -1; }
+      .section-head h2 { grid-column: 1; margin-bottom: 0; }
+      .section-head .section-intro {
+        grid-column: 2; max-width: 46ch; margin: 0 0 8px;
+        padding-left: 22px; border-left: 2px solid rgba(38, 53, 74, .14);
+      }
+      #quiz .section-head .section-intro { border-left-color: rgba(255, 255, 255, .18); }
+    }
+
+    /* Bolder: una jugada decidida per secció, sempre amb el vocabulari que la web ja té
+       (tipografia de títols, notes, ombres dures, colors pastel). La portada i el concurs ja eren el punt àlgid. */
+    #ingredients .ingredient-icon--art { width: 100%; height: 138px; padding: 12px; overflow: hidden; margin-bottom: 20px; border-radius: 18px 18px 18px 7px; }
+    #ingredients .ingredient-icon--art svg { overflow: hidden; transform: scale(1.3); }
+    #ingredients .ingredient h3 { font-family: var(--heading-font); font-size: 1.55rem; line-height: 1.05; letter-spacing: -.03em; }
+    #ingredients .ingredient:nth-child(even) { transform: translateY(18px); }
+
+    #ciencia .reaction-equation { font-family: var(--heading-font); font-size: clamp(1.45rem,3.2vw,2.35rem); font-weight: 700; letter-spacing: -.02em; gap: 12px; padding: 22px 14px; }
+    #ciencia .science-copy > h3, #ciencia .science-copy h3 { font-family: var(--heading-font); font-size: clamp(1.7rem,3vw,2.3rem); line-height: 1.08; letter-spacing: -.03em; }
+
+    #laboratori .lab-explainer .formula-box { font-family: var(--heading-font); font-size: clamp(1.9rem,3.4vw,2.7rem); padding: 20px 14px; letter-spacing: -.01em; }
+    #laboratori .lab-result strong { font-family: var(--heading-font); font-size: clamp(2.2rem,4vw,3.2rem); line-height: 1; }
+    #laboratori .lab-explainer h3, #laboratori .lab-tool h3 { font-family: var(--heading-font); font-size: 1.7rem; letter-spacing: -.03em; }
+
+    #curiositats .story-title { font-size: clamp(1.45rem,2.2vw,1.8rem); line-height: 1.05; letter-spacing: -.03em; }
+    #curiositats .story-icon { width: 68px; height: 68px; font-size: 1.9rem; margin-bottom: 18px; }
+
+    #glossari .term h3 { font-family: var(--heading-font); font-size: 1.5rem; line-height: 1.05; letter-spacing: -.03em; margin-bottom: 10px; }
+
+    #fonts .research-card h3 { font-size: 1.5rem; line-height: 1.1; letter-spacing: -.03em; }
+
+    @media (max-width: 980px) { #ingredients .ingredient:nth-child(even) { transform: none; } }
+    @media (max-width: 700px) {
+      #ingredients .ingredient-icon--art { width: 78px; height: 78px; padding: 7px; }
+      #ingredients .ingredient-icon--art svg { transform: none; }
+      #ingredients .ingredient h3 { font-size: 1.3rem; }
+      #glossari .term h3 { font-size: 1.3rem; }
+    }
+
+    /* ===== Curiositat i tacte: bloc final de refinaments ===== */
+    :root { interpolate-size: allow-keywords; }
+    h1, h2, h3 { text-wrap: balance; }
+    .lead, .section-intro, .history-note-body p, .term p, .story-card p { text-wrap: pretty; }
+    .big-score, .lab-result strong, .discovery-progress, .story-progress-copy, .quiz-meta, .journey-count, .research-progress-copy { font-variant-numeric: tabular-nums; }
+
+    /* Feedback de pulsació: la web "escolta" el clic */
+    .glossary-filter, .research-filter, .molecule-choice, .history-note summary, .story-card summary {
+      transition-property: transform, background-color, border-color, color, box-shadow; transition-duration: 160ms; transition-timing-function: var(--ease-out);
+    }
+    .btn:active, .answer:active:not(:disabled), .story-answer:active:not(:disabled), .glossary-filter:active, .research-filter:active,
+    .molecule-choice:active, .history-note summary:active, .story-card summary:active, .next-hook:active { transform: scale(.97); }
+
+    /* Hover més calmat on es veu moltes vegades: només el vora canvia */
+    @media (hover: hover) and (pointer: fine) {
+      .card:hover:not(.ingredient), .term:hover, .story-card:hover { transform: none; }
+      .term:hover, .story-card:hover { border-color: rgba(38,53,74,.55); }
+    }
+    /* Les ombres dures queden per al que es prem; la resta, més suau */
+    .ingredient, .term, .science-copy, .science-visual, .lab-explainer, .lab-tool, .event, .curiosity {
+      box-shadow: 0 1px 0 rgba(38,53,74,.08), 0 10px 22px -14px rgba(38,53,74,.28);
+    }
+
+    /* Barres de progrés: transform en lloc d'amplada (sense layout) */
+    .quiz-track span, .story-progress-track span, .research-progress-track span {
+      width: 100% !important; transform: scaleX(0); transform-origin: 0 50%; transition: transform .3s var(--ease-out) !important;
+    }
+
+    /* Obertura suau dels <details>: l'alçada i l'opacitat avancen juntes; el tancament és més ràpid */
+    .history-note::details-content, .story-card::details-content {
+      block-size: 0; opacity: 0; overflow: clip;
+      transition: block-size 150ms var(--ease-out), opacity 120ms var(--ease-out), content-visibility 150ms allow-discrete;
+    }
+    .history-note[open]::details-content, .story-card[open]::details-content {
+      block-size: auto; opacity: 1;
+      transition: block-size 260ms var(--ease-out), opacity 220ms var(--ease-out) 40ms, content-visibility 260ms allow-discrete;
+    }
+    .history-note-body { animation: none; }
+
+    /* Línia del temps: es dibuixa en fer scroll i cada node s'il·lumina en arribar-hi */
+    .history-notes.tl-ready::before {
+      -webkit-mask-image: linear-gradient(#000 calc(var(--tl, 0) * 100%), transparent calc(var(--tl, 0) * 100%));
+              mask-image: linear-gradient(#000 calc(var(--tl, 0) * 100%), transparent calc(var(--tl, 0) * 100%));
+    }
+    .history-note::after { transition: background-color .3s var(--ease-out), transform .3s var(--ease-out); }
+    .history-note.is-reached::after { background: #26354a; transform: scale(1.14); }
+
+    /* Portada: l'escena segueix el cursor amb una mica d'inèrcia */
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .hero-art .art-center svg { translate: calc(var(--px, 0) * 12px) calc(var(--py, 0) * 12px); }
+      .hero-art .orbit-label { translate: calc(var(--px, 0) * -16px) calc(var(--py, 0) * -16px); }
+    }
+    .bubble-burst { position: fixed; z-index: 150; border-radius: 50%; border: 2px solid #26354a; background: rgba(255,255,255,.72); pointer-events: none; opacity: 0; }
+
+    /* Escuma entre seccions */
+    main > section { position: relative; }
+    main > section::before {
+      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 16px; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(circle at 10px 0, #fffdf7 9px, transparent 9.6px) 0 0 / 38px 16px repeat-x,
+        radial-gradient(circle at 29px 0, #fffdf7 6px, transparent 6.6px) 0 0 / 38px 12px repeat-x;
+      opacity: .85;
+    }
+
+    /* Següent secció */
+    .next-hook {
+      display: flex; align-items: center; gap: 12px; width: fit-content; margin: 48px 0 0 auto; padding: 12px 20px;
+      border: 2px solid #26354a; border-radius: 999px; background: #fffdf7; color: #26354a;
+      font-family: var(--heading-font); font-weight: 700; font-size: 1.05rem; box-shadow: 3px 4px 0 rgba(38,53,74,.14);
+      transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out);
+    }
+    .next-hook small { color: #52665f; font-family: "Nunito Sans", sans-serif; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .next-hook b { display: inline-block; transition: translate 200ms var(--ease-out); }
+    @media (hover: hover) and (pointer: fine) { .next-hook:hover { background: #fff0b8; } .next-hook:hover b { translate: 5px 0; } }
+    #quiz .next-hook { background: #2a3550; color: #fff8e9; border-color: #f4cc70; box-shadow: 3px 4px 0 rgba(0,0,0,.3); }
+    #quiz .next-hook small { color: #f4cc70; }
+    @media (max-width: 700px) { .next-hook { margin-inline: 0; width: 100%; justify-content: space-between; } }
+
+    /* Gerra d'exploració */
+    .journey {
+      position: fixed; left: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 10px; padding: 7px 16px 7px 11px;
+      background: #fffdf7; border: 2px solid #26354a; border-radius: 999px; box-shadow: 3px 4px 0 rgba(38,53,74,.15); color: #26354a;
+      font-family: var(--heading-font); font-weight: 700; line-height: 1.1; transition: background-color .3s var(--ease-out);
+    }
+    .journey svg { width: 24px; height: 32px; display: block; overflow: visible; }
+    .journey .jl { transform: scaleY(var(--fill, 0)); transform-box: fill-box; transform-origin: 50% 100%; transition: transform .6s var(--ease-out); }
+    .journey-text { display: grid; }
+    .journey-count { font-size: 1rem; }
+    .journey-label { font-family: "Nunito Sans", sans-serif; font-size: .75rem; font-weight: 800; color: #52665f; letter-spacing: .04em; }
+    .journey.is-full { background: #fff0b8; }
+    .journey.pulse { animation: journeyPulse .45s var(--ease-out); }
+    @keyframes journeyPulse { 0% { transform: scale(1); } 40% { transform: scale(1.07); } 100% { transform: scale(1); } }
+    @media (max-width: 700px) { .journey { left: 10px; bottom: 86px; padding: 5px 12px 5px 9px; } .journey-label { display: none; } }
+    body.quiz-victory-open .journey { display: none; }
+
+    .toast-lite {
+      position: fixed; left: 50%; bottom: 28px; z-index: 160; translate: -50% 16px; opacity: 0; pointer-events: none; max-width: min(92vw, 420px);
+      padding: 12px 18px; border: 2px solid #26354a; border-radius: 16px; background: #fff0b8; color: #26354a; font-weight: 800; font-size: .95rem; text-align: center;
+      box-shadow: 3px 4px 0 rgba(38,53,74,.16); transition: opacity 180ms var(--ease-out), translate 220ms var(--ease-out);
+    }
+    .toast-lite.is-in { opacity: 1; translate: -50% 0; }
+    @media (max-width: 700px) { .toast-lite { bottom: 150px; } }
+    .footer-fact { margin-top: 10px; color: #52665f; }
+    .footer-fact strong { color: #26354a; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .history-note::details-content, .story-card::details-content, .history-note[open]::details-content, .story-card[open]::details-content { transition: none; }
+      .quiz-track span, .story-progress-track span, .research-progress-track span { transition: none !important; }
+      .journey .jl, .journey.pulse, .toast-lite, .next-hook b, .history-note::after { transition: none; animation: none; }
+    }
+
+    /* Menys capes: el contenidor de la biblioteca deixa de ser una targeta dins d'una altra */
+    .research-workbench { background: transparent; border: 0; box-shadow: none; padding-inline: 0; }
+    footer { padding-bottom: 88px; }
+    @media (max-width: 700px) { .journey { opacity: .94; } }
+
+    /* ===== Direcció de disseny: la cervesa com a protagonista ===== */
+    :root { --heading-font: "Young Serif", Georgia, "Times New Roman", serif; }
+    h1, h2, h3, .history-note .event-date, .history-note-copy strong, .story-title, .story-progress-copy strong, .research-hero h2,
+    .research-workbench-head h3, .research-card h3, .lab-explainer h3, .lab-tool h3, .formula-box, #laboratori .lab-result strong,
+    #ciencia .reaction-equation, #glossari .term h3, .victory-card h2, .next-hook, .brand, .footer-brand {
+      font-family: var(--heading-font); font-weight: 400; font-synthesis: none; letter-spacing: -.01em;
+    }
+    .brand, .footer-brand { letter-spacing: .02em; }
+    /* Sense etiquetes en majúscules: els rètols parlen en veu normal */
+    .eyebrow, .hero-foot, .section-number, .ingredient .small-label, .source-type, .term-category, .next-hook small, .research-eyebrow, .research-kicker, .victory-kicker {
+      text-transform: none; letter-spacing: .01em; font-family: "Nunito Sans", system-ui, sans-serif;
+    }
+    .section-number { font-size: 1rem; font-weight: 800; }
+    .ingredient .small-label, .source-type, .research-eyebrow, .research-kicker { font-size: .85rem; }
+    .btn-primary { background: #7a3a12; color: #fff6e0; border-color: #2b1408; }
+    @media (hover: hover) and (pointer: fine) { .btn-primary:hover { background: #5e2a0b; } }
+
+    /* Portada */
+    #inici {
+      color: #fbf1d9 !important; border-bottom: 0; padding-bottom: 120px !important;
+      background: radial-gradient(55% 75% at 74% 52%, rgba(232,169,58,.26), transparent 72%), linear-gradient(160deg, #3b1d0b 0%, #26130a 100%) !important;
+    }
+    #inici::before { display: none; }
+    #inici::after {
+      content: ""; display: block; position: absolute; inset: auto 0 -1px 0; width: auto; height: 20px; border-radius: 0; filter: none; z-index: 2; pointer-events: none;
+      background:
+        radial-gradient(circle at 12px 20px, #f0ebfa 11px, transparent 11.6px) 0 0 / 38px 20px repeat-x,
+        radial-gradient(circle at 30px 20px, #f0ebfa 8px, transparent 8.6px) 0 0 / 38px 15px repeat-x;
+    }
+    #historia::before { display: none; }
+    #inici .eyebrow { color: #e8a93a; font-size: 1.05rem; font-weight: 800; }
+    #inici .eyebrow::before { background: #e8a93a; }
+    #inici h1 { color: #fbf1d9; font-size: clamp(3rem, 7.2vw, 6rem); line-height: 1.02; text-shadow: none; max-width: 14ch; }
+    #inici h1 em { color: inherit; background: none; animation: none; text-decoration: none; box-shadow: none; }
+    #inici .lead { color: #e6d3ae; max-width: 34rem; }
+    #inici .btn-primary { background: #e8a93a; color: #2b1408; border-color: #e8a93a; box-shadow: 3px 4px 0 rgba(0,0,0,.35); }
+    #inici .btn-secondary { background: transparent; color: #fbf1d9; border-color: rgba(251,241,217,.55); box-shadow: none; }
+    @media (hover: hover) and (pointer: fine) {
+      #inici .btn-primary:hover { background: #f3bc5a; }
+      #inici .btn-secondary:hover { background: rgba(251,241,217,.1); border-color: #fbf1d9; }
+    }
+    #inici .hero-foot { color: #d9c294; border-top: 1px dashed rgba(251,241,217,.28); font-size: .95rem; font-weight: 700; }
+    #inici .art-orbit { width: min(100%, 360px); aspect-ratio: auto; height: 440px; border: 0; background: none; display: grid; place-items: center; }
+    #inici .art-orbit::before, #inici .art-orbit::after { display: none; }
+    #inici .hero-art { min-height: 440px; }
+    #inici .orbit-label { border: 0; box-shadow: none; color: #2b1408; }
+    .glass { width: min(74%, 250px); height: auto; display: block; overflow: visible; filter: drop-shadow(0 22px 34px rgba(0,0,0,.38)); }
+    .glass .liquid { animation: pour 2.4s var(--ease-out) .25s both; }
+    .glass .crest { animation: crest .5s var(--ease-out) 2.2s both; }
+    .glass .b { opacity: 0; animation: rise 6s linear infinite; }
+    .glass .b1 { animation-delay: 2.4s; } .glass .b2 { animation-delay: 3.6s; animation-duration: 7s; } .glass .b3 { animation-delay: 4.4s; animation-duration: 5.5s; }
+    .glass .b4 { animation-delay: 5.2s; animation-duration: 6.5s; } .glass .b5 { animation-delay: 3s; animation-duration: 8s; } .glass .b6 { animation-delay: 6s; } .glass .b7 { animation-delay: 4s; animation-duration: 7.5s; }
+    @keyframes pour { from { transform: translateY(300px); } to { transform: translateY(0); } }
+    @keyframes crest { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes rise { 0% { transform: translateY(0); opacity: 0; } 12% { opacity: .85; } 100% { transform: translateY(-260px); opacity: 0; } }
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .hero-art .art-center svg { translate: none; }
+      .hero-art .glass { translate: calc(var(--px, 0) * 10px) calc(var(--py, 0) * 8px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .glass .liquid, .glass .crest, .glass .b { animation: none; } .glass .b { opacity: 0; } }
+    @media (max-width: 700px) { #inici { padding-bottom: 100px; } #inici .art-orbit { height: 380px; } #inici .hero-art { min-height: 380px; } }
   </style>
 </head>
 <body>
@@ -2028,28 +2511,44 @@
       <div class="wrap">
         <div class="hero-grid">
           <div class="hero-copy">
-            <div class="eyebrow">Treball de Recerca · Àlex López</div>
+            <div class="eyebrow">Treball de Recerca d'Àlex López</div>
             <h1>La cervesa,<br><em>més que una beguda.</em></h1>
             <p class="lead">Un recorregut per la història, la química i la cultura d'un producte que ha acompanyat moltes societats al llarg del temps. Ciència explicada amb recursos visuals i activitats interactives.</p>
             <div class="hero-actions"><a class="btn btn-primary" href="#historia">Comença a explorar <span aria-hidden="true">↘</span></a><a class="btn btn-secondary" href="#quiz">Posa't a prova</a></div>
-            <p class="hero-note">Projecte educatiu de divulgació històrica i científica.</p>
           </div>
-          <div class="hero-art" aria-label="Il·lustració abstracta de cereals, ciència i química" role="img" tabindex="0">
+          <div class="hero-art" aria-label="Un vaso de cervesa que s'omple d'ambre amb escuma i bombolles" role="img" tabindex="0">
             <div class="art-orbit">
               <span class="orbit-label one">Història</span><span class="orbit-label two">Química</span><span class="orbit-label three">Biologia</span><span class="orbit-label four">Cultura</span>
-              <div class="art-center">
-                <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
-                  <g class="hero-mascot">
-                  <path d="M60 17c-8 13-18 22-18 40a18 18 0 0 0 36 0c0-18-10-27-18-40Z" stroke="#26333a" stroke-width="4" stroke-linejoin="round"/>
-                  <path d="M60 70c-19-15-32-1-25 12 6 11 18 10 25-12Z" fill="#26333a" opacity=".9"/>
-                  <path d="M60 70c19-15 32-1 25 12-6 11-18 10-25-12Z" fill="#26333a" opacity=".72"/>
-                  <path d="M60 70v29" stroke="#26333a" stroke-width="4" stroke-linecap="round"/>
-                  <circle cx="27" cy="34" r="5" fill="#26333a"/><circle cx="93" cy="35" r="4" fill="#26333a"/><circle cx="91" cy="91" r="3" fill="#26333a"/>
-                  <circle cx="52" cy="55" r="2.5" fill="#26333a"/><circle cx="68" cy="55" r="2.5" fill="#26333a"/>
-                  <path d="M54 63q6 6 12 0" stroke="#26333a" stroke-width="2.5" stroke-linecap="round"/>
+              <svg class="glass" viewBox="0 0 240 400" fill="none" aria-hidden="true">
+                <defs>
+                  <clipPath id="glassClip"><path d="M44 34H196L182 360Q181 378 164 378H76Q59 378 58 360Z"/></clipPath>
+                  <linearGradient id="ale" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4b73c"/><stop offset="1" stop-color="#b9661a"/></linearGradient>
+                </defs>
+                <g clip-path="url(#glassClip)">
+                  <rect x="30" y="20" width="180" height="370" fill="#3b2410" opacity=".55"/>
+                  <g class="liquid">
+                    <rect x="30" y="92" width="180" height="300" fill="url(#ale)"/>
+                    <g fill="#fbf1d9">
+                      <rect x="30" y="40" width="180" height="58"/>
+                      <circle cx="52" cy="98" r="15"/><circle cx="82" cy="102" r="13"/><circle cx="112" cy="99" r="16"/><circle cx="146" cy="103" r="12"/><circle cx="174" cy="99" r="15"/><circle cx="198" cy="102" r="12"/>
+                    </g>
+                    <g fill="#fff8e6" opacity=".55"><circle cx="70" cy="64" r="9"/><circle cx="128" cy="56" r="11"/><circle cx="170" cy="70" r="8"/></g>
                   </g>
-                </svg>
-              </div>
+                  <g class="bubbles" fill="#fff3cf">
+                    <circle class="b b1" cx="78" cy="350" r="3.5"/><circle class="b b2" cx="104" cy="360" r="2.5"/><circle class="b b3" cx="130" cy="352" r="4"/>
+                    <circle class="b b4" cx="152" cy="362" r="2.5"/><circle class="b b5" cx="95" cy="356" r="3"/><circle class="b b6" cx="142" cy="348" r="3"/><circle class="b b7" cx="116" cy="364" r="2"/>
+                  </g>
+                  <rect x="64" y="46" width="12" height="300" rx="6" fill="#fff8e6" opacity=".16"/>
+                </g>
+                <g class="crest" fill="#fbf1d9"><circle cx="70" cy="34" r="13"/><circle cx="104" cy="28" r="16"/><circle cx="140" cy="31" r="14"/><circle cx="172" cy="34" r="11"/></g>
+                <path d="M44 34H196L182 360Q181 378 164 378H76Q59 378 58 360Z" stroke="#fbf1d9" stroke-opacity=".75" stroke-width="4" stroke-linejoin="round"/>
+                <g transform="translate(86 176) scale(.58)"><g class="hero-mascot">
+                  <path d="M60 17c-8 13-18 22-18 40a18 18 0 0 0 36 0c0-18-10-27-18-40Z" stroke="#2b1408" stroke-width="5" stroke-linejoin="round"/>
+                  <path d="M60 70c-19-15-32-1-25 12 6 11 18 10 25-12Z" fill="#2b1408" opacity=".9"/><path d="M60 70c19-15 32-1 25 12-6 11-18 10-25-12Z" fill="#2b1408" opacity=".72"/>
+                  <path d="M60 70v29" stroke="#2b1408" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="52" cy="55" r="3" fill="#2b1408"/><circle cx="68" cy="55" r="3" fill="#2b1408"/><path d="M54 63q6 6 12 0" stroke="#2b1408" stroke-width="3" stroke-linecap="round"/>
+                </g></g>
+              </svg>
             </div>
           </div>
         </div>
@@ -2059,7 +2558,7 @@
 
     <section id="historia">
       <div class="wrap">
-        <div class="section-head history-section-head"><div><div class="section-number">01 · Història</div><h2>Una història de milers d'anys</h2></div></div>
+        <div class="section-head history-section-head"><div><div class="section-number">Història</div><h2>Una història de milers d'anys</h2></div></div>
         <div class="timeline history-notes" aria-label="Cronologia interactiva de la història de la cervesa">
           <details class="history-note history-note--gold reveal">
             <summary><span class="event-date">Fa uns<br>13.000 anys</span><span class="history-note-copy"><strong>Primeres evidències arqueològiques</strong><em>Què s'ha trobat a la cova de Raqefet...?</em></span><span class="history-note-toggle" aria-hidden="true">+</span></summary>
@@ -2091,9 +2590,20 @@
 
     <section id="ingredients">
       <div class="wrap">
-        <div class="section-head"><div><div class="section-number">02 · Matèries primeres</div><h2>Quatre elements, moltes propietats</h2><p class="section-intro"><strong>L'aigua, els cereals, el llúpol i els llevats</strong> s'associen tradicionalment a la cervesa. Cadascun té una <strong>composició i unes propietats diferents</strong>.</p></div></div>
+        <div class="section-head"><div><div class="section-number">Matèries primeres</div><h2>Quatre elements, moltes propietats</h2><p class="section-intro"><strong>L'aigua, els cereals, el llúpol i els llevats</strong> s'associen tradicionalment a la cervesa. Cadascun té una <strong>composició i unes propietats diferents</strong>.</p></div></div>
         <div class="ingredients">
-          <article class="card ingredient reveal"><div class="ingredient-icon" aria-hidden="true">◌</div><div class="small-label">01 · Aigua</div><h3>El medi principal</h3><p>És el component majoritari de moltes begudes. La seva composició mineral és un exemple de com les substàncies dissoltes poden modificar les propietats d'una mescla.</p></article>
+          <article class="card ingredient reveal"><div class="ingredient-icon ingredient-icon--art ingredient-icon--water" aria-hidden="true">
+              <svg viewBox="0 0 100 100" role="presentation" focusable="false">
+                <path d="M50 9 C50 9 21 43 21 62 C21 79 34 91 50 91 C66 91 79 79 79 62 C79 43 50 9 50 9Z" fill="#9fd3dc" stroke="#26354a" stroke-width="3.5" stroke-linejoin="round"/>
+                <path d="M24 66 Q37 58 50 66 T77 66 C76 80 64 89 50 89 C36 89 25 80 24 66Z" fill="#6fb5c2"/>
+                <path d="M24 66 Q37 58 50 66 T77 66" fill="none" stroke="#2f7f86" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M36 58 C36 48 40 40 45 33" fill="none" stroke="#fffefa" stroke-width="4.5" stroke-linecap="round"/>
+                <circle cx="61" cy="48" r="4.5" fill="#e3f4f5" stroke="#26354a" stroke-width="2.2"/>
+                <circle cx="58" cy="77" r="3.2" fill="#e3f4f5" stroke="#26354a" stroke-width="2"/>
+                <circle cx="41" cy="80" r="2.4" fill="#e3f4f5" stroke="#26354a" stroke-width="1.8"/>
+                <path d="M16 30 Q8 24 11 15 M85 32 Q93 25 90 16" fill="none" stroke="#438f86" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div><div class="small-label">Aigua</div><h3>El medi principal</h3><p>És el component majoritari de moltes begudes. La seva composició mineral és un exemple de com les substàncies dissoltes poden modificar les propietats d'una mescla.</p></article>
           <article class="card ingredient reveal"><div class="ingredient-icon ingredient-icon--art ingredient-icon--cereal" aria-hidden="true">
               <svg viewBox="0 0 100 100" role="presentation" focusable="false">
                 <path d="M48 91 C48 72 49 50 55 17" fill="none" stroke="#367d68" stroke-width="4.5" stroke-linecap="round"/>
@@ -2109,7 +2619,7 @@
                 <path d="M19 54 Q30 61 45 67 M76 53 Q65 63 53 75" fill="none" stroke="#4f8e65" stroke-width="2" stroke-linecap="round"/>
                 <path d="M41 91 Q51 88 61 92" fill="none" stroke="#26354a" stroke-width="3" stroke-linecap="round"/>
               </svg>
-            </div><div class="small-label">02 · Cereals</div><h3>Midó i carbohidrats</h3><p>L'ordi i altres cereals contenen <strong>midó</strong>, un polisacàrid format per unitats de glucosa. Els carbohidrats són importants en la <strong>química dels aliments</strong>.</p></article>
+            </div><div class="small-label">Cereals</div><h3>Midó i carbohidrats</h3><p>L'ordi i altres cereals contenen <strong>midó</strong>, un polisacàrid format per unitats de glucosa. Els carbohidrats són importants en la <strong>química dels aliments</strong>.</p></article>
           <article class="card ingredient reveal"><div class="ingredient-icon ingredient-icon--art ingredient-icon--hop" aria-hidden="true">
               <svg viewBox="0 0 100 100" role="presentation" focusable="false">
                 <path d="M49 48 C31 34 21 19 29 12 C42 11 50 27 52 42 C53 27 62 11 75 14 C81 24 68 40 54 49" fill="#78aa72" stroke="#26354a" stroke-width="3" stroke-linejoin="round"/>
@@ -2124,15 +2634,29 @@
                 <path d="M50 49 L51 91 M34 48 Q40 56 49 61 M66 48 Q60 56 52 61" fill="none" stroke="#497d43" stroke-width="2" stroke-linecap="round"/>
                 <path d="M18 31 Q8 24 10 15 M82 31 Q94 24 91 14" fill="none" stroke="#438f86" stroke-width="3" stroke-linecap="round"/>
               </svg>
-            </div><div class="small-label">03 · Llúpol</div><h3>Compostos vegetals</h3><p>El llúpol és una planta amb <strong>compostos aromàtics i amargs</strong>. El seu ús forma part de la història agrícola i cultural de diferents regions.</p></article>
-          <article class="card ingredient reveal"><div class="ingredient-icon" aria-hidden="true">⬡</div><div class="small-label">04 · Llevats</div><h3>Microorganismes</h3><p>Els llevats són <strong>fongs unicel·lulars</strong>. Algunes espècies participen en processos de fermentació i permeten estudiar la relació entre els éssers vius i les <strong>transformacions químiques</strong>.</p></article>
+            </div><div class="small-label">Llúpol</div><h3>Compostos vegetals</h3><p>El llúpol és una planta amb <strong>compostos aromàtics i amargs</strong>. El seu ús forma part de la història agrícola i cultural de diferents regions.</p></article>
+          <article class="card ingredient reveal"><div class="ingredient-icon ingredient-icon--art ingredient-icon--yeast" aria-hidden="true">
+              <svg viewBox="0 0 100 100" role="presentation" focusable="false">
+                <path d="M44 31 C26 31 15 45 17 61 C19 77 33 87 49 85 C65 83 74 69 72 53 C70 39 60 31 44 31Z" fill="#f2d48a" stroke="#26354a" stroke-width="3.5" stroke-linejoin="round"/>
+                <circle cx="73" cy="28" r="13" fill="#f7e3ad" stroke="#26354a" stroke-width="3"/>
+                <path d="M63 36 Q66 34 66 31" fill="none" stroke="#26354a" stroke-width="2.4" stroke-linecap="round"/>
+                <ellipse cx="41" cy="60" rx="10.5" ry="8.5" fill="#e9a86b" stroke="#26354a" stroke-width="2.6"/>
+                <circle cx="39" cy="58" r="2.6" fill="#fff3d6"/>
+                <circle cx="57" cy="47" r="5.5" fill="#fff8e2" stroke="#b98a3d" stroke-width="2.2"/>
+                <circle cx="56" cy="70" r="3.4" fill="#fff8e2" stroke="#b98a3d" stroke-width="1.8"/>
+                <circle cx="27" cy="45" r="2.6" fill="#fff8e2" stroke="#b98a3d" stroke-width="1.6"/>
+                <circle cx="86" cy="58" r="4.2" fill="none" stroke="#438f86" stroke-width="2.4"/>
+                <circle cx="90" cy="73" r="2.8" fill="none" stroke="#438f86" stroke-width="2.2"/>
+                <circle cx="80" cy="84" r="2" fill="none" stroke="#438f86" stroke-width="2"/>
+              </svg>
+            </div><div class="small-label">Llevats</div><h3>Microorganismes</h3><p>Els llevats són <strong>fongs unicel·lulars</strong>. Algunes espècies participen en processos de fermentació i permeten estudiar la relació entre els éssers vius i les <strong>transformacions químiques</strong>.</p></article>
         </div>
       </div>
     </section>
 
     <section id="ciencia">
       <div class="wrap">
-        <div class="section-head"><div><div class="section-number">03 · Química i biologia</div><h2>La ciència de la fermentació</h2><p class="section-intro">La <strong>fermentació</strong> és un procés metabòlic en què determinats <strong>microorganismes transformen molècules orgàniques</strong>. També és present en la indústria alimentària i la biotecnologia.</p></div></div>
+        <div class="section-head"><div><div class="section-number">Química i biologia</div><h2>La ciència de la fermentació</h2><p class="section-intro">La <strong>fermentació</strong> és un procés metabòlic en què determinats <strong>microorganismes transformen molècules orgàniques</strong>. També és present en la indústria alimentària i la biotecnologia.</p></div></div>
         <div class="science-panel">
           <article class="card science-copy reveal"><div class="eyebrow">Una transformació bioquímica</div><h3>Què passa a escala molecular?</h3><p>Els <strong>llevats obtenen energia</strong> a partir de determinats sucres. En la fermentació alcohòlica, la <strong>glucosa es transforma en etanol i diòxid de carboni</strong>. L'equació resumeix el balanç global, però no descriu tots els passos bioquímics que tenen lloc a l'interior de la cèl·lula.</p><p class="tiny-note">Fonts per contrastar aquesta explicació: <a href="https://www.ncbi.nlm.nih.gov/books/NBK20360/" target="_blank" rel="noopener noreferrer">NIH · fermentació i llevats</a> · fórmules de <a href="https://pubchem.ncbi.nlm.nih.gov/compound/5793" target="_blank" rel="noopener noreferrer">glucosa</a>, <a href="https://pubchem.ncbi.nlm.nih.gov/compound/702" target="_blank" rel="noopener noreferrer">etanol</a> i <a href="https://pubchem.ncbi.nlm.nih.gov/compound/280" target="_blank" rel="noopener noreferrer">diòxid de carboni</a>.</p><div class="reaction-challenge" aria-labelledby="reactionChallengeTitle">
               <div class="reaction-challenge-head">
@@ -2249,7 +2773,7 @@
 
     <section id="laboratori">
       <div class="wrap">
-        <div class="section-head"><div><div class="section-number">04 · Laboratori virtual</div><h2>Laboratori virtual de química</h2><p class="section-intro">Explora les <strong>molècules</strong>, observa com es reorganitzen els seus àtoms durant la fermentació i comprova la <strong>conservació de la matèria</strong>.</p></div></div>
+        <div class="section-head"><div><div class="section-number">Laboratori virtual</div><h2>Laboratori virtual de química</h2><p class="section-intro">Explora les <strong>molècules</strong>, observa com es reorganitzen els seus àtoms durant la fermentació i comprova la <strong>conservació de la matèria</strong>.</p></div></div>
 
         <article class="molecular-lab card reveal" aria-labelledby="molecularLabTitle">
           <div class="mol-lab-topline"><span>🧪 ESTACIÓ MOLECULAR</span><span class="mol-live-indicator"><i aria-hidden="true"></i> LABORATORI INTERACTIU</span></div>
@@ -2283,7 +2807,8 @@
             </div>
           </div>
 
-\n          <section class="mol-builder" aria-labelledby="molBuilderTitle">
+
+          <section class="mol-builder" aria-labelledby="molBuilderTitle">
             <div class="mol-builder-heading">
               <div>
                 <span class="mol-step-number">2. CONSTRUCTOR DE MOLÈCULES</span>
@@ -2367,7 +2892,7 @@
 
     <section id="quiz">
       <div class="wrap">
-        <div class="section-head"><div><div class="section-number">05 · Minijocs</div><h2>Posa a prova el que saps</h2><p class="section-intro">Un qüestionari sobre <strong>història, química i microbiologia</strong>. Després de cada resposta trobaràs una explicació.</p></div></div>
+        <div class="section-head"><div><div class="section-number">Minijocs</div><h2>Posa a prova el que saps</h2><p class="section-intro">Un qüestionari sobre <strong>història, química i microbiologia</strong>. Després de cada resposta trobaràs una explicació.</p></div></div>
         <div class="quiz-theatre" id="quizTheatre">
           <div class="quiz-curtain-screen" id="quizCurtainScreen" aria-label="Escenari tancat del Malt Show">
             <div class="curtain-stage-glow" aria-hidden="true"></div>
@@ -2495,7 +3020,7 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <div class="section-number">06 · Curiositats</div>
+            <div class="section-number">Curiositats</div>
             <h2>Detalls que expliquen una història</h2>
             <p class="section-intro">Obre cada fitxa, descobreix-ne el context i respon una <strong>pregunta curta</strong> per comprovar què n'has après.</p>
           </div>
@@ -2513,7 +3038,7 @@
           <details class="story-card reveal" data-story="archaeology">
             <summary class="story-summary">
               <span class="story-icon" aria-hidden="true">🏺</span>
-              <span class="story-number">01 · ARQUEOLOGIA</span>
+              <span class="story-number">ARQUEOLOGIA</span>
               <span class="story-title">Una història anterior a les grans ciutats</span>
               <span class="story-teaser">Què ens poden explicar unes restes de midó i unes eines de pedra...?</span>
               <span class="story-open-label">Descobreix la història <b aria-hidden="true">＋</b></span>
@@ -2536,7 +3061,7 @@
           <details class="story-card reveal" data-story="ninkasi">
             <summary class="story-summary">
               <span class="story-icon" aria-hidden="true">📜</span>
-              <span class="story-number">02 · MESOPOTÀMIA</span>
+              <span class="story-number">MESOPOTÀMIA</span>
               <span class="story-title">Ninkasi, una divinitat amb un himne propi</span>
               <span class="story-teaser">I si una antiga cançó també fos una font per estudiar la història...?</span>
               <span class="story-open-label">Descobreix la història <b aria-hidden="true">＋</b></span>
@@ -2559,7 +3084,7 @@
           <details class="story-card reveal" data-story="law">
             <summary class="story-summary">
               <span class="story-icon" aria-hidden="true">⚖️</span>
-              <span class="story-number">03 · HISTÒRIA</span>
+              <span class="story-number">HISTÒRIA</span>
               <span class="story-title">Una norma que ve del 1516</span>
               <span class="story-teaser">Per què una norma antiga encara apareix quan parlem de cervesa...?</span>
               <span class="story-open-label">Descobreix la història <b aria-hidden="true">＋</b></span>
@@ -2582,7 +3107,7 @@
           <details class="story-card reveal" data-story="pasteur">
             <summary class="story-summary">
               <span class="story-icon" aria-hidden="true">🔬</span>
-              <span class="story-number">04 · CIÈNCIA</span>
+              <span class="story-number">CIÈNCIA</span>
               <span class="story-title">Pasteur i el món invisible</span>
               <span class="story-teaser">Com es va començar a entendre què passava durant la fermentació...?</span>
               <span class="story-open-label">Descobreix la història <b aria-hidden="true">＋</b></span>
@@ -2605,7 +3130,7 @@
           <details class="story-card reveal" data-story="yeast">
             <summary class="story-summary">
               <span class="story-icon" aria-hidden="true">🦠</span>
-              <span class="story-number">05 · BIOLOGIA</span>
+              <span class="story-number">BIOLOGIA</span>
               <span class="story-title">Els llevats són fongs</span>
               <span class="story-teaser">Són tan petits que sovint es confonen amb altres microorganismes...</span>
               <span class="story-open-label">Descobreix la història <b aria-hidden="true">＋</b></span>
@@ -2628,7 +3153,7 @@
           <details class="story-card reveal" data-story="carbon">
             <summary class="story-summary">
               <span class="story-icon" aria-hidden="true">🫧</span>
-              <span class="story-number">06 · QUÍMICA</span>
+              <span class="story-number">QUÍMICA</span>
               <span class="story-title">Un gas amb molts papers</span>
               <span class="story-teaser">Un mateix compost participa en processos biològics molt diferents...</span>
               <span class="story-open-label">Descobreix la història <b aria-hidden="true">＋</b></span>
@@ -2653,10 +3178,10 @@
 
     <section id="glossari">
       <div class="wrap">
-        <div class="section-head"><div><div class="section-number">07 · Glossari</div><h2>Paraules clau</h2><p class="section-intro">Troba definicions clares dels <strong>conceptes científics</strong> que apareixen al llarg de la web.</p></div></div>
+        <div class="section-head"><div><div class="section-number">Glossari</div><h2>Paraules clau</h2><p class="section-intro">Troba definicions clares dels <strong>conceptes científics</strong> que apareixen al llarg de la web.</p></div></div>
         <div class="glossary-tools reveal">
           <div class="glossary-tools-main glossary-tools-simple">
-            <div><span class="glossary-kicker">DICCIONARI VISUAL</span><h3>Conceptes clau</h3><p>Consulta les definicions i organitza els conceptes segons la matèria.</p></div>
+            <div><h3>Conceptes clau</h3><p>Consulta les definicions i organitza els conceptes segons la matèria.</p></div>
           </div>
           <div class="glossary-filter-row" role="group" aria-label="Filtra els conceptes per matèria">
             <button class="glossary-filter active" type="button" data-filter="all" aria-pressed="true">Tots <span>8</span></button>
@@ -2683,7 +3208,7 @@
       <div class="wrap">
         <div class="research-hero reveal">
           <div class="research-hero-copy">
-            <span class="research-eyebrow">08 · BIBLIOTECA D'INVESTIGACIÓ</span>
+            <span class="research-eyebrow">BIBLIOTECA D'INVESTIGACIÓ</span>
             <h2>Per continuar investigant</h2>
             <p>El recorregut no s'acaba aquí. Consulta aquestes <strong>fonts de divulgació i institucions de recerca</strong> per ampliar els temes que més t'interessin i contrastar la informació.</p><p class="research-updated">Contingut revisat el 4 de novembre de 2026.</p>
             <div class="research-facts"><span>📚 3 fonts seleccionades</span></div>
@@ -2706,7 +3231,7 @@
 
         <div class="research-workbench">
           <div class="research-workbench-head">
-            <div><span class="research-kicker">BIBLIOTECA DE FONTS</span><h3>Totes les fonts en un mateix lloc</h3><p>Consulta les fonts seleccionades per ampliar els continguts del treball i marca les que ja hagis llegit.</p></div>
+            <div><h3>Totes les fonts en un mateix lloc</h3><p>Consulta les fonts seleccionades per ampliar els continguts del treball i marca les que ja hagis llegit.</p></div>
             <div class="research-progress-card">
               <div class="research-progress-label"><span class="research-passport-title"><span class="research-passport-emoji" role="img" aria-label="Passaport">🛂</span><span>Passaport d'investigador</span></span><strong id="researchProgressText">0 / 3 consultades</strong></div>
               <div class="research-progress-track" id="researchProgressBar" role="progressbar" aria-label="Fonts consultades" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><span id="researchProgressFill"></span></div>
@@ -2719,7 +3244,7 @@
 
           <div class="sources research-sources" id="researchSources">
             <article class="source-card research-card reveal" data-topic="historia" data-source-id="history-beer">
-              <div class="research-card-top"><span class="research-card-icon" aria-hidden="true">🏛️</span><span class="source-type">Història · divulgació</span></div>
+              <div class="research-card-top"><span class="research-card-icon" aria-hidden="true">🏛️</span><span class="source-type">Història, divulgació</span></div>
               <h3>Who Invented Beer?</h3>
               <p>Evan Andrews, HISTORY. Una introducció a les primeres evidències històriques de begudes fermentades i al seu context cultural.</p>
               <div class="research-card-question"><span>QUÈ HI POTS INVESTIGAR?</span><p>Com s'han relacionat les begudes fermentades amb les primeres societats i els seus costums?</p></div>
@@ -2727,7 +3252,7 @@
             </article>
 
             <article class="source-card research-card reveal" data-topic="ciencia" data-source-id="pasteur-years">
-              <div class="research-card-top"><span class="research-card-icon" aria-hidden="true">🔬</span><span class="source-type">Ciència · recerca</span></div>
+              <div class="research-card-top"><span class="research-card-icon" aria-hidden="true">🔬</span><span class="source-type">Ciència, recerca</span></div>
               <h3>The early years 1847–1862</h3>
               <p>Institut Pasteur. Context sobre els primers anys de Louis Pasteur i les investigacions que van contribuir a explicar el paper dels microorganismes.</p>
               <div class="research-card-question"><span>QUÈ HI POTS INVESTIGAR?</span><p>Com va canviar la comprensió científica de la fermentació durant el segle XIX?</p></div>
@@ -2735,7 +3260,7 @@
             </article>
 
             <article class="source-card research-card reveal" data-topic="arqueologia" data-source-id="early-evidence">
-              <div class="research-card-top"><span class="research-card-icon" aria-hidden="true">🏺</span><span class="source-type">Arqueologia · història</span></div>
+              <div class="research-card-top"><span class="research-card-icon" aria-hidden="true">🏺</span><span class="source-type">Arqueologia, història</span></div>
               <h3>When Did Humans Start Drinking Alcohol?</h3>
               <p>HISTORY. Recull evidències arqueològiques de Raqefet i altres exemples que ajuden a estudiar l'antiguitat de les begudes fermentades.</p>
               <div class="research-card-question"><span>QUÈ HI POTS INVESTIGAR?</span><p>Quines pistes poden utilitzar els arqueòlegs quan no es conserven els aliments originals?</p></div>
@@ -2767,7 +3292,12 @@
     <div class="wrap footer-inner"><div><div class="footer-brand">CERVESA. · HISTÒRIA, QUÍMICA I CIÈNCIA</div><div>Projecte educatiu vinculat al Treball de Recerca d'Àlex López.</div></div><a class="backtop" href="#inici">Tornar a l'inici ↑</a></div>
   </footer>
 
-  <script>
+  
+  <div class="journey" id="journey" role="status" aria-label="Progrés d'exploració">
+    <svg viewBox="0 0 40 52" aria-hidden="true"><defs><clipPath id="jgClip"><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z"/></clipPath></defs><g clip-path="url(#jgClip)"><rect x="0" y="0" width="40" height="52" fill="#f1d9a0"/><rect class="jl" x="0" y="0" width="40" height="52" fill="#edbf56"/></g><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z" fill="none" stroke="#26354a" stroke-width="3" stroke-linejoin="round"/><path d="M30 15h3a4.5 4.5 0 0 1 0 12h-4" fill="none" stroke="#26354a" stroke-width="3" stroke-linecap="round"/></svg>
+    <span class="journey-text"><span class="journey-count" id="journeyCount">0/0</span><span class="journey-label">explorat</span></span>
+  </div>
+<script>
     // Menú mòbil
     const heroArt = document.querySelector('.hero-art');
     heroArt.addEventListener('pointerenter', () => {
@@ -2818,8 +3348,9 @@
     const progressBar = document.getElementById('readingProgress');
     function updateProgress() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      const value = max > 0 ? Math.round((window.scrollY / max) * 100) : 0;
-      progressBar.style.width = value + '%';
+      const ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      const value = Math.round(ratio * 100);
+      progressBar.style.transform = `scaleX(${ratio})`;
       progressBar.setAttribute('aria-valuenow', String(value));
     }
     window.addEventListener('scroll', updateProgress, { passive: true });
@@ -2838,8 +3369,13 @@
     const revealItems = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const observer = new IntersectionObserver(entries => {
+        let step = 0; // escalonado corto entre elementos que entran a la vez
         entries.forEach(entry => {
-          if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+          if (entry.isIntersecting) {
+            entry.target.style.setProperty('--reveal-delay', Math.min(step++, 5) * 60 + 'ms');
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
         });
       }, { threshold: 0.12 });
       revealItems.forEach(item => observer.observe(item));
@@ -3795,7 +4331,7 @@
       questionText.textContent = current.q;
       questionCount.textContent = `Pregunta ${quizIndex + 1} de ${questions.length}`;
       scoreLabel.textContent = `${quizScore} encerts`;
-      quizProgress.style.width = `${(quizIndex / questions.length) * 100}%`;
+      quizProgress.style.transform = `scaleX(${quizIndex / questions.length})`;
       quizFeedback.textContent = '';
       nextQuestion.disabled = true;
       nextQuestion.textContent = quizIndex === questions.length - 1 ? 'Veure resultat →' : 'Següent pregunta →';
@@ -3837,7 +4373,7 @@
     }
     function finishQuiz() {
       quizFinished = true;
-      quizProgress.style.width = '100%';
+      quizProgress.style.transform = 'scaleX(1)';
       questionCount.textContent = 'Qüestionari completat';
       scoreLabel.textContent = `${quizScore} de ${questions.length}`;
       questionText.textContent = `Has encertat ${quizScore} de ${questions.length} preguntes.`;
@@ -3928,7 +4464,7 @@
       const opened = storyCards.filter(card => card.open).length;
       if (storyProgressText) storyProgressText.textContent = `${opened} de ${storyCards.length} històries desplegades`;
       if (storyProgressBar) storyProgressBar.setAttribute('aria-valuenow', String(opened));
-      if (storyProgressFill) storyProgressFill.style.width = `${storyCards.length ? opened / storyCards.length * 100 : 0}%`;
+      if (storyProgressFill) storyProgressFill.style.transform = `scaleX(${storyCards.length ? opened / storyCards.length : 0})`;
     }
     storyCards.forEach(card => {
       card.addEventListener('toggle', updateStoryProgress);
@@ -3971,7 +4507,7 @@
       const count = consultedSources.size;
       if (researchProgressText) researchProgressText.textContent = `${count} / ${total} consultades`;
       if (researchProgressBar) researchProgressBar.setAttribute('aria-valuenow', String(count));
-      if (researchProgressFill) researchProgressFill.style.width = `${total ? count / total * 100 : 0}%`;
+      if (researchProgressFill) researchProgressFill.style.transform = `scaleX(${total ? count / total : 0})`;
     }
 
     sourceCards.forEach(card => {
@@ -4000,6 +4536,220 @@
       }, { rootMargin: '-35% 0px -55% 0px' });
       document.querySelectorAll('main section[id]').forEach(section => sectionObserver.observe(section));
     }
+
+    // ===== Capa visual: titulars revelats i inclinació 3D amb molla =====
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Titulars de secció: clip-path quan entren a la pantalla
+      if ('IntersectionObserver' in window && !reduceMotion) {
+        const heads = document.querySelectorAll('.section-head');
+        const headObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-in');
+            headObserver.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -10% 0px' });
+        document.documentElement.classList.add('has-head-reveal');
+        heads.forEach(head => headObserver.observe(head));
+      }
+
+      // Hero: inclinació que segueix el ratolí amb física de molla (només decoratiu)
+      const hero = document.querySelector('.hero');
+      const heroArtEl = document.querySelector('.hero-art');
+      const orbit = heroArtEl && heroArtEl.querySelector('.art-orbit');
+      if (!hero || !orbit || reduceMotion || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+      heroArtEl.classList.add('has-tilt');
+      const STIFFNESS = 140, DAMPING = 16, MAX_TILT = 11;
+      const state = { x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0 };
+      let frame = 0, lastTime = 0;
+
+      function tick(time) {
+        const dt = lastTime ? Math.min(0.032, (time - lastTime) / 1000) : 0.016;
+        lastTime = time;
+        for (const axis of ['x', 'y']) {
+          const v = 'v' + axis, t = 't' + axis;
+          const force = -STIFFNESS * (state[axis] - state[t]) - DAMPING * state[v];
+          state[v] += force * dt;
+          state[axis] += state[v] * dt;
+        }
+        orbit.style.transform = `perspective(900px) rotateX(${state.y.toFixed(2)}deg) rotateY(${state.x.toFixed(2)}deg)`;
+        const moving = Math.abs(state.x - state.tx) + Math.abs(state.y - state.ty) + Math.abs(state.vx) + Math.abs(state.vy) > 0.02;
+        if (moving) frame = requestAnimationFrame(tick);
+        else { frame = 0; lastTime = 0; }
+      }
+      const wake = () => { if (!frame) frame = requestAnimationFrame(tick); };
+
+      hero.addEventListener('pointermove', event => {
+        const rect = orbit.getBoundingClientRect();
+        const nx = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
+        const ny = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
+        state.tx = Math.max(-1, Math.min(1, nx)) * MAX_TILT;
+        state.ty = Math.max(-1, Math.min(1, ny)) * -MAX_TILT;
+        wake();
+      });
+      hero.addEventListener('pointerleave', () => { state.tx = 0; state.ty = 0; wake(); });
+    })();
+
+    // ===== Curiositat: progrés unificat, línia del temps, portada viva, sorpreses i atajos =====
+    (function () {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const store = {
+        get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+        set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+      };
+
+      const toast = document.createElement('div');
+      toast.className = 'toast-lite'; toast.setAttribute('role', 'status'); toast.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toast);
+      let toastTimer;
+      function showToast(message) {
+        toast.textContent = message; toast.classList.add('is-in');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('is-in'), 3400);
+      }
+
+      // Gerra d'exploració: històries, curiositats, fonts i el concurs en un sol indicador
+      const notes = [...document.querySelectorAll('.history-note')];
+      const stories = [...document.querySelectorAll('[data-story]')];
+      const sources = [...document.querySelectorAll('.research-card[data-source-id]')];
+      const journey = document.getElementById('journey');
+      const journeyCount = document.getElementById('journeyCount');
+      const ids = [...notes.map((_, i) => 'h' + i), ...stories.map((_, i) => 's' + i), ...sources.map(c => 'f' + c.dataset.sourceId), 'quiz'];
+      const valid = new Set(ids);
+      let explored;
+      try { explored = new Set(JSON.parse(store.get('cervesa-viatge') || '[]').filter(id => valid.has(id))); } catch (e) { explored = new Set(); }
+      function renderJourney(pulse) {
+        if (!journey) return;
+        journey.style.setProperty('--fill', String(explored.size / ids.length));
+        journeyCount.textContent = explored.size + '/' + ids.length;
+        journey.classList.toggle('is-full', explored.size >= ids.length);
+        if (pulse && !reduce) { journey.classList.remove('pulse'); void journey.offsetWidth; journey.classList.add('pulse'); }
+      }
+      function mark(id) {
+        if (!valid.has(id) || explored.has(id)) return;
+        explored.add(id); store.set('cervesa-viatge', JSON.stringify([...explored])); renderJourney(true);
+        if (explored.size === ids.length) showToast('Has explorat tota la web. Enhorabona!');
+      }
+      renderJourney(false);
+      notes.forEach((el, i) => el.addEventListener('toggle', () => { if (el.open) mark('h' + i); }));
+      stories.forEach((el, i) => el.addEventListener('toggle', () => { if (el.open) mark('s' + i); }));
+      sources.forEach(card => {
+        const link = card.querySelector('.research-card-actions a');
+        if (link) link.addEventListener('click', () => mark('f' + card.dataset.sourceId));
+      });
+      const overlay = document.getElementById('quizVictoryOverlay');
+      if (overlay) new MutationObserver(() => { if (!overlay.hidden) mark('quiz'); }).observe(overlay, { attributes: true, attributeFilter: ['hidden'] });
+
+      // Línia del temps: es dibuixa amb el scroll i cada nota s'il·lumina en arribar-hi
+      const timeline = document.querySelector('.history-notes');
+      if (timeline) {
+        if (reduce || !('IntersectionObserver' in window)) notes.forEach(n => n.classList.add('is-reached'));
+        else {
+          timeline.classList.add('tl-ready');
+          const io = new IntersectionObserver(entries => entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('is-reached'); io.unobserve(e.target); }
+          }), { rootMargin: '0px 0px -38% 0px' });
+          notes.forEach(n => io.observe(n));
+          let queued = false;
+          const update = () => {
+            queued = false;
+            const r = timeline.getBoundingClientRect();
+            const progress = Math.max(0, Math.min(1, (window.innerHeight * 0.62 - r.top) / r.height));
+            timeline.style.setProperty('--tl', progress.toFixed(3));
+          };
+          window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+          window.addEventListener('resize', update);
+          update();
+        }
+      }
+
+      // Portada: paral·laxi suau amb inèrcia (només amb ratolí) i sorpresa amagada
+      const art = document.querySelector('.hero-art');
+      if (art && finePointer && !reduce) {
+        let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+        const loop = () => {
+          cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;
+          art.style.setProperty('--px', cx.toFixed(3)); art.style.setProperty('--py', cy.toFixed(3));
+          raf = (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) ? requestAnimationFrame(loop) : 0;
+        };
+        const go = () => { if (!raf) raf = requestAnimationFrame(loop); };
+        art.addEventListener('pointermove', e => {
+          const r = art.getBoundingClientRect();
+          tx = ((e.clientX - r.left) / r.width - 0.5) * 2; ty = ((e.clientY - r.top) / r.height - 0.5) * 2; go();
+        });
+        art.addEventListener('pointerleave', () => { tx = 0; ty = 0; go(); });
+      }
+      function burst() {
+        if (!art || reduce) return;
+        const r = art.getBoundingClientRect();
+        for (let i = 0; i < 16; i++) {
+          const b = document.createElement('span'); const size = 10 + Math.random() * 22;
+          b.className = 'bubble-burst';
+          b.style.cssText = 'left:' + (r.left + r.width / 2) + 'px;top:' + (r.top + r.height / 2) + 'px;width:' + size + 'px;height:' + size + 'px';
+          document.body.appendChild(b);
+          const dx = (Math.random() - 0.5) * 360, dy = -(80 + Math.random() * 260);
+          b.animate([
+            { transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 },
+            { opacity: 1, offset: 0.15 },
+            { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(1)', opacity: 0 }
+          ], { duration: 900 + Math.random() * 700, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'forwards' }).onfinish = () => b.remove();
+        }
+      }
+      if (art) {
+        let clicks = 0, timer;
+        art.addEventListener('click', () => {
+          clicks++; clearTimeout(timer); timer = setTimeout(() => { clicks = 0; }, 1800);
+          if (clicks >= 5) { clicks = 0; burst(); showToast("Sorpresa! Has trobat l'escuma secreta."); }
+        });
+      }
+
+      // Enllaç «Següent» al final de cada secció, amb el títol de la següent
+      const order = ['historia', 'ingredients', 'ciencia', 'laboratori', 'quiz', 'curiositats', 'glossari', 'fonts'];
+      order.slice(0, -1).forEach((id, i) => {
+        const section = document.getElementById(id), next = document.getElementById(order[i + 1]);
+        const title = next && next.querySelector('h2');
+        if (!section || !title) return;
+        const link = document.createElement('a');
+        link.className = 'next-hook'; link.href = '#' + order[i + 1];
+        link.innerHTML = '<small>Següent</small><span></span><b aria-hidden="true">→</b>';
+        link.querySelector('span').textContent = title.textContent.trim();
+        (section.querySelector(':scope > .wrap') || section).appendChild(link);
+      });
+
+      // Dada curiosa i atajos de teclat al peu
+      const footerBox = document.querySelector('.footer-inner > div');
+      if (footerBox) {
+        const facts = [
+          "A la cova de Raqefet, a l'actual Israel, s'han estudiat restes que apunten a una beguda fermentada de cereals.",
+          "La disposició coneguda com a Reinheitsgebot va regular determinats ingredients a Baviera.",
+          "Les investigacions de Louis Pasteur van ajudar a demostrar que la fermentació està relacionada amb els microorganismes.",
+          "A Mesopotàmia, la figura de Ninkasi va quedar vinculada a la cervesa."
+        ];
+        const fact = document.createElement('div');
+        fact.className = 'footer-fact';
+        const label = document.createElement('strong'); label.textContent = 'Sabies que…? ';
+        fact.append(label, document.createTextNode(facts[Math.floor(Math.random() * facts.length)]));
+        footerBox.appendChild(fact);
+        if (finePointer) {
+          const tip = document.createElement('div'); tip.className = 'footer-fact';
+          tip.textContent = 'Consell: prem les tecles 1–8 per saltar entre seccions.'; footerBox.appendChild(tip);
+        }
+      }
+      document.addEventListener('keydown', e => {
+        if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+        const t = e.target;
+        if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+        if (document.body.classList.contains('quiz-victory-open')) return;
+        const n = Number(e.key);
+        if (n >= 1 && n <= order.length) {
+          const target = document.getElementById(order[n - 1]);
+          if (target) { target.scrollIntoView({ behavior: 'instant', block: 'start' }); e.preventDefault(); }
+        }
+      });
+    })();
   </script>
 </body>
 </html>
