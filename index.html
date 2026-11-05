@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <title>La cervesa, més que una beguda · Versió 3.8</title>
+  <title>La cervesa, més que una beguda · Versió 3.9</title>
   <style>
     :root {
       color-scheme: dark;
@@ -1501,9 +1501,7 @@
     .research-card-actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:auto; padding-top:16px; }
     .research-card-actions a { display:inline-flex; align-items:center; gap:7px; padding:9px 11px; border:1.5px solid #26354a; border-radius:10px 10px 10px 4px; color:#fff9ed; background:#26354a; font-size:.74rem; font-weight:900; }
     .research-card-actions a:hover { background:#3b5664; }
-    .research-done { padding:9px 10px; border:1.5px solid rgba(38,53,74,.2); border-radius:10px 10px 10px 4px; color:#536477; background:#fffefa; cursor:pointer; font-size:.7rem; font-weight:850; }
-    .research-done[aria-pressed="true"] { border-color:#39866e; color:#245d4d; background:#e1f1e5; }
-    .research-empty { padding:18px; border:1px dashed rgba(38,53,74,.3); border-radius:13px; color:#66737a; text-align:center; }
+.research-empty { padding:18px; border:1px dashed rgba(38,53,74,.3); border-radius:13px; color:#66737a; text-align:center; }
     #fonts .method-note { padding:16px 18px; border:2px dashed rgba(38,53,74,.24); border-radius:15px; background:#f6edcf; color:#626d70; }
     #fonts .method-note strong { color:#26354a; }
 
@@ -2661,7 +2659,7 @@
               <h3>Who Invented Beer?</h3>
               <p>Evan Andrews, HISTORY. Una introducció a les primeres evidències històriques de begudes fermentades i al seu context cultural.</p>
               <div class="research-card-question"><span>QUÈ HI POTS INVESTIGAR?</span><p>Com s'han relacionat les begudes fermentades amb les primeres societats i els seus costums?</p></div>
-              <div class="research-card-actions"><a href="https://www.history.com/articles/who-invented-beer" target="_blank" rel="noopener noreferrer">Obrir la font <span aria-hidden="true">↗</span></a><button class="research-done" type="button" aria-pressed="false">Marcar com a consultada</button></div>
+              <div class="research-card-actions"><a href="https://www.history.com/articles/who-invented-beer" target="_blank" rel="noopener noreferrer">Obrir la font <span aria-hidden="true">↗</span></a></div>
             </article>
 
             <article class="source-card research-card reveal" data-topic="ciencia" data-source-id="pasteur-years">
@@ -2669,7 +2667,7 @@
               <h3>The early years 1847–1862</h3>
               <p>Institut Pasteur. Context sobre els primers anys de Louis Pasteur i les investigacions que van contribuir a explicar el paper dels microorganismes.</p>
               <div class="research-card-question"><span>QUÈ HI POTS INVESTIGAR?</span><p>Com va canviar la comprensió científica de la fermentació durant el segle XIX?</p></div>
-              <div class="research-card-actions"><a href="https://www.pasteur.fr/en/about-us/early-years-1847-1862" target="_blank" rel="noopener noreferrer">Obrir la font <span aria-hidden="true">↗</span></a><button class="research-done" type="button" aria-pressed="false">Marcar com a consultada</button></div>
+              <div class="research-card-actions"><a href="https://www.pasteur.fr/en/about-us/early-years-1847-1862" target="_blank" rel="noopener noreferrer">Obrir la font <span aria-hidden="true">↗</span></a></div>
             </article>
 
             <article class="source-card research-card reveal" data-topic="arqueologia" data-source-id="early-evidence">
@@ -2677,7 +2675,7 @@
               <h3>When Did Humans Start Drinking Alcohol?</h3>
               <p>HISTORY. Recull evidències arqueològiques de Raqefet i altres exemples que ajuden a estudiar l'antiguitat de les begudes fermentades.</p>
               <div class="research-card-question"><span>QUÈ HI POTS INVESTIGAR?</span><p>Quines pistes poden utilitzar els arqueòlegs quan no es conserven els aliments originals?</p></div>
-              <div class="research-card-actions"><a href="https://www.history.com/articles/alcohol-earliest-evidence" target="_blank" rel="noopener noreferrer">Obrir la font <span aria-hidden="true">↗</span></a><button class="research-done" type="button" aria-pressed="false">Marcar com a consultada</button></div>
+              <div class="research-card-actions"><a href="https://www.history.com/articles/alcohol-earliest-evidence" target="_blank" rel="noopener noreferrer">Obrir la font <span aria-hidden="true">↗</span></a></div>
             </article>
           </div>
         </div>
@@ -3763,25 +3761,20 @@
     }
 
     sourceCards.forEach(card => {
-      const button = card.querySelector('.research-done');
+      const sourceLink = card.querySelector('.research-card-actions a');
       const sourceId = card.dataset.sourceId;
-      if (!button) return;
-      button.addEventListener('click', () => {
-        const done = button.getAttribute('aria-pressed') !== 'true';
-        button.setAttribute('aria-pressed', String(done));
-        if (done) {
-          consultedSources.add(sourceId);
-          button.textContent = 'Consultada ✓';
-        } else {
-          consultedSources.delete(sourceId);
-          button.textContent = 'Marcar com a consultada';
-        }
+      if (!sourceLink || !sourceId) return;
+      sourceLink.addEventListener('click', () => {
+        if (consultedSources.has(sourceId)) return;
+        consultedSources.add(sourceId);
+        sourceLink.classList.add('source-visited');
+        sourceLink.setAttribute('aria-label', `${sourceLink.textContent.trim()} · Font consultada`);
         updateResearchProgress();
       });
     });
     updateResearchProgress();
 
-        // Enllaç actiu a la navegació segons la secció visible
+    // Enllaç actiu a la navegació segons la secció visible
     const navLinks = [...document.querySelectorAll('#desktopNav a')];
     if ('IntersectionObserver' in window) {
       const sectionObserver = new IntersectionObserver(entries => {
