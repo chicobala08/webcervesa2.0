@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <title>La cervesa, més que una beguda · Versió 3.5</title>
+  <title>La cervesa, més que una beguda · Versió 3.6</title>
   <style>
     :root {
       color-scheme: dark;
@@ -1882,6 +1882,34 @@
 
     /* Es conserva el fons fosc del Malt Show com a escenari del concurs. */
 
+  
+    /* Malt parla amb escriptura progressiva i una veu electrònica original. */
+    .bubble-heading { display:flex; align-items:center; justify-content:space-between; gap:9px; margin-bottom:6px; }
+    .bubble-heading .bubble-label { margin:0; }
+    .guide-sound-toggle {
+      display:inline-flex; align-items:center; gap:5px; padding:4px 8px;
+      border:1px solid rgba(139,102,48,.28); border-radius:999px;
+      background:rgba(255,255,255,.55); color:#795c2d;
+      font:800 .65rem/1.2 "Nunito Sans",sans-serif; cursor:pointer;
+      transition:background .18s ease,transform .18s ease;
+    }
+    .guide-sound-toggle:hover { background:#fffefa; transform:translateY(-1px); }
+    .guide-sound-toggle:focus-visible { outline:3px solid #bd8738; outline-offset:2px; }
+    .guide-sound-toggle[aria-pressed="false"] { color:#647b83; background:rgba(255,255,255,.35); }
+    .guide-sound-toggle .sound-icon { font-size:.9rem; line-height:1; }
+    #guideMessage.is-typing::after {
+      content:"▍"; display:inline-block; margin-left:2px; color:#a65e32;
+      animation:maltCursor .8s steps(2,end) infinite;
+    }
+    @keyframes maltCursor { 50% { opacity:0; } }
+    @media (max-width:420px) {
+      .guide-sound-toggle { padding:4px 6px; font-size:.6rem; }
+      .bubble-heading { gap:5px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      #guideMessage.is-typing::after { animation:none; }
+    }
+
   </style>
 </head>
 <body>
@@ -2363,7 +2391,12 @@
               <div class="guide-name">MALT <span>· presentador oficial</span></div>
             </div>
             <div class="guide-bubble" id="guideBubble">
-              <span class="bubble-label">MALT ET DIU</span>
+              <div class="bubble-heading">
+                <span class="bubble-label">MALT ET DIU</span>
+                <button class="guide-sound-toggle" id="guideSoundToggle" type="button" aria-label="Desactivar el so de Malt" aria-pressed="true" title="Desactivar el so">
+                  <span class="sound-icon" aria-hidden="true">♫</span><span class="sound-label">So activat</span>
+                </button>
+              </div>
               <p id="guideMessage" aria-live="polite">Ei! Soc en Malt. Preparat per descobrir quantes coses saps sobre la història i la ciència de la cervesa?</p>
             </div>
             <div class="guide-score">
@@ -3303,10 +3336,110 @@
       ]
     };
 
+    const guideSoundToggle = document.getElementById('guideSoundToggle');
+    let guideTypingTimer = null;
+    let guideAudioContext = null;
+    let guideSoundEnabled = true;
+    try { guideSoundEnabled = localStorage.getItem('maltVoiceSound') !== 'off'; } catch (error) {}
+
+    function updateGuideSoundButton() {
+      if (!guideSoundToggle) return;
+      guideSoundToggle.setAttribute('aria-pressed', String(guideSoundEnabled));
+      guideSoundToggle.setAttribute('aria-label', guideSoundEnabled ? 'Desactivar el so de Malt' : 'Activar el so de Malt');
+      guideSoundToggle.title = guideSoundEnabled ? 'Desactivar el so' : 'Activar el so';
+      const label = guideSoundToggle.querySelector('.sound-label');
+      const icon = guideSoundToggle.querySelector('.sound-icon');
+      if (label) label.textContent = guideSoundEnabled ? 'So activat' : 'So desactivat';
+      if (icon) icon.textContent = guideSoundEnabled ? '♫' : '♪';
+    }
+
+    function unlockMaltAudio() {
+      if (!guideSoundEnabled) return;
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        if (!guideAudioContext) guideAudioContext = new AudioContextClass();
+        if (guideAudioContext.state === 'suspended') guideAudioContext.resume().catch(() => {});
+      } catch (error) {
+        guideAudioContext = null;
+      }
+    }
+
+    function playMaltBlip(character) {
+      if (!guideSoundEnabled || !guideAudioContext || /\\s/.test(character) || /[.,;:!?¿¡]/.test(character)) return;
+      try {
+        const now = guideAudioContext.currentTime;
+        const isVowel = /[aeiouàèéíïòóúü]/i.test(character);
+        const pitch = 470 + ((character.toLocaleLowerCase('ca').charCodeAt(0) * 23) % 180) + (isVowel ? 105 : 0);
+        const oscillator = guideAudioContext.createOscillator();
+        const gain = guideAudioContext.createGain();
+        oscillator.type = 'triangle';
+        oscillator.frequency.setValueAtTime(pitch * 1.08, now);
+        oscillator.frequency.exponentialRampToValueAtTime(pitch * .86, now + .045);
+        gain.gain.setValueAtTime(.0001, now);
+        gain.gain.exponentialRampToValueAtTime(.018, now + .006);
+        gain.gain.exponentialRampToValueAtTime(.0001, now + .052);
+        oscillator.connect(gain);
+        gain.connect(guideAudioContext.destination);
+        oscillator.start(now);
+        oscillator.stop(now + .055);
+      } catch (error) {}
+    }
+
+    function typeGuideMessage(message) {
+      if (guideTypingTimer) window.clearTimeout(guideTypingTimer);
+      guideMessage.textContent = '';
+      guideMessage.classList.remove('is-typing');
+      guideMessage.setAttribute('aria-live', 'off');
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        guideMessage.textContent = message;
+        guideMessage.setAttribute('aria-live', 'polite');
+        return;
+      }
+
+      let position = 0;
+      guideMessage.classList.add('is-typing');
+      const writeNextCharacter = () => {
+        if (position >= message.length) {
+          guideMessage.classList.remove('is-typing');
+          guideMessage.setAttribute('aria-live', 'polite');
+          guideTypingTimer = null;
+          return;
+        }
+        const character = message.charAt(position);
+        guideMessage.textContent += character;
+        if (position % 2 === 0) playMaltBlip(character);
+        position += 1;
+
+        let delay = 29;
+        if (character === ' ') delay = 13;
+        else if (/[,:;]/.test(character)) delay = 115;
+        else if (/[.!?…]/.test(character)) delay = 230;
+        guideTypingTimer = window.setTimeout(writeNextCharacter, delay);
+      };
+      writeNextCharacter();
+    }
+
+    if (guideSoundToggle) {
+      updateGuideSoundButton();
+      guideSoundToggle.addEventListener('click', () => {
+        guideSoundEnabled = !guideSoundEnabled;
+        try { localStorage.setItem('maltVoiceSound', guideSoundEnabled ? 'on' : 'off'); } catch (error) {}
+        updateGuideSoundButton();
+        if (guideSoundEnabled) unlockMaltAudio();
+      });
+    }
+
     function setGuideMessage(mood, customMessage) {
       quizGuide.dataset.mood = mood;
       const options = guideMessages[mood] || guideMessages.idle;
-      guideMessage.textContent = customMessage || options[Math.floor(Math.random() * options.length)];
+      const message = customMessage || options[Math.floor(Math.random() * options.length)];
+
+      // El navegador només permet iniciar àudio després d'una acció de l'usuari.
+      if (navigator.userActivation && navigator.userActivation.isActive) unlockMaltAudio();
+      typeGuideMessage(message);
+
       if (mood === 'correct') {
         quizGuide.classList.remove('celebrate');
         void quizGuide.offsetWidth;
