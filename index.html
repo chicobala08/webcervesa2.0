@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <title>La cervesa, més que una beguda · Versió 3.6</title>
+  <title>La cervesa, més que una beguda · Versió 3.7</title>
   <style>
     :root {
       color-scheme: dark;
@@ -1886,31 +1886,48 @@
     /* Malt parla amb escriptura progressiva i una veu electrònica original. */
     .bubble-heading { display:flex; align-items:center; justify-content:space-between; gap:9px; margin-bottom:6px; }
     .bubble-heading .bubble-label { margin:0; }
-    .guide-sound-toggle {
-      display:inline-flex; align-items:center; gap:5px; padding:4px 8px;
-      border:1px solid rgba(139,102,48,.28); border-radius:999px;
-      background:rgba(255,255,255,.55); color:#795c2d;
-      font:800 .65rem/1.2 "Nunito Sans",sans-serif; cursor:pointer;
-      transition:background .18s ease,transform .18s ease;
-    }
-    .guide-sound-toggle:hover { background:#fffefa; transform:translateY(-1px); }
-    .guide-sound-toggle:focus-visible { outline:3px solid #bd8738; outline-offset:2px; }
-    .guide-sound-toggle[aria-pressed="false"] { color:#647b83; background:rgba(255,255,255,.35); }
-    .guide-sound-toggle .sound-icon { font-size:.9rem; line-height:1; }
     #guideMessage.is-typing::after {
       content:"▍"; display:inline-block; margin-left:2px; color:#a65e32;
       animation:maltCursor .8s steps(2,end) infinite;
     }
     @keyframes maltCursor { 50% { opacity:0; } }
     @media (max-width:420px) {
-      .guide-sound-toggle { padding:4px 6px; font-size:.6rem; }
       .bubble-heading { gap:5px; }
     }
     @media (prefers-reduced-motion:reduce) {
       #guideMessage.is-typing::after { animation:none; }
     }
 
-  </style>
+  
+    /* Efectes del públic del Malt Show */
+    .quiz-layout { position:relative; }
+    .audience-effects { position:absolute; inset:0; z-index:30; overflow:visible; pointer-events:none; contain:layout style; }
+    .flying-tomato {
+      position:absolute; left:var(--start-x); top:var(--start-y); display:block;
+      font-size:clamp(1.7rem,3vw,2.35rem); line-height:1;
+      filter:drop-shadow(2px 4px 2px rgba(38,53,74,.22)); opacity:0; will-change:transform,opacity;
+      animation:tomatoFlight 1.38s cubic-bezier(.18,.72,.22,1) var(--flight-delay,0s) forwards;
+    }
+    @keyframes tomatoFlight {
+      0% { opacity:0; transform:translate3d(-25px,28px,0) rotate(-55deg) scale(.65); }
+      12% { opacity:1; }
+      70% { opacity:1; transform:translate3d(var(--travel-x),var(--travel-y),0) rotate(var(--spin)) scale(1.08); }
+      100% { opacity:0; transform:translate3d(calc(var(--travel-x) + 18px),calc(var(--travel-y) + 22px),0) rotate(calc(var(--spin) + 110deg)) scale(.72); }
+    }
+    .tomato-spark {
+      position:absolute; left:var(--impact-x); top:var(--impact-y);
+      color:#bd5b43; font-size:1.2rem; opacity:0;
+      animation:tomatoSpark .48s ease-out var(--spark-delay,.78s) forwards;
+    }
+    @keyframes tomatoSpark {
+      0% { opacity:0; transform:scale(.35) rotate(0); }
+      35% { opacity:.85; transform:scale(1.15) rotate(70deg); }
+      100% { opacity:0; transform:scale(1.5) rotate(130deg); }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .flying-tomato,.tomato-spark { display:none !important; animation:none !important; }
+    }
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Ves al contingut principal</a>
@@ -2391,12 +2408,7 @@
               <div class="guide-name">MALT <span>· presentador oficial</span></div>
             </div>
             <div class="guide-bubble" id="guideBubble">
-              <div class="bubble-heading">
-                <span class="bubble-label">MALT ET DIU</span>
-                <button class="guide-sound-toggle" id="guideSoundToggle" type="button" aria-label="Desactivar el so de Malt" aria-pressed="true" title="Desactivar el so">
-                  <span class="sound-icon" aria-hidden="true">♫</span><span class="sound-label">So activat</span>
-                </button>
-              </div>
+              <div class="bubble-heading"><span class="bubble-label">MALT ET DIU</span></div>
               <p id="guideMessage" aria-live="polite">Ei! Soc en Malt. Preparat per descobrir quantes coses saps sobre la història i la ciència de la cervesa?</p>
             </div>
             <div class="guide-score">
@@ -2405,6 +2417,7 @@
             </div>
             <div class="guide-tip">Una bona investigació comença amb curiositat. Continua!</div>
               </aside>
+              <div class="audience-effects" id="audienceEffects" aria-hidden="true"></div>
             </div>
           </div>
         </div>
@@ -3336,100 +3349,197 @@
       ]
     };
 
-    const guideSoundToggle = document.getElementById('guideSoundToggle');
     let guideTypingTimer = null;
     let guideAudioContext = null;
-    let guideSoundEnabled = true;
-    try { guideSoundEnabled = localStorage.getItem('maltVoiceSound') !== 'off'; } catch (error) {}
-
-    function updateGuideSoundButton() {
-      if (!guideSoundToggle) return;
-      guideSoundToggle.setAttribute('aria-pressed', String(guideSoundEnabled));
-      guideSoundToggle.setAttribute('aria-label', guideSoundEnabled ? 'Desactivar el so de Malt' : 'Activar el so de Malt');
-      guideSoundToggle.title = guideSoundEnabled ? 'Desactivar el so' : 'Activar el so';
-      const label = guideSoundToggle.querySelector('.sound-label');
-      const icon = guideSoundToggle.querySelector('.sound-icon');
-      if (label) label.textContent = guideSoundEnabled ? 'So activat' : 'So desactivat';
-      if (icon) icon.textContent = guideSoundEnabled ? '♫' : '♪';
-    }
 
     function unlockMaltAudio() {
-      if (!guideSoundEnabled) return;
       try {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (!AudioContextClass) return;
         if (!guideAudioContext) guideAudioContext = new AudioContextClass();
         if (guideAudioContext.state === 'suspended') guideAudioContext.resume().catch(() => {});
-      } catch (error) {
-        guideAudioContext = null;
-      }
+      } catch (error) { guideAudioContext = null; }
+    }
+
+    document.addEventListener('pointerdown', unlockMaltAudio, { once:true, capture:true });
+
+    function withMaltAudio(callback) {
+      if (!guideAudioContext) unlockMaltAudio();
+      const context = guideAudioContext;
+      if (!context) return;
+      if (context.state === 'running') callback(context);
+      else context.resume().then(() => {
+        if (guideAudioContext === context && context.state === 'running') callback(context);
+      }).catch(() => {});
+    }
+
+    function makeAudienceNoise(context, duration) {
+      const length = Math.max(1, Math.floor(context.sampleRate * duration));
+      const buffer = context.createBuffer(1, length, context.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i=0; i<length; i++) data[i]=(Math.random()*2-1)*(1-i/length);
+      return buffer;
     }
 
     function playMaltBlip(character) {
-      if (!guideSoundEnabled || !guideAudioContext || /\\s/.test(character) || /[.,;:!?¿¡]/.test(character)) return;
-      try {
-        const now = guideAudioContext.currentTime;
-        const isVowel = /[aeiouàèéíïòóúü]/i.test(character);
-        const pitch = 470 + ((character.toLocaleLowerCase('ca').charCodeAt(0) * 23) % 180) + (isVowel ? 105 : 0);
-        const oscillator = guideAudioContext.createOscillator();
-        const gain = guideAudioContext.createGain();
-        oscillator.type = 'triangle';
-        oscillator.frequency.setValueAtTime(pitch * 1.08, now);
-        oscillator.frequency.exponentialRampToValueAtTime(pitch * .86, now + .045);
-        gain.gain.setValueAtTime(.0001, now);
-        gain.gain.exponentialRampToValueAtTime(.018, now + .006);
-        gain.gain.exponentialRampToValueAtTime(.0001, now + .052);
-        oscillator.connect(gain);
-        gain.connect(guideAudioContext.destination);
-        oscillator.start(now);
-        oscillator.stop(now + .055);
-      } catch (error) {}
+      if (!guideAudioContext || /\\s/.test(character) || /[.,;:!?¿¡]/.test(character)) return;
+      withMaltAudio(context => {
+        try {
+          const now=context.currentTime;
+          const vowel=/[aeiouàèéíïòóúü]/i.test(character);
+          const pitch=470+((character.toLocaleLowerCase('ca').charCodeAt(0)*23)%180)+(vowel?105:0);
+          const oscillator=context.createOscillator(), gain=context.createGain();
+          oscillator.type='triangle';
+          oscillator.frequency.setValueAtTime(pitch*1.08,now);
+          oscillator.frequency.exponentialRampToValueAtTime(pitch*.86,now+.045);
+          gain.gain.setValueAtTime(.0001,now);
+          gain.gain.exponentialRampToValueAtTime(.018,now+.006);
+          gain.gain.exponentialRampToValueAtTime(.0001,now+.052);
+          oscillator.connect(gain); gain.connect(context.destination);
+          oscillator.start(now); oscillator.stop(now+.055);
+        } catch(error) {}
+      });
+    }
+
+    function playPageFlip() {
+      withMaltAudio(context => {
+        try {
+          const now=context.currentTime;
+          const source=context.createBufferSource(), filter=context.createBiquadFilter(), gain=context.createGain();
+          source.buffer=makeAudienceNoise(context,.34);
+          filter.type='bandpass';
+          filter.frequency.setValueAtTime(1500,now);
+          filter.frequency.exponentialRampToValueAtTime(430,now+.31);
+          filter.Q.value=.65;
+          gain.gain.setValueAtTime(.0001,now);
+          gain.gain.exponentialRampToValueAtTime(.075,now+.035);
+          gain.gain.exponentialRampToValueAtTime(.0001,now+.32);
+          source.connect(filter); filter.connect(gain); gain.connect(context.destination);
+          source.start(now); source.stop(now+.34);
+
+          const tick=context.createOscillator(), tickGain=context.createGain();
+          tick.type='sine';
+          tick.frequency.setValueAtTime(520,now+.025);
+          tick.frequency.exponentialRampToValueAtTime(260,now+.095);
+          tickGain.gain.setValueAtTime(.0001,now);
+          tickGain.gain.exponentialRampToValueAtTime(.018,now+.03);
+          tickGain.gain.exponentialRampToValueAtTime(.0001,now+.12);
+          tick.connect(tickGain); tickGain.connect(context.destination);
+          tick.start(now+.02); tick.stop(now+.13);
+        } catch(error) {}
+      });
+    }
+
+    function playAudienceReaction(reaction) {
+      withMaltAudio(context => {
+        const now=context.currentTime;
+        if(reaction==='applause') {
+          try {
+            const noise=makeAudienceNoise(context,.085);
+            for(let i=0;i<27;i++) {
+              const source=context.createBufferSource(), filter=context.createBiquadFilter(), gain=context.createGain();
+              source.buffer=noise;
+              filter.type='bandpass';
+              filter.frequency.value=1150+Math.random()*1450;
+              filter.Q.value=.8+Math.random()*.7;
+              const at=now+Math.random()*1.05, volume=.035+Math.random()*.045;
+              gain.gain.setValueAtTime(.0001,at);
+              gain.gain.exponentialRampToValueAtTime(volume,at+.006);
+              gain.gain.exponentialRampToValueAtTime(.0001,at+.075);
+              source.connect(filter); filter.connect(gain); gain.connect(context.destination);
+              source.start(at); source.stop(at+.09);
+            }
+          } catch(error) {}
+        } else {
+          try {
+            [148,163,177].forEach((frequency,index)=>{
+              const oscillator=context.createOscillator(), gain=context.createGain(), filter=context.createBiquadFilter();
+              oscillator.type=index===1?'sawtooth':'triangle';
+              oscillator.frequency.setValueAtTime(frequency,now);
+              oscillator.frequency.linearRampToValueAtTime(frequency*.84,now+.42);
+              oscillator.frequency.linearRampToValueAtTime(frequency*1.08,now+.88);
+              filter.type='lowpass'; filter.frequency.value=720;
+              gain.gain.setValueAtTime(.0001,now);
+              gain.gain.exponentialRampToValueAtTime(index===1?.018:.013,now+.12);
+              gain.gain.setValueAtTime(index===1?.018:.013,now+.72);
+              gain.gain.exponentialRampToValueAtTime(.0001,now+1.12);
+              oscillator.connect(filter); filter.connect(gain); gain.connect(context.destination);
+              oscillator.start(now); oscillator.stop(now+1.14);
+            });
+          } catch(error) {}
+        }
+      });
+    }
+
+    function throwTomatoes() {
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const layer=document.getElementById('audienceEffects');
+      if(!layer) return;
+      layer.replaceChildren();
+      for(let i=0;i<6;i++) {
+        const tomato=document.createElement('span');
+        tomato.className='flying-tomato';
+        tomato.textContent='🍅';
+        const startX=17+Math.random()*42, startY=18+Math.random()*53;
+        const travelX=25+Math.random()*28, travelY=-28+Math.random()*48;
+        const spin=Math.round(220+Math.random()*520), delay=Math.random()*.22;
+        tomato.style.setProperty('--start-x',startX+'%');
+        tomato.style.setProperty('--start-y',startY+'%');
+        tomato.style.setProperty('--travel-x',travelX+'vw');
+        tomato.style.setProperty('--travel-y',travelY+'vh');
+        tomato.style.setProperty('--spin',spin+'deg');
+        tomato.style.setProperty('--flight-delay',delay+'s');
+        layer.appendChild(tomato);
+
+        const spark=document.createElement('span');
+        spark.className='tomato-spark'; spark.textContent='✦';
+        spark.style.setProperty('--impact-x',Math.min(90,startX+travelX*.42)+'%');
+        spark.style.setProperty('--impact-y',Math.max(6,Math.min(84,startY+travelY*.48))+'%');
+        spark.style.setProperty('--spark-delay',(delay+.72)+'s');
+        layer.appendChild(spark);
+      }
+      window.setTimeout(()=>layer.replaceChildren(),1900);
     }
 
     function typeGuideMessage(message) {
-      if (guideTypingTimer) window.clearTimeout(guideTypingTimer);
-      guideMessage.textContent = '';
+      if(guideTypingTimer) window.clearTimeout(guideTypingTimer);
+      guideMessage.textContent='';
       guideMessage.classList.remove('is-typing');
-      guideMessage.setAttribute('aria-live', 'off');
-
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        guideMessage.textContent = message;
-        guideMessage.setAttribute('aria-live', 'polite');
+      guideMessage.setAttribute('aria-live','off');
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        guideMessage.textContent=message;
+        guideMessage.setAttribute('aria-live','polite');
         return;
       }
-
-      let position = 0;
+      let position=0;
       guideMessage.classList.add('is-typing');
-      const writeNextCharacter = () => {
-        if (position >= message.length) {
+      const writeNextCharacter=()=>{
+        if(position>=message.length) {
           guideMessage.classList.remove('is-typing');
-          guideMessage.setAttribute('aria-live', 'polite');
-          guideTypingTimer = null;
+          guideMessage.setAttribute('aria-live','polite');
+          guideTypingTimer=null;
           return;
         }
-        const character = message.charAt(position);
-        guideMessage.textContent += character;
-        if (position % 2 === 0) playMaltBlip(character);
-        position += 1;
-
-        let delay = 29;
-        if (character === ' ') delay = 13;
-        else if (/[,:;]/.test(character)) delay = 115;
-        else if (/[.!?…]/.test(character)) delay = 230;
-        guideTypingTimer = window.setTimeout(writeNextCharacter, delay);
+        const character=message.charAt(position);
+        guideMessage.textContent+=character;
+        if(position%2===0) playMaltBlip(character);
+        position+=1;
+        let delay=29;
+        if(character===' ') delay=13;
+        else if(/[,:;]/.test(character)) delay=115;
+        else if(/[.!?…]/.test(character)) delay=230;
+        guideTypingTimer=window.setTimeout(writeNextCharacter,delay);
       };
       writeNextCharacter();
     }
 
-    if (guideSoundToggle) {
-      updateGuideSoundButton();
-      guideSoundToggle.addEventListener('click', () => {
-        guideSoundEnabled = !guideSoundEnabled;
-        try { localStorage.setItem('maltVoiceSound', guideSoundEnabled ? 'on' : 'off'); } catch (error) {}
-        updateGuideSoundButton();
-        if (guideSoundEnabled) unlockMaltAudio();
-      });
-    }
+    const desktopMenuLinks=[...document.querySelectorAll('#desktopNav a')];
+    const mobileMenuLinks=[...document.querySelectorAll('#mobileNav a')];
+    [...desktopMenuLinks,...mobileMenuLinks].forEach(link=>{
+      link.addEventListener('click',()=>{ unlockMaltAudio(); playPageFlip(); });
+    });
+    const textSizeButton=document.getElementById('textSizeBtn');
+    if(textSizeButton) textSizeButton.addEventListener('click',()=>{ unlockMaltAudio(); playPageFlip(); });
 
     function setGuideMessage(mood, customMessage) {
       quizGuide.dataset.mood = mood;
@@ -3507,10 +3617,13 @@
         quizScore++;
         quizFeedback.textContent = `Correcte. ${current.e}`;
         setGuideMessage('correct');
+        playAudienceReaction('applause');
         launchConfetti();
       } else {
         quizFeedback.textContent = `La resposta correcta és «${current.a[current.c]}». ${current.e}`;
         setGuideMessage('incorrect');
+        playAudienceReaction('boo');
+        throwTomatoes();
       }
       scoreLabel.textContent = `${quizScore} encerts`;
       scoreValue.textContent = `${quizScore}/${questions.length}`;
