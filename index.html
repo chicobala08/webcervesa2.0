@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <title>La cervesa, més que una beguda · Versió 4.0</title>
+  <title>La cervesa, més que una beguda · Versió 4.1</title>
   <style>
     :root {
       color-scheme: dark;
@@ -2758,7 +2758,7 @@
       <div class="victory-trophy" aria-hidden="true"><span class="trophy-glow"></span><span class="trophy-emoji">🏆</span></div>
       <h2 id="victoryTitle">Una nit de campions!</h2>
       <p class="victory-score" id="victoryScore">6/8 encerts</p>
-      <p id="victoryDescription">Has superat el repte. Les llums de l'escenari s'apaguen i el dia s'acomiada amb una melodia tranquil·la.</p>
+      <p id="victoryDescription">Has superat el repte! El públic celebra el teu resultat amb una fanfàrria i un cor de festa.</p>
       <button class="btn btn-primary victory-close" id="closeVictory" type="button">Continuar</button>
     </div>
   </div>
@@ -3551,7 +3551,7 @@
       withMaltAudio(context => {
         try {
           const now=context.currentTime+.03;
-          // Original, calm closing melody: a few warm chimes and a soft final chord.
+          // Melodia original de final de concurs, amb un cor electrònic alegre.
           const notes=[
             {f:523.25,t:0,d:.56},{f:659.25,t:.2,d:.58},
             {f:783.99,t:.42,d:.7},{f:987.77,t:.72,d:.82},
@@ -3590,6 +3590,71 @@
       });
     }
 
+    function playVictoryCrowdCheer() {
+      withMaltAudio(context => {
+        try {
+          const now=context.currentTime+.08;
+          // Veus artificials superposades: una celebració alegre original, no una mostra del videojoc.
+          const voices=[
+            {f:480,t:0,formant:920,volume:.016},
+            {f:575,t:.08,formant:1120,volume:.014},
+            {f:655,t:.16,formant:1350,volume:.013},
+            {f:535,t:.28,formant:1020,volume:.014},
+            {f:735,t:.38,formant:1480,volume:.012}
+          ];
+          voices.forEach((voice,index)=>{
+            const start=now+voice.t;
+            const osc=context.createOscillator();
+            const vibrato=context.createOscillator();
+            const vibratoDepth=context.createGain();
+            const formant=context.createBiquadFilter();
+            const gain=context.createGain();
+            osc.type='sawtooth';
+            osc.frequency.setValueAtTime(voice.f,start);
+            osc.frequency.exponentialRampToValueAtTime(voice.f*1.32,start+.48);
+            osc.frequency.exponentialRampToValueAtTime(voice.f*1.19,start+1.12);
+            vibrato.type='sine';
+            vibrato.frequency.value=5.2+index*.35;
+            vibratoDepth.gain.value=7+index;
+            vibrato.connect(vibratoDepth);
+            vibratoDepth.connect(osc.frequency);
+            formant.type='bandpass';
+            formant.frequency.setValueAtTime(voice.formant,start);
+            formant.Q.value=1.25;
+            gain.gain.setValueAtTime(.0001,start);
+            gain.gain.exponentialRampToValueAtTime(voice.volume,start+.16);
+            gain.gain.setValueAtTime(voice.volume,start+.72);
+            gain.gain.exponentialRampToValueAtTime(.0001,start+1.38);
+            osc.connect(formant);
+            formant.connect(gain);
+            gain.connect(context.destination);
+            osc.start(start);
+            vibrato.start(start);
+            osc.stop(start+1.4);
+            vibrato.stop(start+1.4);
+          });
+
+          // Petita remor de públic, suau i breu, per donar sensació de celebració.
+          const noise=context.createBufferSource();
+          const filter=context.createBiquadFilter();
+          const crowdGain=context.createGain();
+          noise.buffer=makeAudienceNoise(context,1.05);
+          filter.type='bandpass';
+          filter.frequency.value=1750;
+          filter.Q.value=.55;
+          crowdGain.gain.setValueAtTime(.0001,now);
+          crowdGain.gain.exponentialRampToValueAtTime(.012,now+.18);
+          crowdGain.gain.setValueAtTime(.012,now+.62);
+          crowdGain.gain.exponentialRampToValueAtTime(.0001,now+1.08);
+          noise.connect(filter);
+          filter.connect(crowdGain);
+          crowdGain.connect(context.destination);
+          noise.start(now);
+          noise.stop(now+1.1);
+        } catch(error) {}
+      });
+    }
+
     const quizVictoryOverlay=document.getElementById('quizVictoryOverlay');
     const victoryScore=document.getElementById('victoryScore');
     const closeVictoryButton=document.getElementById('closeVictory');
@@ -3600,6 +3665,7 @@
       quizVictoryOverlay.hidden=false;
       document.body.classList.add('quiz-victory-open');
       playDayEndJingle();
+      playVictoryCrowdCheer();
       if(closeVictoryButton) closeVictoryButton.focus();
     }
 
