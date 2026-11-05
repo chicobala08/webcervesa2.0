@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <title>La cervesa, més que una beguda · Versió 3.7</title>
+  <title>La cervesa, més que una beguda · Versió 3.8</title>
   <style>
     :root {
       color-scheme: dark;
@@ -1906,23 +1906,28 @@
       position:absolute; left:var(--start-x); top:var(--start-y); display:block;
       font-size:clamp(1.7rem,3vw,2.35rem); line-height:1;
       filter:drop-shadow(2px 4px 2px rgba(38,53,74,.22)); opacity:0; will-change:transform,opacity;
-      animation:tomatoFlight 1.38s cubic-bezier(.18,.72,.22,1) var(--flight-delay,0s) forwards;
+      transform-origin:50% 85%;
+      animation:tomatoFlight 1.48s cubic-bezier(.18,.72,.22,1) var(--flight-delay,0s) forwards;
+    }
+    .flying-tomato::after {
+      content:""; position:absolute; left:8%; bottom:-.12em; width:84%; height:.48em;
+      border-radius:50%;
+      background:radial-gradient(ellipse at center,rgba(153,43,34,.72) 0 28%,rgba(207,73,48,.48) 50%,rgba(224,112,69,0) 76%);
+      opacity:0; transform:scale(.1,.5);
+      animation:tomatoSplat .52s ease-out calc(var(--flight-delay,0s) + .91s) forwards;
     }
     @keyframes tomatoFlight {
       0% { opacity:0; transform:translate3d(-25px,28px,0) rotate(-55deg) scale(.65); }
       12% { opacity:1; }
-      70% { opacity:1; transform:translate3d(var(--travel-x),var(--travel-y),0) rotate(var(--spin)) scale(1.08); }
-      100% { opacity:0; transform:translate3d(calc(var(--travel-x) + 18px),calc(var(--travel-y) + 22px),0) rotate(calc(var(--spin) + 110deg)) scale(.72); }
+      65% { opacity:1; transform:translate3d(var(--travel-x),var(--travel-y),0) rotate(var(--spin)) scale(1.08); }
+      75% { opacity:1; transform:translate3d(var(--travel-x),var(--travel-y),0) rotate(0deg) scaleX(1.48) scaleY(.32); }
+      84% { opacity:.82; transform:translate3d(var(--travel-x),var(--travel-y),0) rotate(0deg) scaleX(1.7) scaleY(.2); }
+      100% { opacity:0; transform:translate3d(var(--travel-x),var(--travel-y),0) rotate(8deg) scale(.08); }
     }
-    .tomato-spark {
-      position:absolute; left:var(--impact-x); top:var(--impact-y);
-      color:#bd5b43; font-size:1.2rem; opacity:0;
-      animation:tomatoSpark .48s ease-out var(--spark-delay,.78s) forwards;
-    }
-    @keyframes tomatoSpark {
-      0% { opacity:0; transform:scale(.35) rotate(0); }
-      35% { opacity:.85; transform:scale(1.15) rotate(70deg); }
-      100% { opacity:0; transform:scale(1.5) rotate(130deg); }
+    @keyframes tomatoSplat {
+      0% { opacity:0; transform:scale(.1,.4); }
+      30% { opacity:.9; transform:scale(1.35,1); }
+      100% { opacity:0; transform:scale(1.65,.3); }
     }
     @media (prefers-reduced-motion:reduce) {
       .flying-tomato,.tomato-spark { display:none !important; animation:none !important; }
@@ -2347,7 +2352,7 @@
                 <div class="quiz-footer"><span class="tiny-note" id="quizHint">Tria una resposta per continuar.</span><button class="btn btn-primary" type="button" id="nextQuestion" disabled>Següent pregunta →</button></div>
               </div>
               <aside class="card quiz-side quiz-guide reveal" id="quizGuide" data-mood="idle" aria-label="Presentador del qüestionari">
-            <div class="guide-kicker"><span class="guide-spark" aria-hidden="true">✦</span> PRESENTADOR EN ESCENA</div>
+            
             <div class="guide-mascot-wrap">
               <svg class="guide-mascot" viewBox="0 0 260 300" role="img" aria-labelledby="maltTitle maltDesc">
                 <title id="maltTitle">Malt, el presentador del gran concurs</title>
@@ -2588,9 +2593,8 @@
       <div class="wrap">
         <div class="section-head"><div><div class="section-number">07 · Glossari</div><h2>Paraules clau</h2><p class="section-intro">Troba definicions clares dels <strong>conceptes científics</strong> que apareixen al llarg de la web.</p></div></div>
         <div class="glossary-tools reveal">
-          <div class="glossary-tools-main">
-            <div><span class="glossary-kicker">DICCIONARI VISUAL</span><h3>Què vols consultar?</h3><p>Filtra per matèria o escriu una paraula per trobar-ne la definició.</p></div>
-            <label class="glossary-searchbox"><span aria-hidden="true">⌕</span><input id="glossarySearch" type="search" placeholder="Cerca un concepte..." aria-label="Cerca un concepte del glossari"></label>
+          <div class="glossary-tools-main glossary-tools-simple">
+            <div><span class="glossary-kicker">DICCIONARI VISUAL</span><h3>Conceptes clau</h3><p>Consulta les definicions i organitza els conceptes segons la matèria.</p></div>
           </div>
           <div class="glossary-filter-row" role="group" aria-label="Filtra els conceptes per matèria">
             <button class="glossary-filter active" type="button" data-filter="all" aria-pressed="true">Tots <span>8</span></button>
@@ -2620,7 +2624,7 @@
             <span class="research-eyebrow">08 · BIBLIOTECA D'INVESTIGACIÓ</span>
             <h2>Per continuar investigant</h2>
             <p>El recorregut no s'acaba aquí. Consulta aquestes <strong>fonts de divulgació i institucions de recerca</strong> per ampliar els temes que més t'interessin i contrastar la informació.</p><p class="research-updated">Contingut revisat el 4 de novembre de 2026.</p>
-            <div class="research-facts"><span>📚 3 fonts seleccionades</span><span>🧭 3 camins per explorar</span></div>
+            <div class="research-facts"><span>📚 3 fonts seleccionades</span></div>
           </div>
           <div class="research-hero-art" aria-hidden="true">
             <svg viewBox="0 0 220 180" role="img" aria-label="Llibres i lupa">
@@ -2640,18 +2644,15 @@
 
         <div class="research-workbench">
           <div class="research-workbench-head">
-            <div><span class="research-kicker">EL TEU SEGÜENT PAS</span><h3>Tria un camí per aprofundir</h3><p>Filtra les fonts segons el tema que vulguis explorar.</p></div>
+            <div><span class="research-kicker">BIBLIOTECA DE FONTS</span><h3>Totes les fonts en un mateix lloc</h3><p>Consulta les fonts seleccionades per ampliar els continguts del treball i marca les que ja hagis llegit.</p></div>
             <div class="research-progress-card">
               <div class="research-progress-label"><span class="research-passport-title"><span class="research-passport-emoji" role="img" aria-label="Passaport">🛂</span><span>Passaport d'investigador</span></span><strong id="researchProgressText">0 / 3 consultades</strong></div>
               <div class="research-progress-track" id="researchProgressBar" role="progressbar" aria-label="Fonts consultades" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><span id="researchProgressFill"></span></div>
             </div>
           </div>
 
-          <div class="research-filters" role="group" aria-label="Filtra les fonts per tema">
-            <button class="research-filter active" type="button" data-source-filter="all" aria-pressed="true">🌐 Totes les fonts</button>
-            <button class="research-filter" type="button" data-source-filter="historia" aria-pressed="false">🏛️ Història</button>
-            <button class="research-filter" type="button" data-source-filter="arqueologia" aria-pressed="false">🏺 Arqueologia</button>
-            <button class="research-filter" type="button" data-source-filter="ciencia" aria-pressed="false">🔬 Ciència</button>
+          <div class="research-filters" aria-label="Fonts disponibles">
+            <span class="research-filter active" aria-current="true">🌐 Totes les fonts</span>
           </div>
 
           <div class="sources research-sources" id="researchSources">
@@ -2679,7 +2680,6 @@
               <div class="research-card-actions"><a href="https://www.history.com/articles/alcohol-earliest-evidence" target="_blank" rel="noopener noreferrer">Obrir la font <span aria-hidden="true">↗</span></a><button class="research-done" type="button" aria-pressed="false">Marcar com a consultada</button></div>
             </article>
           </div>
-          <p class="research-empty" id="researchEmpty" hidden>No hi ha fonts en aquesta categoria.</p>
         </div>
 
         
@@ -3491,12 +3491,7 @@
         tomato.style.setProperty('--flight-delay',delay+'s');
         layer.appendChild(tomato);
 
-        const spark=document.createElement('span');
-        spark.className='tomato-spark'; spark.textContent='✦';
-        spark.style.setProperty('--impact-x',Math.min(90,startX+travelX*.42)+'%');
-        spark.style.setProperty('--impact-y',Math.max(6,Math.min(84,startY+travelY*.48))+'%');
-        spark.style.setProperty('--spark-delay',(delay+.72)+'s');
-        layer.appendChild(spark);
+
       }
       window.setTimeout(()=>layer.replaceChildren(),1900);
     }
@@ -3682,33 +3677,22 @@
       });
     }
 
-    // Cercador i filtres del glossari
-    const glossarySearch = document.getElementById('glossarySearch');
+    // Glossari: filtre per matèria, sense cercador.
     const termCards = [...document.querySelectorAll('.term')];
     const termCount = document.getElementById('termCount');
     const glossaryFilters = [...document.querySelectorAll('.glossary-filter')];
     let activeGlossaryFilter = 'all';
 
     function updateGlossary() {
-      const query = glossarySearch.value.trim().toLocaleLowerCase('ca');
       let visible = 0;
       termCards.forEach(card => {
-        const matchesText = (card.textContent + ' ' + card.dataset.term).toLocaleLowerCase('ca').includes(query);
-        const matchesCategory = activeGlossaryFilter === 'all' || card.dataset.category === activeGlossaryFilter;
-        const matches = matchesText && matchesCategory;
+        const matches = activeGlossaryFilter === 'all' || card.dataset.category === activeGlossaryFilter;
         card.hidden = !matches;
         if (matches) visible++;
       });
-      let empty = document.getElementById('noTerms');
-      if (!visible && !empty) {
-        empty = document.createElement('div'); empty.id = 'noTerms'; empty.className = 'empty-state glossary-empty';
-        empty.textContent = 'No s’ha trobat cap concepte. Prova una altra paraula o matèria.';
-        document.getElementById('termsList').appendChild(empty);
-      } else if (visible && empty) empty.remove();
       termCount.textContent = `${visible} ${visible === 1 ? 'concepte' : 'conceptes'}`;
     }
 
-    glossarySearch.addEventListener('input', updateGlossary);
     glossaryFilters.forEach(button => {
       button.addEventListener('click', () => {
         activeGlossaryFilter = button.dataset.filter;
@@ -3720,9 +3704,10 @@
         updateGlossary();
       });
     });
+    updateGlossary();
 
 
-    // Microhistòries interactives: desplegament, progrés i preguntes ràpides.
+        // Microhistòries interactives: desplegament, progrés i preguntes ràpides.
     const storyCards = [...document.querySelectorAll('[data-story]')];
     const storyProgressText = document.getElementById('storyProgressText');
     const storyProgressBar = document.getElementById('storyProgressBar');
@@ -3762,15 +3747,13 @@
     });
     updateStoryProgress();
 
-    // Biblioteca d'investigació: filtre temàtic i passaport de fonts consultades.
-    const sourceFilters = [...document.querySelectorAll('.research-filter')];
+    // Biblioteca d'investigació: una única vista amb totes les fonts.
     const sourceCards = [...document.querySelectorAll('.research-card[data-source-id]')];
-    const researchEmpty = document.getElementById('researchEmpty');
     const researchProgressText = document.getElementById('researchProgressText');
     const researchProgressBar = document.getElementById('researchProgressBar');
     const researchProgressFill = document.getElementById('researchProgressFill');
     const consultedSources = new Set();
-    let activeSourceFilter = 'all';
+
     function updateResearchProgress() {
       const total = sourceCards.length;
       const count = consultedSources.size;
@@ -3778,27 +3761,11 @@
       if (researchProgressBar) researchProgressBar.setAttribute('aria-valuenow', String(count));
       if (researchProgressFill) researchProgressFill.style.width = `${total ? count / total * 100 : 0}%`;
     }
-    function filterResearchSources() {
-      let visible = 0;
-      sourceCards.forEach(card => {
-        const match = activeSourceFilter === 'all' || card.dataset.topic === activeSourceFilter;
-        card.hidden = !match;
-        if (match) visible++;
-      });
-      if (researchEmpty) researchEmpty.hidden = visible !== 0;
-    }
-    sourceFilters.forEach(button => button.addEventListener('click', () => {
-      activeSourceFilter = button.dataset.sourceFilter;
-      sourceFilters.forEach(filter => {
-        const selected = filter === button;
-        filter.classList.toggle('active', selected);
-        filter.setAttribute('aria-pressed', String(selected));
-      });
-      filterResearchSources();
-    }));
+
     sourceCards.forEach(card => {
       const button = card.querySelector('.research-done');
       const sourceId = card.dataset.sourceId;
+      if (!button) return;
       button.addEventListener('click', () => {
         const done = button.getAttribute('aria-pressed') !== 'true';
         button.setAttribute('aria-pressed', String(done));
@@ -3812,10 +3779,9 @@
         updateResearchProgress();
       });
     });
-    filterResearchSources();
     updateResearchProgress();
 
-    // Enllaç actiu a la navegació segons la secció visible
+        // Enllaç actiu a la navegació segons la secció visible
     const navLinks = [...document.querySelectorAll('#desktopNav a')];
     if ('IntersectionObserver' in window) {
       const sectionObserver = new IntersectionObserver(entries => {
