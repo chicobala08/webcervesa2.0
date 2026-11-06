@@ -196,7 +196,7 @@ window.__I18N_PATTERNS = (() => {
         if (!loading) {
           loading = new Promise(resolve => {
             const sc = document.createElement('script');
-            sc.src = 'i18n-data.js?v=17';
+            sc.src = 'i18n-data.js?v=18';
             sc.onload = resolve; sc.onerror = resolve;
             document.head.appendChild(sc);
           });

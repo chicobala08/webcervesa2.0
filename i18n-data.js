@@ -29,6 +29,11 @@ window.__I18N_DICT = (() => {
   V.en.push(...["Click me!", "Make Malt react", "Oh! You caught me off guard!", "Uh-oh… don't rush me, I'll spill the beer!", "You know it: I'm the best host around."]);
   V.de.push(...["Klick mich!", "Bring Malt zum Reagieren", "Oh! Du hast mich überrascht!", "Oje … mach keinen Druck, sonst verschütte ich das Bier!", "Du weißt es ja: Ich bin der beste Moderator."]);
   V.zh.push(...["点我！", "让 Malt 做个反应", "哦！你吓了我一跳！", "哎呀……别催我，啤酒要洒了！", "你懂的：我是最棒的主持人。"]);
+  K.push(...["Investiga'm quan tinguis temps, no és un camí senzill!"]);
+  V.es.push(...["¡Investígame cuando tengas tiempo, no es un camino sencillo!"]);
+  V.en.push(...["Explore me when you have time — it's not an easy path!"]);
+  V.de.push(...["Erforsche mich, wenn du Zeit hast – es ist kein einfacher Weg!"]);
+  V.zh.push(...["有空的时候再来探索我吧，这可不是一条简单的路！"]);
   const D = {};
   for (const l in V) { D[l] = {}; K.forEach((k, i) => { if (V[l][i] !== k) D[l][k] = V[l][i]; }); }
   return D;

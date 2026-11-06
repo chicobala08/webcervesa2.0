@@ -2,7 +2,7 @@
 <html lang="ca">
 <head>
   <meta charset="utf-8">
-  <script>try{localStorage.removeItem('cervesa-intro-vista');if(/[?&]intro\b/.test(location.search))sessionStorage.removeItem('cervesa-intro-vista');else if(sessionStorage.getItem('cervesa-intro-vista')==='1')document.documentElement.classList.add('ob-seen')}catch(e){}</script>
+  <script>try{localStorage.removeItem('cervesa-intro-vista');sessionStorage.removeItem('cervesa-intro-vista')}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fcf8f1">
   <meta name="description" content="Un recorregut educatiu per la història, la química i la ciència relacionades amb la cervesa.">
@@ -34,7 +34,8 @@
         <span class="ob-kicker ob-in" style="--i:0">UNA EXPERIÈNCIA INTERACTIVA</span>
         <h1 id="onboardingTitle"><span class="ob-line ob-in" style="--i:1">La cervesa,</span> <span class="ob-line ob-line--gold ob-in" style="--i:2">més que una beguda.</span></h1>
         <p class="ob-in" style="--i:3">Omple el got per començar. Quan vessi, en Malt t'esperarà a l'altra banda.</p>
-        <div class="ob-hint ob-in" style="--i:4" aria-hidden="true"><span class="ob-hint-ring"></span><span class="ob-hint-dot">↓</span><span>Toca el got per omplir-lo</span></div>
+        <p class="ob-note-time ob-in" style="--i:4"><span class="ob-note-icon" aria-hidden="true">⏳</span><span>Investiga'm quan tinguis temps, no és un camí senzill!</span></p>
+        <div class="ob-hint ob-in" style="--i:5" aria-hidden="true"><span class="ob-hint-ring"></span><span class="ob-hint-dot">↓</span><span>Toca el got per omplir-lo</span></div>
       </div>
 
       <div class="ob-art">
@@ -1235,8 +1236,8 @@
     <svg viewBox="0 0 40 52" aria-hidden="true"><defs><clipPath id="jgClip"><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z"/></clipPath></defs><g clip-path="url(#jgClip)"><rect x="0" y="0" width="40" height="52" fill="#f1d9a0"/><rect class="jl" x="0" y="0" width="40" height="52" fill="#edbf56"/></g><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z" fill="none" stroke="#26354a" stroke-width="3" stroke-linejoin="round"/><path d="M30 15h3a4.5 4.5 0 0 1 0 12h-4" fill="none" stroke="#26354a" stroke-width="3" stroke-linecap="round"/></svg>
     <span class="journey-text"><span class="journey-count" id="journeyCount">0/0</span><span class="journey-label">explorat</span></span>
   </div>
-<script src="app.js?v=19"></script>
-  <script src="i18n.js?v=18"></script>
+<script src="app.js?v=20"></script>
+  <script src="i18n.js?v=19"></script>
   <script src="horitzontal.js?v=2"></script>
 </body>
 </html>

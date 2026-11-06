@@ -1794,7 +1794,7 @@
         document.body.classList.remove('onboarding-active');
         ['.skip-link', '.topbar', '#main-content'].forEach(sel => document.querySelector(sel)?.removeAttribute('inert'));
       };
-      const remember = () => { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} };   // l'entrada surt a cada visita nova
+      const remember = () => {};   // l'entrada surt sempre que s'obre o es recarrega la web (es pot saltar)
 
       // Torna a veure la introducció (enllaç del peu de pàgina)
       document.getElementById('replayIntro')?.addEventListener('click', event => {

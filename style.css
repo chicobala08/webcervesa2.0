@@ -3091,3 +3091,21 @@ body.onboarding-active #inici .glass .b { animation: none !important; opacity: 0
   .ob-click-hint::after { display: none; }
 }
 @media (min-width: 801px) { .ob-bubble { min-height: 112px; align-content: start; } }
+
+/* Avís de l'entrada: cal temps */
+.ob-copy .ob-note-time { display: inline-flex; align-items: center; gap: 10px; max-width: 460px; margin: 18px 0 0; padding: 10px 14px; border: 1px dashed rgba(233,180,91,.55); border-radius: 14px; color: #f9e5bf; background: rgba(233,180,91,.08); font-size: .9rem; font-weight: 800; line-height: 1.4; transform: rotate(-1deg); }
+.ob-note-icon { flex: 0 0 auto; font-size: 1.15rem; }
+.ob-copy .ob-note-time.ob-in { animation: obIn 700ms cubic-bezier(.23,1,.32,1) calc(120ms + var(--i) * 80ms) forwards, obTilt 0s linear calc(820ms + var(--i) * 80ms) forwards; }
+@keyframes obTilt { to { transform: rotate(-1deg); } }
+@media (max-width: 800px) { .ob-copy .ob-note-time { margin-top: 10px; padding: 7px 11px; font-size: .78rem; text-align: left; } }
+@media (max-width: 800px) {
+  .ob-art { height: auto; min-height: 0; align-self: stretch; }
+  .ob-glass { height: 100%; max-height: 52svh; min-height: 0; }
+}
+@media (max-width: 800px) and (max-height: 720px) {
+  .ob-welcome { padding-top: 58px; }
+  .ob-copy h1 { margin: 8px 0; font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
+  .ob-copy p:not(.ob-note-time) { font-size: .86rem; }
+  .ob-copy .ob-note-time { margin-top: 8px; }
+  .ob-hint { margin-top: 8px; }
+}
