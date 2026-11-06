@@ -2,7 +2,7 @@
 <html lang="ca">
 <head>
   <meta charset="utf-8">
-  <script>try{if(localStorage.getItem('cervesa-intro-vista')==='1')document.documentElement.classList.add('ob-seen')}catch(e){}</script>
+  <script>try{if(/[?&]intro\b/.test(location.search))localStorage.removeItem('cervesa-intro-vista');else if(localStorage.getItem('cervesa-intro-vista')==='1')document.documentElement.classList.add('ob-seen')}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fcf8f1">
   <meta name="description" content="Un recorregut educatiu per la història, la química i la ciència relacionades amb la cervesa.">
