@@ -17,14 +17,100 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <noscript><style>.reveal, .ingredient-icon { opacity: 1 !important; translate: none !important; scale: 1 !important; }</style></noscript>
-  <link rel="stylesheet" href="style.css?v=7">
+  <noscript><style>.reveal, .ingredient-icon { opacity: 1 !important; translate: none !important; scale: 1 !important; }</style>.beer-onboarding{display:none!important}body.onboarding-active{overflow:auto!important}</style></noscript>
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Ves al contingut principal</a>
+<body class="onboarding-active">
+
+  <div class="beer-onboarding" id="beerOnboarding" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+    <section class="onboarding-screen onboarding-screen--welcome" id="onboardingWelcome">
+      <div class="onboarding-welcome-copy">
+        <span class="onboarding-kicker">UNA EXPERIÈNCIA INTERACTIVA</span>
+        <h1 id="onboardingTitle">La cervesa, més que una beguda.</h1>
+        <p>Abans de començar, omple el got per descobrir el recorregut.</p>
+      </div>
+      <div class="onboarding-glass-column">
+        <button class="onboarding-glass" id="onboardingGlass" type="button" aria-label="Prem el got per omplir-lo.">
+          <svg viewBox="0 0 280 360" role="img" aria-label="Got de cervesa buit">
+            <defs>
+              <clipPath id="onboardingGlassClip"><path d="M69 48H211L192 302Q190 316 176 316H104Q90 316 88 302Z"/></clipPath>
+              <linearGradient id="onboardingBeerGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd36c"/><stop offset="1" stop-color="#bb641d"/></linearGradient>
+              <linearGradient id="onboardingGlassShine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".5" stop-color="#fff" stop-opacity=".03"/><stop offset="1" stop-color="#fff" stop-opacity=".2"/></linearGradient>
+            </defs>
+            <path d="M208 83h20c22 0 30 17 27 39l-12 104c-2 18-14 27-31 27h-14" fill="none" stroke="#f8ecdb" stroke-width="15" stroke-linecap="round"/>
+            <path d="M211 99h13c10 0 13 7 12 18l-10 86c-1 10-7 15-16 15h-9" fill="none" stroke="#8a9690" stroke-opacity=".65" stroke-width="6" stroke-linecap="round"/>
+            <g clip-path="url(#onboardingGlassClip)">
+              <rect x="65" y="48" width="150" height="270" fill="#101a22" opacity=".58"/>
+              <rect class="onboarding-liquid" x="65" y="48" width="150" height="268" fill="url(#onboardingBeerGradient)"/>
+              <g class="onboarding-liquid-bubbles" fill="#fff4d6">
+                <circle cx="102" cy="260" r="5"/><circle cx="161" cy="224" r="4"/><circle cx="133" cy="182" r="3"/><circle cx="183" cy="147" r="4"/>
+              </g>
+              <rect x="82" y="61" width="12" height="228" rx="6" fill="url(#onboardingGlassShine)"/>
+            </g>
+            <path class="onboarding-foam" d="M72 66c-17-3-22-25-8-37 8-7 19-8 28-3 2-18 22-28 38-19 12-13 33-10 40 5 16-5 31 7 30 23 14 8 13 27-1 34-8 5-17 3-23-3-8 9-23 9-31 1-10 10-26 9-34-1-13 12-32 10-39 0Z" fill="#fbf1d9" stroke="#f8ecdb" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M69 48H211L192 302Q190 316 176 316H104Q90 316 88 302Z" fill="none" stroke="#f8ecdb" stroke-width="9" stroke-linejoin="round"/>
+            <path d="M82 69v205" stroke="#fff" stroke-opacity=".28" stroke-width="8" stroke-linecap="round"/>
+          </svg>
+          <span class="onboarding-glass-pulse" aria-hidden="true"></span>
+        </button>
+        <p class="onboarding-glass-status" id="onboardingGlassStatus" aria-live="polite">Got buit. Prem per començar.</p>
+        <span class="onboarding-small-note">Un toc és suficient.</span>
+      </div>
+      <div class="onboarding-spill" aria-hidden="true"></div>
+    </section>
+
+    <section class="onboarding-screen onboarding-screen--interests" id="onboardingInterests" hidden aria-labelledby="onboardingMaltTitle">
+      <div class="onboarding-interests-layout">
+        <div class="onboarding-malt-column">
+          <img src="malt.svg?v=8" alt="MALT, el presentador de la web" width="260" height="300" decoding="async">
+          <span class="onboarding-malt-tag">MALT T'ACOMPANYA</span>
+        </div>
+        <div class="onboarding-interests-content">
+          <span class="onboarding-kicker">ABANS DE COMENÇAR</span>
+          <h2 id="onboardingMaltTitle" tabindex="-1">Abans de continuar, explica'ns què t'interessa.</h2>
+          <p class="onboarding-form-intro">Respon aquestes preguntes per orientar el teu recorregut.</p>
+          <form class="onboarding-form" id="onboardingInterestForm">
+            <div class="onboarding-question-grid">
+              <fieldset class="onboarding-question">
+                <legend>Quina part de la cervesa t'interessa més?</legend>
+                <div class="onboarding-options">
+                  <label class="onboarding-option"><input type="radio" name="interestPart" value="historia"><span>La història i les cultures</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestPart" value="ciencia"><span>La ciència i la fermentació</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestPart" value="elaboracio"><span>Els ingredients i l'elaboració</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestPart" value="tot"><span>Una mica de tot</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="onboarding-question">
+                <legend>Què t'agradaria descobrir?</legend>
+                <div class="onboarding-options">
+                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="origen"><span>Com va començar la cervesa</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="fermentacio"><span>Què passa durant la fermentació</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="recepta"><span>Com es crea una recepta</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="curiositats"><span>Curiositats i mites</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="onboarding-question">
+                <legend>Quin és el teu nivell de coneixement?</legend>
+                <div class="onboarding-options onboarding-options--stacked">
+                  <label class="onboarding-option"><input type="radio" name="interestLevel" value="inici"><span>Començo de zero</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestLevel" value="mitja"><span>Ja en sé una mica</span></label>
+                  <label class="onboarding-option"><input type="radio" name="interestLevel" value="aprofundir"><span>Vull aprofundir</span></label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="onboarding-form-footer">
+              <p>Les respostes són opcionals i no es guarden.</p>
+              <button class="btn btn-primary onboarding-start-button" id="onboardingContinue" type="submit">Comença el recorregut <span aria-hidden="true">↓</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+  <a class="skip-link" href="#main-content" inert>Ves al contingut principal</a>
   <div class="progress" id="readingProgress" role="progressbar" aria-label="Progrés de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
   <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
-  <nav class="topbar" aria-label="Navegació principal">
+  <nav class="topbar" aria-label="Navegació principal" inert>
     <div class="wrap nav">
       <a class="brand" href="#inici" aria-label="Tornar a l'inici" title="Inici"><span class="brand-mark">C.</span><span>CERVESA<span>.</span></span></a>
       <div class="navlinks" id="desktopNav">
@@ -48,7 +134,7 @@
     </div>
   </nav>
 
-  <main id="main-content" tabindex="-1">
+  <main id="main-content" tabindex="-1" inert>
     <header class="hero" id="inici">
       <div class="wrap">
         <div class="hero-grid">
@@ -970,8 +1056,8 @@
     <svg viewBox="0 0 40 52" aria-hidden="true"><defs><clipPath id="jgClip"><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z"/></clipPath></defs><g clip-path="url(#jgClip)"><rect x="0" y="0" width="40" height="52" fill="#f1d9a0"/><rect class="jl" x="0" y="0" width="40" height="52" fill="#edbf56"/></g><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z" fill="none" stroke="#26354a" stroke-width="3" stroke-linejoin="round"/><path d="M30 15h3a4.5 4.5 0 0 1 0 12h-4" fill="none" stroke="#26354a" stroke-width="3" stroke-linecap="round"/></svg>
     <span class="journey-text"><span class="journey-count" id="journeyCount">0/0</span><span class="journey-label">explorat</span></span>
   </div>
-<script src="app.js?v=7"></script>
-  <script src="i18n.js?v=7"></script>
+<script src="app.js?v=8"></script>
+  <script src="i18n.js?v=8"></script>
 </body>
 </html>
 
