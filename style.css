@@ -1012,7 +1012,7 @@
     .quiz-guide::before { content: ""; position: absolute; z-index: -1; width: 230px; height: 230px; top: 70px; left: 50%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle,#fff9e9 0%,rgba(255,249,233,.12) 70%,transparent 72%); }
     .guide-kicker { padding: 8px 10px; border-radius: 999px; background: #26354a; color: #f8d77f; letter-spacing: .12em; }
     .guide-spark { color: #f8d77f; }
-    .guide-mascot { width: min(100%,215px); filter: drop-shadow(4px 6px 0 rgba(38,53,74,.14)); }
+    .guide-mascot { width: min(100%,215px); will-change: transform; }
     .guide-name { margin-top: -2px; padding: 7px 17px; color: #fffefa; background: #26354a; border: 2px solid #26354a; box-shadow: 3px 4px 0 rgba(38,53,74,.14); font-size: .83rem; }
     .guide-name span { color: #f8d77f; }
     .guide-bubble { background: #fffefa; border: 2px solid #26354a; border-radius: 17px 17px 17px 5px; box-shadow: 3px 4px 0 rgba(38,53,74,.12); }
@@ -1915,7 +1915,8 @@
     /* Malt parla amb escriptura progressiva i una veu electrònica original. */
     .bubble-heading { display:flex; align-items:center; justify-content:space-between; gap:9px; margin-bottom:6px; }
     .bubble-heading .bubble-label { margin:0; }
-    #guideMessage.is-typing::after {
+    #guideMessage .guide-ghost { visibility:hidden; }
+    #guideMessage.is-typing > span:first-child::after {
       content:"▍"; display:inline-block; margin-left:2px; color:#8f4f26;
       animation:maltCursor .8s steps(2,end) infinite;
     }
@@ -1924,7 +1925,7 @@
       .bubble-heading { gap:5px; }
     }
     @media (prefers-reduced-motion:reduce) {
-      #guideMessage.is-typing::after { animation:none; }
+      #guideMessage.is-typing > span:first-child::after { animation:none; }
     }
 
   
@@ -1934,7 +1935,7 @@
     .flying-tomato {
       position:absolute; left:var(--start-x); top:var(--start-y); display:block;
       font-size:clamp(1.7rem,3vw,2.35rem); line-height:1;
-      filter:drop-shadow(2px 4px 2px rgba(38,53,74,.22)); opacity:0; will-change:transform,opacity;
+      opacity:0; will-change:transform,opacity;
       transform-origin:50% 85%;
       animation:tomatoFlight 1.48s cubic-bezier(.18,.72,.22,1) var(--flight-delay,0s) forwards;
     }
@@ -2465,7 +2466,7 @@
     @media (prefers-reduced-motion: reduce) { .glass .liquid, .glass .crest, .glass .b { animation: none; } .glass .b { opacity: 0; } }
     @media (max-width: 700px) { #inici { padding-bottom: 100px; } #inici .art-orbit { height: 380px; } #inici .hero-art { min-height: 380px; } }
     /* Malt, nou disseny del presentador */
-    .guide-mascot { filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .35)); }
+    
 
     /* =====================================================================
        La ciència de la fermentació: una sola secció en quatre passos
@@ -2734,7 +2735,30 @@
     @media (prefers-reduced-motion: reduce) {
       .malt-tip, .sim-glass rect { transition: none; }
     }
-      /* Selector d'idioma */
+  
+    /* Rendiment del Malt Show: menys pintura al mòbil */
+    .quiz-theatre.curtains-open .quiz-curtain-screen { visibility: hidden; transition: background .9s ease, visibility 0s linear 1.15s; }
+    .confetti-layer { contain: layout style; }
+    @media (max-width: 700px) {
+      .topbar, .quiz-victory-overlay { -webkit-backdrop-filter: none; backdrop-filter: none; }
+      .question-spotlight, .curtain-stage-glow, .question-spotlight::before, .curtain-beer, .trophy-emoji { filter: none; }
+      .trophy-glow { filter: none; background: radial-gradient(circle,rgba(255,213,103,.6) 0%,rgba(255,213,103,.18) 45%,transparent 70%); }
+      .question-spotlight { clip-path: none; background: radial-gradient(ellipse 46% 100% at 50% 0%, rgba(255,242,195,.24), rgba(255,231,172,.07) 62%, transparent 100%); }
+      .curtain-stage-glow { clip-path: none; background: radial-gradient(ellipse 50% 90% at 50% 0%, rgba(255,244,201,.18), transparent 100%); }
+      .quiz-theatre { box-shadow: 0 14px 34px rgba(0,0,0,.28); }
+      .quiz-main { box-shadow: 0 0 0 3px rgba(242,206,123,.10), 0 10px 22px rgba(0,0,0,.24); }
+      .quiz-guide { box-shadow: 0 8px 20px rgba(0,0,0,.24); }
+      .curtain-panel { box-shadow: inset 0 0 26px rgba(0,0,0,.45); }
+      .curtain-opening { box-shadow: 0 10px 28px rgba(0,0,0,.35); }
+    }
+
+    /* Les bombolles del got de l'inici s'aturen quan no es veuen (estalvia pintura a tota la pàgina) */
+    #inici.is-offscreen .glass .b, #inici.is-offscreen .art-orbit::before { animation-play-state: paused; }
+
+    /* Malt: el cos és una imatge fixa i només la cara (petita) es repinta quan canvia d'humor */
+    .guide-mascot { position: relative; aspect-ratio: 260 / 300; }
+    .guide-mascot .malt-body, .guide-mascot .malt-faces { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    /* Selector d'idioma */
     .nav-actions { gap: 8px; }
     .lang-btn { font-weight: 900; font-size: .8rem; letter-spacing: .02em; }
     .lang-menu {

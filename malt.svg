@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300">
+                <defs>
+                  <!-- Formes base: es dibuixen dues vegades, com a vora d'adhesiu i amb color -->
+                  <path id="mSuit" d="M70 286c0-58 30-96 78-98 48 2 78 40 78 98q0 8-8 8H78q-8 0-8-8z"/>
+                  <circle id="mHead" cx="148" cy="134" r="54"/>
+                  <path id="mHair" d="M95 119c-12-6-14-22-4-30-6-16 6-30 22-28 4-16 22-24 36-14 12-12 32-8 38 6 18 0 28 16 22 30 12 8 12 26 0 34 4 12-4 22-14 22-4 0-6-4-6-8 2-10-2-16-8-20-6 8-16 10-24 4-8 8-20 8-28 2-8 8-20 8-28 2-4 6-8 6-6 0z"/>
+                  <path id="mArm" d="M100 214C82 200 70 184 64 156" fill="none"/>
+                  <g id="mMug"><path d="M30 76h56l-4 62q-1 8-9 8H43q-8 0-9-8z"/><path d="M24 80q-6-16 10-20 2-14 18-12 8-12 22-4 16-4 18 12 10 6 2 20z"/></g>
+                  <pattern id="mDotsDark" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="2.5" cy="2.5" r="1.05" fill="#2b2118"/></pattern>
+                  <pattern id="mDotsOrange" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="2.5" cy="2.5" r="1.25" fill="#c4560c"/></pattern>
+                  <pattern id="mDotsRed" width="4.5" height="4.5" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="2.25" cy="2.25" r="1.1" fill="#e2551b"/></pattern>
+                  <pattern id="mDotsGold" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="2.5" cy="2.5" r="1.2" fill="#d88a2a"/></pattern>
+                  <linearGradient id="mFadeR" x1="0" y1="0" x2="1" y2=".6"><stop offset=".45" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+                  <linearGradient id="mFadeD" x1="0" y1="0" x2=".3" y2="1"><stop offset=".35" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+                  <mask id="mMaskR" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#mFadeR)"/></mask>
+                  <mask id="mMaskD" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#mFadeD)"/></mask>
+                  <clipPath id="mClipHead"><use href="#mHead"/></clipPath>
+                  <clipPath id="mClipHair"><use href="#mHair"/></clipPath>
+                  <clipPath id="mClipSuit"><use href="#mSuit"/></clipPath>
+                  <clipPath id="mClipMug"><path d="M30 76h56l-4 62q-1 8-9 8H43q-8 0-9-8z"/></clipPath>
+                </defs>
+                <!-- Vora d'adhesiu (ombra + crema) -->
+                <g transform="translate(3 5)" fill="#000" stroke="#000" stroke-width="22" stroke-linejoin="round" opacity=".16">
+                  <use href="#mSuit"/><use href="#mHead"/><use href="#mHair"/><use href="#mArm" fill="none" stroke-width="56" stroke-linecap="round"/><use href="#mMug" transform="rotate(-10 58 110)"/>
+                </g>
+                <g fill="#fbefd6" stroke="#fbefd6" stroke-width="22" stroke-linejoin="round">
+                  <use href="#mSuit"/><use href="#mHead"/><use href="#mHair"/><use href="#mArm" fill="none" stroke-width="56" stroke-linecap="round"/><use href="#mMug" transform="rotate(-10 58 110)"/>
+                  <path d="M98 44q6-10 10-14 6 10 4 16-2 6-8 6t-6-8z M122 26q5-9 8-12 5 9 4 15-2 6-7 6t-5-9z" stroke-width="14"/>
+                  <path d="M214 66l12-14M222 84l18-6M220 102l18 2" stroke-width="22" stroke-linecap="round"/>
+                </g>
+                <!-- Gotes i línies d'emoció -->
+                <g class="maltSplash">
+                  <path d="M98 44q6-10 10-14 6 10 4 16-2 6-8 6t-6-8z" fill="#f5a524" stroke="#2b2118" stroke-width="3" stroke-linejoin="round"/>
+                  <path d="M122 26q5-9 8-12 5 9 4 15-2 6-7 6t-5-9z" fill="#f5a524" stroke="#2b2118" stroke-width="3" stroke-linejoin="round"/>
+                  <path d="M103 44q1-4 3-6M126 25q1-3 2-5" stroke="#ffe3a6" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M214 66l12-14M222 84l18-6M220 102l18 2" stroke="#f9b71e" stroke-width="7" stroke-linecap="round"/>
+                </g>
+                <!-- Vestit -->
+                <use href="#mSuit" fill="#f39320" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
+                <g clip-path="url(#mClipSuit)" opacity=".5"><rect x="60" y="180" width="180" height="120" fill="url(#mDotsOrange)" mask="url(#mMaskR)"/><rect x="60" y="186" width="70" height="60" fill="url(#mDotsOrange)" opacity=".7"/></g>
+                <path d="M128 189l20 50 20-50q-10-2-20-2t-20 2z" fill="#2b2118"/>
+                <path d="M141 196h14l3 9h-20z" fill="#fbe7c4" stroke="#2b2118" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M139 206h18l-9 30z" fill="#fbe7c4" stroke="#2b2118" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M126 190l-14 16 8 8-12 10 34 50M170 190l14 16-8 8 12 10-30 46" fill="none" stroke="#2b2118" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M196 262l4 24" stroke="#2b2118" stroke-width="4" stroke-linecap="round"/>
+                <!-- Braç que aixeca la gerra -->
+                <use href="#mArm" stroke="#2b2118" stroke-width="36" stroke-linecap="round"/>
+                <use href="#mArm" stroke="#f39320" stroke-width="27" stroke-linecap="round"/>
+                <path d="M78 204q-8-10-12-22" stroke="#c4560c" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+                <!-- Cap -->
+                <use href="#mHead" fill="#fbe7c4" stroke="#2b2118" stroke-width="5"/>
+                <g clip-path="url(#mClipHead)" opacity=".55"><rect x="94" y="80" width="110" height="110" fill="url(#mDotsDark)" mask="url(#mMaskR)"/></g>
+                <!-- Cabells d'escuma de cervesa -->
+                <g class="maltFoam">
+                  <use href="#mHair" fill="#f7dcaa" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
+                  <g clip-path="url(#mClipHair)"><rect x="80" y="60" width="150" height="110" fill="url(#mDotsGold)" mask="url(#mMaskD)"/></g>
+                  <ellipse cx="124" cy="73" rx="9" ry="5" fill="#fff4dd" transform="rotate(-12 124 73)"/>
+                  <ellipse cx="156" cy="61" rx="8" ry="4.5" fill="#fff4dd"/>
+                  <ellipse cx="186" cy="75" rx="6.5" ry="4" fill="#fff4dd" transform="rotate(14 186 75)"/>
+                  <ellipse cx="142" cy="85" rx="6" ry="3.6" fill="#fff4dd"/>
+                  <ellipse cx="106" cy="91" rx="4.5" ry="3" fill="#fff4dd"/>
+                </g>
+                <!-- Mà i gerra -->
+                <circle cx="64" cy="152" r="17" fill="#fbe7c4" stroke="#2b2118" stroke-width="5"/>
+                <g transform="rotate(-10 58 110)">
+                  <path d="M30 76h56l-4 62q-1 8-9 8H43q-8 0-9-8z" fill="#f9b82b" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
+                  <g clip-path="url(#mClipMug)" opacity=".75"><rect x="30" y="76" width="56" height="70" fill="url(#mDotsRed)" mask="url(#mMaskR)"/></g>
+                  <rect x="42" y="92" width="10" height="38" rx="5" fill="#ffe3a6" stroke="#2b2118" stroke-width="4"/>
+                  <rect x="64" y="92" width="10" height="38" rx="5" fill="#ffe3a6" stroke="#2b2118" stroke-width="4"/>
+                  <path d="M24 80q-6-16 10-20 2-14 18-12 8-12 22-4 16-4 18 12 10 6 2 20z" fill="#f7dcaa" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
+                  <ellipse cx="44" cy="64" rx="7" ry="4" fill="#fff4dd"/><ellipse cx="68" cy="58" rx="5" ry="3" fill="#fff4dd"/>
+                </g>
+                <path d="M50 150q14 6 28 0" fill="none" stroke="#2b2118" stroke-width="3.5" stroke-linecap="round"/>
+              </svg>

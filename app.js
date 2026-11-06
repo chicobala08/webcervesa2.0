@@ -854,18 +854,25 @@
         return;
       }
       let position=0;
+      // El text complet ocupa l'espai des del principi: la bombolla no canvia de mida a cada lletra.
+      const shown=document.createElement('span');
+      const ghost=document.createElement('span');
+      ghost.className='guide-ghost'; ghost.setAttribute('aria-hidden','true'); ghost.textContent=message;
+      guideMessage.replaceChildren(shown,ghost);
       guideMessage.classList.add('is-typing');
       const writeNextCharacter=()=>{
         if(position>=message.length) {
           guideMessage.classList.remove('is-typing');
+          guideMessage.textContent=message;
           guideMessage.setAttribute('aria-live','polite');
           guideTypingTimer=null;
           return;
         }
         const character=message.charAt(position);
-        guideMessage.textContent+=character;
-        if(position%2===0) playMaltBlip(character);
         position+=1;
+        shown.textContent=message.slice(0,position);
+        ghost.textContent=message.slice(position);
+        if(position%2===1) playMaltBlip(character);
         let delay=29;
         if(character===' ') delay=13;
         else if(/[,:;]/.test(character)) delay=115;
@@ -910,7 +917,8 @@
       if (window.confettiCleanupTimer) window.clearTimeout(window.confettiCleanupTimer);
       layer.replaceChildren();
       const fragment = document.createDocumentFragment();
-      for (let i = 0; i < 54; i++) {
+      const pieces = window.matchMedia('(max-width: 700px)').matches ? 26 : 54;
+      for (let i = 0; i < pieces; i++) {
         const piece = document.createElement('span');
         piece.className = 'confetti-piece';
         piece.style.left = `${Math.random() * 100}%`;
@@ -1558,4 +1566,11 @@
         else if (e.key === 'Escape') stop();
       });
       document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && document.documentElement.classList.contains('presenting')) stop(); });
+    })();
+  
+    // Atura les animacions decoratives de l'inici quan queden fora de la pantalla
+    (() => {
+      const hero = document.getElementById('inici');
+      if (!hero || !('IntersectionObserver' in window)) return;
+      new IntersectionObserver(([entry]) => hero.classList.toggle('is-offscreen', !entry.isIntersecting)).observe(hero);
     })();
