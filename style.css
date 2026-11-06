@@ -2811,7 +2811,7 @@ body.onboarding-active { overflow: hidden; }
   width: min(1120px, calc(100% - 48px)); margin-inline: auto; padding: 54px 0;
   transition: opacity .62s ease, transform .72s cubic-bezier(.2,.8,.2,1);
 }
-.onboarding-screen--welcome.is-pouring { opacity: 0; transform: translateY(-32px) scale(.985); pointer-events: none; }
+.onboarding-screen--welcome.is-pouring { transform: translateY(-12px) scale(.99); pointer-events: none; }
 .onboarding-welcome-copy { max-width: 650px; }
 .onboarding-kicker {
   display: inline-flex; align-items: center; gap: 10px; color: #e9b45b;
@@ -2846,7 +2846,7 @@ body.onboarding-active { overflow: hidden; }
 .onboarding-glass-status { margin: 14px 0 0; color: #fbf1df; font-weight: 800; text-align: center; }
 .onboarding-small-note { margin-top: 4px; color: #9eafad; font-size: .82rem; }
 .onboarding-spill { position: absolute; left: 50%; bottom: -12vh; width: clamp(42px,7vw,86px); height: 0; transform: translateX(-50%); border-radius: 45% 45% 0 0; opacity: 0; pointer-events: none; background: linear-gradient(180deg,#ffd36c,#bb641d); filter: drop-shadow(0 0 18px rgba(233,180,91,.35)); }
-.onboarding-screen--welcome.is-pouring .onboarding-spill { animation: onboardingSpill .78s cubic-bezier(.3,.7,.4,1) forwards; }
+.onboarding-screen--welcome.is-pouring .onboarding-spill { z-index: 5; animation: onboardingSpill .78s cubic-bezier(.3,.7,.4,1) forwards; }
 @keyframes onboardingSpill { 0% { height: 0; opacity: 0; } 18% { opacity: 1; } 100% { height: 125vh; opacity: 1; } }
 
 .onboarding-screen--interests {
