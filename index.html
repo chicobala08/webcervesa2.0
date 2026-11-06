@@ -19,7 +19,7 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <noscript><style>.reveal, .ingredient-icon { opacity: 1 !important; translate: none !important; scale: 1 !important; }.beer-onboarding{display:none!important}body.onboarding-active{overflow:auto!important}</style></noscript>
-  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body class="onboarding-active">
 
@@ -105,42 +105,135 @@
       <div class="ob-layout">
         <div class="ob-malt">
           <img class="ob-malt-img" src="malt-presenter.webp?v=11" alt="Malt, el presentador de la web, aixecant una gerra" width="511" height="476" decoding="async">
-          <div class="ob-bubble" role="status"><span class="ob-bubble-name">MALT, EL TEU GUIA</span><span class="ob-bubble-text" id="onboardingMaltSays">Hola! Sóc en Malt. Digues-me què t'agrada i et porto directe on toca.</span></div>
+          <div class="ob-bubble" role="status"><span class="ob-bubble-name">MALT, EL TEU GUIA</span><span class="ob-bubble-text" id="onboardingMaltSays">Hola! Sóc en Malt. Abans de començar, t'acompanyo en tres passos ràpids.</span></div>
         </div>
         <div class="ob-content">
-          <span class="ob-kicker ob-rise" style="--i:0">ABANS DE COMENÇAR</span>
-          <h2 class="ob-rise" style="--i:1" id="onboardingMaltTitle" tabindex="-1">Què et ve de gust descobrir?</h2>
-          <p class="ob-intro ob-rise" style="--i:2">Tria una resposta de cada pregunta, o les que vulguis. En Malt t'obrirà el camí.</p>
-          <form class="ob-form" id="onboardingInterestForm">
-            <fieldset class="ob-q ob-rise" style="--i:3">
-              <legend>Quina part t'interessa més?</legend>
-              <div class="ob-chips">
-                <label class="ob-chip"><input type="radio" name="interestPart" value="historia"><span>La història</span></label>
-                <label class="ob-chip"><input type="radio" name="interestPart" value="ciencia"><span>La ciència</span></label>
-                <label class="ob-chip"><input type="radio" name="interestPart" value="ingredients"><span>Els ingredients</span></label>
-                <label class="ob-chip"><input type="radio" name="interestPart" value="tot"><span>Una mica de tot</span></label>
+          <div class="ob-steps ob-rise" style="--i:0" aria-hidden="true"><span class="ob-steps-label" id="onboardingStepLabel">Pas 1 de 3</span><span class="ob-steps-bar"><span class="ob-steps-fill" id="onboardingStepFill"></span></span></div>
+          <form class="ob-form" id="onboardingInterestForm" novalidate>
+            <!-- Trampa per a robots: les persones no la veuen -->
+            <label class="ob-trap" aria-hidden="true">Web <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+
+            <fieldset class="ob-step is-current" data-step="1">
+              <legend class="ob-step-head"><span class="ob-kicker">COM ET DIUS? NO CAL!</span><span class="ob-step-title" id="onboardingMaltTitle" tabindex="-1">Coneguem-nos una mica</span></legend>
+              <p class="ob-intro">No et demanem nom ni correu. Només el que ens ajuda a entendre qui visita la web.</p>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqAge">Quina edat tens?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqAge">
+                  <label class="ob-chip"><input type="radio" name="age_range" value="lt14"><span>Menys de 14</span></label>
+                  <label class="ob-chip"><input type="radio" name="age_range" value="14-15"><span>14–15</span></label>
+                  <label class="ob-chip"><input type="radio" name="age_range" value="16-17"><span>16–17</span></label>
+                  <label class="ob-chip"><input type="radio" name="age_range" value="18-25"><span>18–25</span></label>
+                  <label class="ob-chip"><input type="radio" name="age_range" value="26-40"><span>26–40</span></label>
+                  <label class="ob-chip"><input type="radio" name="age_range" value="gt40"><span>Més de 40</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqRole">Qui ets?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqRole">
+                  <label class="ob-chip"><input type="radio" name="role" value="alumne_montjuic"><span>Alumne/a de l'Institut Montjuïc</span></label>
+                  <label class="ob-chip"><input type="radio" name="role" value="alumne_altre"><span>Alumne/a d'un altre centre</span></label>
+                  <label class="ob-chip"><input type="radio" name="role" value="professor"><span>Professor/a</span></label>
+                  <label class="ob-chip"><input type="radio" name="role" value="familia"><span>Família o amics</span></label>
+                  <label class="ob-chip"><input type="radio" name="role" value="altre"><span>Una altra persona</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqFound">Com has arribat a la web?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqFound">
+                  <label class="ob-chip"><input type="radio" name="found_via" value="classe"><span>A classe</span></label>
+                  <label class="ob-chip"><input type="radio" name="found_via" value="qr"><span>Amb el codi QR</span></label>
+                  <label class="ob-chip"><input type="radio" name="found_via" value="amic"><span>M'ho ha passat algú</span></label>
+                  <label class="ob-chip"><input type="radio" name="found_via" value="xarxes"><span>Per xarxes socials</span></label>
+                  <label class="ob-chip"><input type="radio" name="found_via" value="altre"><span>D'una altra manera</span></label>
+                </div>
               </div>
             </fieldset>
-            <fieldset class="ob-q ob-rise" style="--i:4">
-              <legend>Què t'agradaria fer primer?</legend>
-              <div class="ob-chips">
-                <label class="ob-chip"><input type="radio" name="interestDiscover" value="origen"><span>Saber com va començar</span></label>
-                <label class="ob-chip"><input type="radio" name="interestDiscover" value="fermentacio"><span>Veure la fermentació</span></label>
-                <label class="ob-chip"><input type="radio" name="interestDiscover" value="recepta"><span>Crear la meva cervesa</span></label>
-                <label class="ob-chip"><input type="radio" name="interestDiscover" value="curiositats"><span>Llegir curiositats</span></label>
+
+            <fieldset class="ob-step" data-step="2" hidden>
+              <legend class="ob-step-head"><span class="ob-kicker">NO ÉS UN EXAMEN</span><span class="ob-step-title" tabindex="-1">Què en saps, ja?</span></legend>
+              <p class="ob-intro">Respon el que et sembli. Al final del recorregut sabràs si l'has encertat.</p>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqIng">Quants ingredients bàsics creus que té la cervesa?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqIng">
+                  <label class="ob-chip"><input type="radio" name="guess_ingredients" value="2"><span>2</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_ingredients" value="4"><span>4</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_ingredients" value="7"><span>7</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_ingredients" value="10+"><span>Més de 10</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_ingredients" value="nsnc"><span>No ho sé</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqYeast">Què creus que fa el llevat?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqYeast">
+                  <label class="ob-chip"><input type="radio" name="guess_yeast" value="color"><span>Dona color</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_yeast" value="fermenta"><span>Converteix el sucre en alcohol i gas</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_yeast" value="amargor"><span>Dona amargor</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_yeast" value="nsnc"><span>No ho sé</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqOrigin">Des de quan creus que es fa cervesa?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqOrigin">
+                  <label class="ob-chip"><input type="radio" name="guess_origin" value="200"><span>Fa uns 200 anys</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_origin" value="1000"><span>Fa uns 1.000 anys</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_origin" value="milers"><span>Fa milers d'anys</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_origin" value="nsnc"><span>No ho sé</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqNA">Una cervesa «sense alcohol» pot tenir una mica d'alcohol?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqNA">
+                  <label class="ob-chip"><input type="radio" name="guess_nonalcoholic" value="si"><span>Sí</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_nonalcoholic" value="no"><span>No, en té zero</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_nonalcoholic" value="nsnc"><span>No ho sé</span></label>
+                </div>
               </div>
             </fieldset>
-            <fieldset class="ob-q ob-rise" style="--i:5">
-              <legend>Quant en saps?</legend>
-              <div class="ob-chips">
-                <label class="ob-chip"><input type="radio" name="interestLevel" value="inici"><span>Començo de zero</span></label>
-                <label class="ob-chip"><input type="radio" name="interestLevel" value="mitja"><span>Ja en sé una mica</span></label>
-                <label class="ob-chip"><input type="radio" name="interestLevel" value="aprofundir"><span>Vull aprofundir</span></label>
+
+            <fieldset class="ob-step" data-step="3" hidden>
+              <legend class="ob-step-head"><span class="ob-kicker">L'ÚLTIM PAS</span><span class="ob-step-title" tabindex="-1">Què et ve de gust descobrir?</span></legend>
+              <p class="ob-intro">Amb això en Malt tria per on comences.</p>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqPart">Quina part t'interessa més?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqPart">
+                  <label class="ob-chip"><input type="radio" name="interestPart" value="historia"><span>La història</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestPart" value="ciencia"><span>La ciència</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestPart" value="ingredients"><span>Els ingredients</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestPart" value="tot"><span>Una mica de tot</span></label>
+                </div>
               </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqDisc">Què t'agradaria fer primer?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqDisc">
+                  <label class="ob-chip"><input type="radio" name="interestDiscover" value="origen"><span>Saber com va començar</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestDiscover" value="fermentacio"><span>Veure la fermentació</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestDiscover" value="recepta"><span>Crear la meva cervesa</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestDiscover" value="curiositats"><span>Llegir curiositats</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqLevel">Quant en saps?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqLevel">
+                  <label class="ob-chip"><input type="radio" name="interestLevel" value="inici"><span>Començo de zero</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestLevel" value="mitja"><span>Ja en sé una mica</span></label>
+                  <label class="ob-chip"><input type="radio" name="interestLevel" value="aprofundir"><span>Vull aprofundir</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <label class="ob-q-title" for="obWish">Hi ha alguna cosa que t'agradaria aprendre? <span class="ob-optional">(opcional)</span></label>
+                <textarea class="ob-text" id="obWish" name="wish" rows="2" maxlength="200" placeholder="Escriu-ho aquí, sense dades personals"></textarea>
+              </div>
+              <label class="ob-consent" data-needs-db><input type="checkbox" name="consent" checked><span>Envia les meves respostes, de manera anònima, per al Treball de Recerca.</span></label>
             </fieldset>
-            <div class="ob-footer ob-rise" style="--i:6">
-              <p>Les respostes només serveixen per triar per on comences. No es guarden enlloc.</p>
-              <button class="ob-go" id="onboardingContinue" type="submit"><span id="onboardingGoText">Comença el recorregut</span> <span class="ob-go-arrow" aria-hidden="true">↓</span></button>
+
+            <div class="ob-footer">
+              <p class="ob-note" data-needs-db>No demanem nom ni correu. Les respostes només es fan servir per al Treball de Recerca d'Àlex López.</p>
+              <p class="ob-note" data-no-db hidden>Les respostes només serveixen per triar per on comences. No es guarden enlloc.</p>
+              <div class="ob-nav">
+                <button class="ob-back" id="onboardingBack" type="button" hidden><span aria-hidden="true">←</span> <span>Enrere</span></button>
+                <button class="ob-go" id="onboardingNext" type="button"><span>Següent</span> <span class="ob-go-arrow ob-go-arrow--right" aria-hidden="true">→</span></button>
+                <button class="ob-go" id="onboardingContinue" type="submit" hidden><span id="onboardingGoText">Comença el recorregut</span> <span class="ob-go-arrow" aria-hidden="true">↓</span></button>
+              </div>
             </div>
           </form>
         </div>
@@ -1096,8 +1189,8 @@
     <svg viewBox="0 0 40 52" aria-hidden="true"><defs><clipPath id="jgClip"><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z"/></clipPath></defs><g clip-path="url(#jgClip)"><rect x="0" y="0" width="40" height="52" fill="#f1d9a0"/><rect class="jl" x="0" y="0" width="40" height="52" fill="#edbf56"/></g><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z" fill="none" stroke="#26354a" stroke-width="3" stroke-linejoin="round"/><path d="M30 15h3a4.5 4.5 0 0 1 0 12h-4" fill="none" stroke="#26354a" stroke-width="3" stroke-linecap="round"/></svg>
     <span class="journey-text"><span class="journey-count" id="journeyCount">0/0</span><span class="journey-label">explorat</span></span>
   </div>
-<script src="app.js?v=11"></script>
-  <script src="i18n.js?v=11"></script>
+<script src="app.js?v=13"></script>
+  <script src="i18n.js?v=13"></script>
 </body>
 </html>
 

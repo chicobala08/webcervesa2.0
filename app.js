@@ -1801,7 +1801,15 @@
         flood.remove();
       });
 
-      // ----- Les respostes fan alguna cosa -----
+      // ----- Enquesta en tres passos: respostes anònimes per al Treball de Recerca -----
+      // Supabase: posa aquí la URL del projecte i la clau pública (publishable / anon).
+      // La clau pública es pot veure al navegador; la taula només deixa AFEGIR files, no llegir-les.
+      const SURVEY_DB = { url: '', key: '' };
+      const SENT_KEY = 'cervesa-enquesta-enviada';
+      const hasDb = !!(SURVEY_DB.url && SURVEY_DB.key);
+      form.querySelectorAll('[data-needs-db]').forEach(el => { el.hidden = !hasDb; });
+      form.querySelectorAll('[data-no-db]').forEach(el => { el.hidden = hasDb; });
+
       const LINES = {
         historia: "Viatjarem milers d'anys enrere!",
         ciencia: 'Llevat, sucre i bombolles: la meva especialitat.',
@@ -1813,7 +1821,20 @@
         curiositats: "Tinc un munt d'històries per explicar-te.",
         inici: 'Cap problema: el concurs serà de nivell inicial.',
         mitja: 'Perfecte, anirem al teu ritme.',
-        aprofundir: 'Et deixo el concurs en nivell expert!'
+        aprofundir: 'Et deixo el concurs en nivell expert!',
+        'age_range': 'Apuntat! Ara ja sé una mica més de tu.',
+        'role:alumne_montjuic': "Algú de l'institut! Benvingut a casa.",
+        'role:professor': 'Un professor! Hauré de fer-ho molt bé.',
+        'role': 'Encantat de conèixer-te!',
+        'found_via:qr': 'El codi QR funciona! Que bé.',
+        'found_via': 'Gràcies per passar per aquí!',
+        'nsnc': 'Cap problema: per això hi som!',
+        'guess': 'Interessant… ho comprovarem durant el recorregut.'
+      };
+      const STEP_LINES = {
+        1: "Hola! Sóc en Malt. Abans de començar, t'acompanyo en tres passos ràpids.",
+        2: 'Ara una mica de joc: què en saps, de cervesa?',
+        3: 'Última parada: tria per on vols començar.'
       };
       const DEST = {
         historia: ['historia', 'Comença per la història'],
@@ -1825,21 +1846,74 @@
         recepta: ['simulador', 'Comença pel simulador'],
         curiositats: ['curiositats', 'Comença per les curiositats']
       };
-      const destination = () => {
-        const v = name => form.querySelector(`input[name="${name}"]:checked`)?.value;
-        return DEST[v('interestDiscover')] || DEST[v('interestPart')] || ['historia', 'Comença el recorregut'];
-      };
+      const val = name => form.querySelector(`input[name="${name}"]:checked`)?.value || null;
+      const destination = () => DEST[val('interestDiscover')] || DEST[val('interestPart')] || ['historia', 'Comença el recorregut'];
       const replay = (el, cls) => { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+      const maltSay = line => {
+        if (!line || !says) return;
+        says.textContent = line; replay(bubble, 'is-talking');
+        if (maltImg?.animate && !reduced) maltImg.animate([{ transform: 'none' }, { transform: 'translateY(-10px) rotate(-4deg)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.34,1.56,.64,1)' });
+      };
 
       form.addEventListener('change', event => {
-        const value = event.target.value;
-        if (LINES[value] && says) { says.textContent = LINES[value]; replay(bubble, 'is-talking'); }
-        if (maltImg?.animate && !reduced) {
-          maltImg.animate([{ transform: 'none' }, { transform: 'translateY(-10px) rotate(-4deg)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.34,1.56,.64,1)' });
-        }
+        const { name, value } = event.target;
+        if (event.target.type !== 'radio') return;
+        let line = LINES[`${name}:${value}`] || (name.startsWith('interest') ? LINES[value] : null) || LINES[name];
+        if (name.startsWith('guess_')) line = value === 'nsnc' ? LINES.nsnc : LINES.guess;
+        maltSay(line);
         const label = destination()[1];
         if (goText.textContent !== label) { goText.textContent = label; replay(goBtn, 'is-updated'); }
       });
+
+      // Passos
+      const steps = [...form.querySelectorAll('.ob-step')];
+      const backBtn = document.getElementById('onboardingBack');
+      const nextBtn = document.getElementById('onboardingNext');
+      const stepLabel = document.getElementById('onboardingStepLabel');
+      const stepFill = document.getElementById('onboardingStepFill');
+      let step = 1;
+      const goTo = n => {
+        const from = steps[step - 1], to = steps[n - 1], dir = n > step ? 1 : -1;
+        step = n;
+        from.hidden = true; from.classList.remove('is-current');
+        to.hidden = false; to.classList.add('is-current');
+        if (to.animate && !reduced) to.animate([{ opacity: 0, transform: `translateX(${24 * dir}px)` }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.23,1,.32,1)' });
+        backBtn.hidden = n === 1;
+        nextBtn.hidden = n === steps.length;
+        goBtn.hidden = n !== steps.length;
+        stepLabel.textContent = `Pas ${n} de ${steps.length}`;
+        stepFill.style.transform = `scaleX(${n / steps.length})`;
+        maltSay(STEP_LINES[n]);
+        interests.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' });
+        to.querySelector('.ob-step-title')?.focus({ preventScroll: true });
+      };
+      stepFill.style.transform = `scaleX(${1 / steps.length})`;
+      nextBtn.addEventListener('click', () => { if (step < steps.length) goTo(step + 1); });
+      backBtn.addEventListener('click', () => { if (step > 1) goTo(step - 1); });
+
+      const sendSurvey = () => {
+        if (!hasDb) return;
+        if (!form.querySelector('input[name="consent"]')?.checked) return;
+        if (form.querySelector('input[name="website"]')?.value) return;   // robot
+        try { if (localStorage.getItem(SENT_KEY)) return; } catch (e) {}
+        let lang = 'ca';
+        try { lang = localStorage.getItem('cervesa-lang') || 'ca'; } catch (e) {}
+        const wish = (form.querySelector('#obWish')?.value || '').trim().slice(0, 200) || null;
+        const row = {
+          lang: ['ca', 'es', 'en', 'de', 'zh'].includes(lang) ? lang : 'ca',
+          age_range: val('age_range'), role: val('role'), found_via: val('found_via'),
+          guess_ingredients: val('guess_ingredients'), guess_yeast: val('guess_yeast'),
+          guess_origin: val('guess_origin'), guess_nonalcoholic: val('guess_nonalcoholic'),
+          interest_part: val('interestPart'), interest_discover: val('interestDiscover'), interest_level: val('interestLevel'),
+          wish
+        };
+        if (Object.entries(row).every(([k, v]) => k === 'lang' || v == null)) return;   // no ha respost res
+        const headers = { 'Content-Type': 'application/json', apikey: SURVEY_DB.key, Prefer: 'return=minimal' };
+        if (SURVEY_DB.key.startsWith('eyJ')) headers.Authorization = `Bearer ${SURVEY_DB.key}`;
+        fetch(`${SURVEY_DB.url.replace(/\/$/, '')}/rest/v1/intro_responses`, { method: 'POST', headers, body: JSON.stringify(row), keepalive: true })
+          .then(r => { if (r.ok) { try { localStorage.setItem(SENT_KEY, '1'); } catch (e) {} } })
+          .catch(() => {});
+      };
 
       const finish = (target, level) => {
         remember();
@@ -1862,6 +1936,8 @@
 
       form.addEventListener('submit', event => {
         event.preventDefault();
+        if (step < steps.length) { goTo(step + 1); return; }   // Enter a mig formulari: passa al següent pas
+        sendSurvey();
         const level = form.querySelector('input[name="interestLevel"]:checked')?.value;
         finish(destination()[0], level === 'inici' ? 'inicial' : level === 'aprofundir' ? 'expert' : null);
       });
