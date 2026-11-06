@@ -50,7 +50,7 @@ window.__I18N_PATTERNS = (() => {
       const INLINE = new Set(['STRONG', 'B', 'EM', 'I', 'SUB', 'SUP', 'BR', 'SMALL', 'ABBR', 'CODE', 'MARK', 'U']);
       const SKIP = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'SELECT', 'OPTION']);
       const norm = s => s.replace(/\s+/g, ' ').trim();
-      const hasWords = s => /\p{L}{2}/u.test(s);
+      const hasWords = s => /\p{L}{2}|[\u3400-\u9fff]/u.test(s);   // el xinès pot tenir paraules d'un sol caràcter
       let lang = 'ca';
       let store;
       try { store = localStorage.getItem('cervesa-lang'); } catch (e) { store = null; }
@@ -157,7 +157,7 @@ window.__I18N_PATTERNS = (() => {
         if (rootEl.nodeType === 1 && root.nodeType === 3) list.push(root);
         for (const node of list) {
           if (!node.isConnected || skipped(node) || SKIP.has(node.parentElement.tagName)) continue;
-          if (!hasWords(node.nodeValue) && !texts.has(node)) continue;
+          if (!hasWords(node.nodeValue) && !texts.has(node) && !units.has(unitOf(node.parentElement))) continue;
           const u = unitOf(node.parentElement);
           if (done.has(u)) continue;
           if (u.childElementCount && allInline(u)) {
@@ -196,7 +196,7 @@ window.__I18N_PATTERNS = (() => {
         if (!loading) {
           loading = new Promise(resolve => {
             const sc = document.createElement('script');
-            sc.src = 'i18n-data.js?v=13';
+            sc.src = 'i18n-data.js?v=14';
             sc.onload = resolve; sc.onerror = resolve;
             document.head.appendChild(sc);
           });
