@@ -3039,3 +3039,21 @@ body.onboarding-active #inici .glass .b { animation: none !important; opacity: 0
 .ob-chips--scale { position: relative; padding-bottom: 20px; }
 .ob-chips--scale .ob-chip { min-width: 58px; justify-content: center; }
 .ob-scale-ends { position: absolute; left: 4px; right: 4px; bottom: 0; display: flex; justify-content: space-between; color: #93a3a1; font-size: .72rem; font-weight: 800; max-width: 340px; }
+
+/* Selector d'idioma de l'entrada */
+.ob-langs { position: absolute; z-index: 30; top: max(16px, env(safe-area-inset-top)); left: 18px; display: flex; gap: 6px; padding: 4px; border: 1px solid rgba(251,241,223,.18); border-radius: 999px; background: rgba(9,16,22,.45); opacity: 0; animation: obFade 400ms cubic-bezier(.23,1,.32,1) 500ms forwards; }
+.ob-lang { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 4px 10px 4px 6px; border: 1px solid transparent; border-radius: 999px; color: #e9dcc4; background: transparent; font: inherit; font-size: .74rem; font-weight: 900; letter-spacing: .04em; cursor: pointer; transition: transform 160ms cubic-bezier(.23,1,.32,1), background-color 200ms ease, border-color 200ms ease; }
+.ob-lang .lang-flag { display: block; width: 22px; height: 15px; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,.25); }
+.ob-lang .lang-flag svg { display: block; width: 100%; height: 100%; }
+.ob-lang[aria-pressed="true"] { color: #211a13; background: #e9b45b; }
+.ob-lang:active { transform: scale(.95); }
+.ob-lang:focus-visible { outline: 3px solid #f4d49a; outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .ob-lang:not([aria-pressed="true"]):hover { border-color: rgba(251,241,223,.35); } }
+@media (max-width: 800px) {
+  .ob-langs { left: 12px; gap: 2px; padding: 3px; }
+  .ob-lang { min-height: 32px; padding: 4px; }
+  .ob-lang-code { display: none; }
+  .ob-skip { right: 12px; padding: 7px 12px; font-size: .74rem; }
+  .ob-interests { padding-top: 64px; }
+}
+@media (prefers-reduced-motion: reduce) { .ob-langs { animation: none; opacity: 1; } }

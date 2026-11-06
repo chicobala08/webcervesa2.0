@@ -223,6 +223,7 @@ window.__I18N_PATTERNS = (() => {
         if (save) { try { localStorage.setItem('cervesa-lang', lang); } catch (e) {} }
         if (btn) { btn.textContent = lang === 'zh' ? '中' : lang.toUpperCase(); btn.setAttribute('aria-label', t('Canvia l’idioma') + ': ' + LANGS.find(([c]) => c === lang)[1]); }
         menu && menu.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.lang === lang)));
+        document.querySelectorAll('#onboardingLangs .ob-lang').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
       }
 
       // Selector d'idioma, al costat del botó A+
@@ -274,6 +275,19 @@ window.__I18N_PATTERNS = (() => {
         window.addEventListener('scroll', () => { if (!menu.hidden) place(); }, { passive: true });
       }
 
+      // Selector d'idioma a l'entrada: qui no sap català pot canviar-lo abans de començar
+      const obLangs = document.getElementById('onboardingLangs');
+      if (obLangs && !RECORD) {
+        LANGS.forEach(([code, name]) => {
+          const b = document.createElement('button');
+          b.type = 'button'; b.className = 'ob-lang'; b.dataset.lang = code; b.title = name;
+          b.lang = code === 'zh' ? 'zh-Hans' : code;
+          b.setAttribute('aria-label', name);
+          b.innerHTML = `<span class="lang-flag" aria-hidden="true">${FLAGS[code]}</span><span class="ob-lang-code" aria-hidden="true">${code === 'zh' ? '中文' : code.toUpperCase()}</span>`;
+          b.addEventListener('click', () => setLang(code, true));
+          obLangs.appendChild(b);
+        });
+      }
       window.__setLang = code => setLang(code, false);
       setLang(store || 'ca', false);
     })();
