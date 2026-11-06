@@ -1801,6 +1801,29 @@
         flood.remove();
       });
 
+      // Malt en relleu: quan hi passes el ratolí s'inclina cap al cursor, s'aixeca i li cau la llum
+      const tilt = document.getElementById('onboardingMaltTilt');
+      if (tilt && !reduced && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        const zone = tilt.closest('.ob-malt') || tilt;
+        let tx = 0, ty = 0, tz = 0, cx = 0, cy = 0, cz = 0, raf = 0, mx = 50, my = 30;
+        const loop = () => {
+          cx += (tx - cx) * .14; cy += (ty - cy) * .14; cz += (tz - cz) * .14;   // molla suau
+          tilt.style.transform = `perspective(700px) rotateX(${cy.toFixed(2)}deg) rotateY(${cx.toFixed(2)}deg) translateZ(${cz.toFixed(1)}px) scale(${(1 + cz / 600).toFixed(4)})`;
+          tilt.style.setProperty('--mx', mx + '%'); tilt.style.setProperty('--my', my + '%');
+          tilt.style.setProperty('--lift', (cz / 30).toFixed(3));
+          if (Math.abs(tx - cx) + Math.abs(ty - cy) + Math.abs(tz - cz) > .02) raf = requestAnimationFrame(loop);
+          else raf = 0;
+        };
+        const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+        zone.addEventListener('pointermove', e => {
+          const r = tilt.getBoundingClientRect();
+          const px = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), py = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+          tx = (px - .5) * 22; ty = (.5 - py) * 18; tz = 30; mx = px * 100; my = py * 100;
+          tilt.classList.add('is-hover'); kick();
+        });
+        zone.addEventListener('pointerleave', () => { tx = 0; ty = 0; tz = 0; tilt.classList.remove('is-hover'); kick(); });
+      }
+
       // ----- Enquesta en tres passos: respostes anònimes per al Treball de Recerca -----
       // Supabase: posa aquí la URL del projecte i la clau pública (publishable / anon).
       // La clau pública es pot veure al navegador; la taula només deixa AFEGIR files, no llegir-les.

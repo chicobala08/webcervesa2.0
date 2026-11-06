@@ -3057,3 +3057,14 @@ body.onboarding-active #inici .glass .b { animation: none !important; opacity: 0
   .ob-interests { padding-top: 64px; }
 }
 @media (prefers-reduced-motion: reduce) { .ob-langs { animation: none; opacity: 1; } }
+
+/* Malt en relleu a l'enquesta */
+.ob-malt-tilt { position: relative; width: min(100%, 250px); transform-style: preserve-3d; will-change: transform; --lift: 0; }
+.ob-malt-tilt .ob-malt-img { width: 100%; }
+.ob-malt-tilt::before { content: ""; position: absolute; left: 14%; right: 14%; bottom: -4%; height: 12%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.45), transparent); transform: translateZ(-40px) scale(calc(1 + var(--lift) * .25)); opacity: calc(.55 + var(--lift) * .35); pointer-events: none; }
+.ob-malt-shine { position: absolute; inset: 0; pointer-events: none; opacity: 0; mix-blend-mode: soft-light;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.95), rgba(255,255,255,0) 45%);
+  -webkit-mask: url(malt-presenter.webp?v=11) center / contain no-repeat; mask: url(malt-presenter.webp?v=11) center / contain no-repeat;
+  transition: opacity 260ms ease; }
+.ob-malt-tilt.is-hover .ob-malt-shine { opacity: 1; }
+@media (max-width: 800px) { .ob-malt-tilt { width: 96px; } }
