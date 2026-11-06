@@ -816,29 +816,205 @@
       if(event.key==='Escape' && quizVictoryOverlay && !quizVictoryOverlay.hidden) closeQuizVictory();
     });
 
-    function throwTomatoes() {
-      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const layer=document.getElementById('audienceEffects');
-      if(!layer) return;
-      layer.replaceChildren();
-      for(let i=0;i<6;i++) {
-        const tomato=document.createElement('span');
-        tomato.className='flying-tomato';
-        tomato.textContent='🍅';
-        const startX=17+Math.random()*42, startY=18+Math.random()*53;
-        const travelX=25+Math.random()*28, travelY=-28+Math.random()*48;
-        const spin=Math.round(220+Math.random()*520), delay=Math.random()*.22;
-        tomato.style.setProperty('--start-x',startX+'%');
-        tomato.style.setProperty('--start-y',startY+'%');
-        tomato.style.setProperty('--travel-x',travelX+'vw');
-        tomato.style.setProperty('--travel-y',travelY+'vh');
-        tomato.style.setProperty('--spin',spin+'deg');
-        tomato.style.setProperty('--flight-delay',delay+'s');
-        layer.appendChild(tomato);
 
+    // ===== Sons del concurs: campanetes quan l'encertes, trombó trist quan falles =====
+    function playCorrectSound() {
+      withMaltAudio(context => {
+        try {
+          const now = context.currentTime + .01;
+          const master = context.createGain();
+          master.gain.value = .9;
+          master.connect(context.destination);
+          // Arpegi brillant tipus "ding-ding-ding!" (Do major que puja)
+          [[1046.5, 0], [1318.5, .085], [1568, .17], [2093, .255]].forEach(([freq, at], i) => {
+            [1, 2.01, 3.02].forEach((mult, h) => {
+              const osc = context.createOscillator(), gain = context.createGain();
+              osc.type = h === 0 ? 'triangle' : 'sine';
+              osc.frequency.setValueAtTime(freq * mult, now + at);
+              const peak = (h === 0 ? .07 : h === 1 ? .022 : .01) * (i === 3 ? 1.25 : 1);
+              const len = i === 3 ? .9 : .38;
+              gain.gain.setValueAtTime(.0001, now + at);
+              gain.gain.exponentialRampToValueAtTime(peak, now + at + .008);
+              gain.gain.exponentialRampToValueAtTime(.0001, now + at + len);
+              osc.connect(gain); gain.connect(master);
+              osc.start(now + at); osc.stop(now + at + len + .02);
+            });
+          });
+          // Espurneig per sobre
+          const source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
+          source.buffer = makeAudienceNoise(context, .7);
+          filter.type = 'highpass'; filter.frequency.value = 6500;
+          gain.gain.setValueAtTime(.0001, now + .22);
+          gain.gain.exponentialRampToValueAtTime(.05, now + .28);
+          gain.gain.exponentialRampToValueAtTime(.0001, now + .9);
+          source.connect(filter); filter.connect(gain); gain.connect(master);
+          source.start(now + .22); source.stop(now + .92);
+          // Picarols de públic content
+          const noise = makeAudienceNoise(context, .07);
+          for (let i = 0; i < 16; i++) {
+            const clap = context.createBufferSource(), bp = context.createBiquadFilter(), g = context.createGain();
+            clap.buffer = noise; bp.type = 'bandpass'; bp.frequency.value = 1300 + Math.random() * 1200; bp.Q.value = 1;
+            const at = now + .3 + Math.random() * .8;
+            g.gain.setValueAtTime(.0001, at); g.gain.exponentialRampToValueAtTime(.03 + Math.random() * .025, at + .005); g.gain.exponentialRampToValueAtTime(.0001, at + .06);
+            clap.connect(bp); bp.connect(g); g.connect(master); clap.start(at); clap.stop(at + .08);
+          }
+        } catch (error) {}
+      });
+    }
 
+    function playWrongSound() {
+      withMaltAudio(context => {
+        try {
+          const now = context.currentTime + .01;
+          const filter = context.createBiquadFilter();
+          filter.type = 'lowpass'; filter.frequency.value = 1100; filter.Q.value = 2;
+          const master = context.createGain(); master.gain.value = .9;
+          filter.connect(master); master.connect(context.destination);
+          // "Uah-uah-uah-uaaah": quatre notes que baixen, l'última amb vibrato
+          const notes = [[392, 0, .3], [370, .32, .3], [349, .64, .3], [330, .96, .9]];
+          notes.forEach(([freq, at, len], i) => {
+            const osc = context.createOscillator(), gain = context.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freq * 1.03, now + at);
+            osc.frequency.exponentialRampToValueAtTime(freq, now + at + .06);
+            if (i === 3) {
+              const lfo = context.createOscillator(), depth = context.createGain();
+              lfo.frequency.value = 6.5; depth.gain.value = 9;
+              lfo.connect(depth); depth.connect(osc.frequency);
+              lfo.start(now + at + .15); lfo.stop(now + at + len);
+              osc.frequency.exponentialRampToValueAtTime(freq * .9, now + at + len);
+            }
+            gain.gain.setValueAtTime(.0001, now + at);
+            gain.gain.exponentialRampToValueAtTime(.06, now + at + .03);
+            gain.gain.setValueAtTime(.06, now + at + len - .08);
+            gain.gain.exponentialRampToValueAtTime(.0001, now + at + len);
+            // Sordina de trompeta: el filtre s'obre i es tanca a cada nota
+            filter.frequency.setValueAtTime(500, now + at);
+            filter.frequency.linearRampToValueAtTime(1300, now + at + .12);
+            filter.frequency.linearRampToValueAtTime(600, now + at + len);
+            osc.connect(gain); gain.connect(filter);
+            osc.start(now + at); osc.stop(now + at + len + .02);
+          });
+        } catch (error) {}
+      });
+    }
+
+    function playSplat(delay) {
+      withMaltAudio(context => {
+        try {
+          const at = context.currentTime + delay;
+          const source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
+          source.buffer = makeAudienceNoise(context, .25);
+          filter.type = 'lowpass'; filter.frequency.setValueAtTime(1800, at); filter.frequency.exponentialRampToValueAtTime(180, at + .2);
+          gain.gain.setValueAtTime(.0001, at); gain.gain.exponentialRampToValueAtTime(.22, at + .006); gain.gain.exponentialRampToValueAtTime(.0001, at + .22);
+          source.connect(filter); filter.connect(gain); gain.connect(context.destination);
+          source.start(at); source.stop(at + .25);
+          const thump = context.createOscillator(), tg = context.createGain();
+          thump.frequency.setValueAtTime(140, at); thump.frequency.exponentialRampToValueAtTime(55, at + .12);
+          tg.gain.setValueAtTime(.0001, at); tg.gain.exponentialRampToValueAtTime(.12, at + .005); tg.gain.exponentialRampToValueAtTime(.0001, at + .14);
+          thump.connect(tg); tg.connect(context.destination); thump.start(at); thump.stop(at + .15);
+        } catch (error) {}
+      });
+    }
+
+    // Capa d'efectes a pantalla completa (només transform i opacity: van fluids al mòbil)
+    function fxLayer() {
+      let layer = document.getElementById('fxLayer');
+      if (!layer) {
+        layer = document.createElement('div');
+        layer.id = 'fxLayer'; layer.className = 'fx-layer'; layer.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(layer);
       }
-      window.setTimeout(()=>layer.replaceChildren(),1900);
+      return layer;
+    }
+    const fxReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fxSmall = () => window.matchMedia('(max-width: 700px)').matches;
+
+    // ===== Confeti: esclata des de la resposta correcta, amb gravetat i fregament de l'aire =====
+    function launchConfetti(originEl) {
+      if (fxReduced() || !Element.prototype.animate) return;
+      const layer = fxLayer();
+      const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2 - 40, top: innerHeight / 2, width: 80, height: 0 };
+      const ox = r.left + r.width / 2, oy = r.top + r.height / 2;
+      const colors = ['#edbf56', '#f39320', '#fff3c4', '#438f86', '#e87964', '#8ebc84', '#ffd25a'];
+      const shapes = ['', 'is-dot', 'is-star', 'is-ribbon', '', 'is-star'];
+      const count = fxSmall() ? 30 : 56;
+      const ring = document.createElement('span');
+      ring.className = 'fx-ring'; layer.appendChild(ring);
+      ring.animate([{ transform: `translate(${ox}px,${oy}px) scale(.2)`, opacity: .9 }, { transform: `translate(${ox}px,${oy}px) scale(1.6)`, opacity: 0 }], { duration: 520, easing: 'cubic-bezier(.23,1,.32,1)' }).finished.then(() => ring.remove());
+      const k = 2.4, g = 1700, steps = 14;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('span');
+        p.className = 'fx-confetti ' + shapes[i % shapes.length];
+        p.style.background = colors[i % colors.length];
+        layer.appendChild(p);
+        const angle = (-90 + (Math.random() * 2 - 1) * 62) * Math.PI / 180;
+        const speed = 650 + Math.random() * 900;
+        const vx = Math.cos(angle) * speed, vy = Math.sin(angle) * speed;
+        const life = 1.5 + Math.random() * .9;
+        const spin = (Math.random() < .5 ? -1 : 1) * (360 + Math.random() * 900);
+        const flip = 360 + Math.random() * 1080;
+        const sway = 20 + Math.random() * 40, swayF = 2 + Math.random() * 3;
+        const sx = ox + (Math.random() - .5) * r.width * .6;
+        const frames = [];
+        for (let s = 0; s <= steps; s++) {
+          const t = life * s / steps, e = (1 - Math.exp(-k * t)) / k;
+          const x = sx + vx * e + Math.sin(t * swayF) * sway * (t / life);
+          const y = oy + vy * e + g / k * (t - e);
+          frames.push({ transform: `translate(${x}px,${y}px) rotate(${spin * s / steps}deg) rotateX(${flip * s / steps}deg)`, opacity: s / steps > .72 ? 1 - (s / steps - .72) / .28 : 1 });
+        }
+        p.animate(frames, { duration: life * 1000, easing: 'linear', delay: Math.random() * 60, fill: 'backwards' }).finished.then(() => p.remove());
+      }
+    }
+
+    // ===== Tomàquets: surten del públic, volen cap a la càmera i s'esclafen a la pantalla =====
+    const TOMATO_SVG = '<svg viewBox="0 0 64 64"><ellipse cx="32" cy="37" rx="25" ry="22" fill="#e1352b" stroke="#2b2118" stroke-width="3"/><ellipse cx="22" cy="29" rx="7" ry="4.5" fill="#ff8a73" transform="rotate(-25 22 29)"/><path d="M32 17c-4-6-12-6-14-2 6 0 9 2 10 5-6-1-10 2-10 5 5-3 9-3 14-2 5-1 9-1 14 2 0-3-4-6-10-5 1-3 4-5 10-5-2-4-10-4-14 2z" fill="#3f9b4b" stroke="#2b2118" stroke-width="2.4" stroke-linejoin="round"/></svg>';
+    function splatSvg(seed) {
+      const blobs = [];
+      for (let i = 0; i < 9; i++) {
+        const a = (i / 9) * Math.PI * 2 + seed, d = 34 + ((i * 37 + seed * 100) % 14), rr = 7 + ((i * 13 + seed * 50) % 9);
+        blobs.push(`<circle cx="${(75 + Math.cos(a) * d).toFixed(1)}" cy="${(75 + Math.sin(a) * d).toFixed(1)}" r="${rr}"/>`);
+      }
+      return `<svg viewBox="0 0 150 150"><g fill="#d42c22">${blobs.join('')}<path d="M75 36c22 0 40 16 40 38s-18 40-40 40-40-18-40-40 18-38 40-38z"/><path class="fx-drip" d="M58 108q-2 26 3 34 4 6 8 0 3-10 1-34zM92 104q2 16-1 22-3 5-6 0-2-8 0-22z"/></g><g fill="#ff7a62" opacity=".85"><ellipse cx="62" cy="62" rx="12" ry="7" transform="rotate(-30 62 62)"/></g><g fill="#ffd9a8"><ellipse cx="80" cy="80" rx="3" ry="2"/><ellipse cx="70" cy="88" rx="3" ry="2" transform="rotate(40 70 88)"/><ellipse cx="88" cy="70" rx="3" ry="2" transform="rotate(-20 88 70)"/></g><path d="M68 74l6-6 4 5 6-5" fill="none" stroke="#3f9b4b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    }
+    function throwTomatoes() {
+      if (fxReduced() || !Element.prototype.animate) return;
+      const layer = fxLayer();
+      const n = fxSmall() ? 3 : 4;
+      const theatre = document.querySelector('.quiz-theatre');
+      for (let i = 0; i < n; i++) {
+        const delay = i * 170 + Math.random() * 60;
+        const tx = innerWidth * (.22 + .56 * ((i + .5) / n)) + (Math.random() - .5) * 60;
+        const ty = innerHeight * (.28 + Math.random() * .34);
+        const sx = tx + (Math.random() - .5) * innerWidth * .5, sy = innerHeight + 60;
+        const peak = Math.min(ty, sy) - innerHeight * (.12 + Math.random() * .1);
+        const spin = (Math.random() < .5 ? -1 : 1) * (300 + Math.random() * 400);
+        const tomato = document.createElement('span');
+        tomato.className = 'fx-tomato'; tomato.innerHTML = TOMATO_SVG;
+        layer.appendChild(tomato);
+        const flight = tomato.animate([
+          { transform: `translate(${sx}px,${sy}px) scale(.35) rotate(0deg)` },
+          { transform: `translate(${(sx + tx) / 2}px,${peak}px) scale(.75) rotate(${spin * .6}deg)`, offset: .55, easing: 'cubic-bezier(.4,0,1,1)' },
+          { transform: `translate(${tx}px,${ty}px) scale(1.5) rotate(${spin}deg)` }
+        ], { duration: 560, delay, easing: 'cubic-bezier(0,0,.6,1)', fill: 'both' });
+        playSplat((delay + 560) / 1000);
+        flight.finished.then(() => {
+          tomato.remove();
+          const splat = document.createElement('span');
+          splat.className = 'fx-splat'; splat.innerHTML = splatSvg(Math.random() * 6);
+          layer.appendChild(splat);
+          const rot = Math.round((Math.random() - .5) * 40);
+          const base = `translate(${tx}px,${ty}px) rotate(${rot}deg)`;
+          splat.animate([
+            { transform: `${base} scale(.3,.3)`, opacity: 1 },
+            { transform: `${base} scale(1.18,1.05)`, opacity: 1, offset: .12 },
+            { transform: `${base} scale(.96,1)`, opacity: 1, offset: .2 },
+            { transform: `${base} scale(1)`, opacity: 1, offset: .55 },
+            { transform: `translate(${tx}px,${ty + 46}px) rotate(${rot}deg) scale(1,1.12)`, opacity: 0 }
+          ], { duration: 1500, easing: 'cubic-bezier(.23,1,.32,1)' }).finished.then(() => splat.remove());
+          if (theatre) theatre.animate([{ transform: 'none' }, { transform: `translate(${(Math.random() - .5) * 10}px,4px)` }, { transform: 'none' }], { duration: 180, easing: 'ease-out' });
+        });
+      }
     }
 
     function typeGuideMessage(message) {
@@ -909,29 +1085,6 @@
       }
     }
 
-    function launchConfetti() {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const layer = $('confettiLayer');
-      if (!layer) return;
-      const colors = ['#e87964', '#edbf56', '#438f86', '#b8a6df', '#f7d6a1', '#8ebc84', '#f4a8a0'];
-      if (window.confettiCleanupTimer) window.clearTimeout(window.confettiCleanupTimer);
-      layer.replaceChildren();
-      const fragment = document.createDocumentFragment();
-      const pieces = window.matchMedia('(max-width: 700px)').matches ? 26 : 54;
-      for (let i = 0; i < pieces; i++) {
-        const piece = document.createElement('span');
-        piece.className = 'confetti-piece';
-        piece.style.left = `${Math.random() * 100}%`;
-        piece.style.background = colors[i % colors.length];
-        piece.style.setProperty('--fall-time', `${1.35 + Math.random() * .9}s`);
-        piece.style.setProperty('--fall-delay', `${Math.random() * .22}s`);
-        piece.style.setProperty('--drift', `${Math.round((Math.random() - .5) * 240)}px`);
-        piece.style.setProperty('--spin', `${Math.round(360 + Math.random() * 900)}deg`);
-        fragment.appendChild(piece);
-      }
-      layer.appendChild(fragment);
-      window.confettiCleanupTimer = window.setTimeout(() => { layer.replaceChildren(); }, 2700);
-    }
 
     function renderQuestion() {
       const current = questions[quizIndex];
@@ -967,12 +1120,12 @@
         quizScore++;
         quizFeedback.textContent = `Correcte. ${current.e}`;
         setGuideMessage('correct');
-        playAudienceReaction('applause');
-        launchConfetti();
+        playCorrectSound();
+        launchConfetti(buttons[current.c]);
       } else {
         quizFeedback.textContent = `La resposta correcta és «${current.a[current.c]}». ${current.e}`;
         setGuideMessage('incorrect');
-        playAudienceReaction('boo');
+        playWrongSound();
         throwTomatoes();
       }
       scoreLabel.textContent = `${quizScore} encerts`;
