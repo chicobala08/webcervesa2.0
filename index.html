@@ -20,7 +20,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <noscript><style>.reveal, .ingredient-icon { opacity: 1 !important; translate: none !important; scale: 1 !important; }.beer-onboarding{display:none!important}body.onboarding-active{overflow:auto!important}</style></noscript>
   <link rel="stylesheet" href="style.css?v=13">
-  <script>try{var q=location.search;if(/[?&]horitzontal\b/.test(q))localStorage.setItem('cervesa-layout','h');if(/[?&]vertical\b/.test(q))localStorage.removeItem('cervesa-layout');if(localStorage.getItem('cervesa-layout')==='h'&&matchMedia('(min-width: 1024px)').matches){document.documentElement.classList.add('layout-h');document.write('<link rel="stylesheet" href="horitzontal.css?v=1">')}}catch(e){}</script>
+  <link rel="stylesheet" href="horitzontal.css?v=2" media="(min-width: 1024px)">
+  <script>try{if(matchMedia('(min-width: 1024px)').matches)document.documentElement.classList.add('layout-h');localStorage.removeItem('cervesa-layout')}catch(e){}</script>
 </head>
 <body class="onboarding-active">
 
@@ -189,6 +190,24 @@
                   <label class="ob-chip"><input type="radio" name="guess_nonalcoholic" value="nsnc"><span>No ho sé</span></label>
                 </div>
               </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqHops">Què creus que és el llúpol?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqHops">
+                  <label class="ob-chip"><input type="radio" name="guess_hops" value="flor"><span>Una flor que dona amargor i aroma</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_hops" value="cereal"><span>Un cereal</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_hops" value="llevat"><span>Un tipus de llevat</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_hops" value="nsnc"><span>No ho sé</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqCereal">Quin cereal creus que es fa servir més per fer cervesa?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqCereal">
+                  <label class="ob-chip"><input type="radio" name="guess_cereal" value="ordi"><span>Ordi</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_cereal" value="arros"><span>Arròs</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_cereal" value="blat_moro"><span>Blat de moro</span></label>
+                  <label class="ob-chip"><input type="radio" name="guess_cereal" value="nsnc"><span>No ho sé</span></label>
+                </div>
+              </div>
             </fieldset>
 
             <fieldset class="ob-step" data-step="3" hidden>
@@ -218,6 +237,26 @@
                   <label class="ob-chip"><input type="radio" name="interestLevel" value="inici"><span>Començo de zero</span></label>
                   <label class="ob-chip"><input type="radio" name="interestLevel" value="mitja"><span>Ja en sé una mica</span></label>
                   <label class="ob-chip"><input type="radio" name="interestLevel" value="aprofundir"><span>Vull aprofundir</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqLearn">Com t'agrada més aprendre?</p>
+                <div class="ob-chips" role="radiogroup" aria-labelledby="obqLearn">
+                  <label class="ob-chip"><input type="radio" name="learn_style" value="llegint"><span>Llegint</span></label>
+                  <label class="ob-chip"><input type="radio" name="learn_style" value="jocs"><span>Amb jocs i reptes</span></label>
+                  <label class="ob-chip"><input type="radio" name="learn_style" value="imatges"><span>Amb imatges i vídeos</span></label>
+                  <label class="ob-chip"><input type="radio" name="learn_style" value="experimentant"><span>Experimentant</span></label>
+                </div>
+              </div>
+              <div class="ob-q">
+                <p class="ob-q-title" id="obqSci">Quant t'interessa la ciència, en general?</p>
+                <div class="ob-chips ob-chips--scale" role="radiogroup" aria-labelledby="obqSci">
+                  <label class="ob-chip"><input type="radio" name="science_interest" value="1"><span>1</span></label>
+                  <label class="ob-chip"><input type="radio" name="science_interest" value="2"><span>2</span></label>
+                  <label class="ob-chip"><input type="radio" name="science_interest" value="3"><span>3</span></label>
+                  <label class="ob-chip"><input type="radio" name="science_interest" value="4"><span>4</span></label>
+                  <label class="ob-chip"><input type="radio" name="science_interest" value="5"><span>5</span></label>
+                  <span class="ob-scale-ends" aria-hidden="true"><span>Gens</span><span>Molt</span></span>
                 </div>
               </div>
               <div class="ob-q">
@@ -1190,9 +1229,9 @@
     <svg viewBox="0 0 40 52" aria-hidden="true"><defs><clipPath id="jgClip"><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z"/></clipPath></defs><g clip-path="url(#jgClip)"><rect x="0" y="0" width="40" height="52" fill="#f1d9a0"/><rect class="jl" x="0" y="0" width="40" height="52" fill="#edbf56"/></g><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z" fill="none" stroke="#26354a" stroke-width="3" stroke-linejoin="round"/><path d="M30 15h3a4.5 4.5 0 0 1 0 12h-4" fill="none" stroke="#26354a" stroke-width="3" stroke-linecap="round"/></svg>
     <span class="journey-text"><span class="journey-count" id="journeyCount">0/0</span><span class="journey-label">explorat</span></span>
   </div>
-<script src="app.js?v=13"></script>
-  <script src="i18n.js?v=15"></script>
-  <script src="horitzontal.js?v=1"></script>
+<script src="app.js?v=14"></script>
+  <script src="i18n.js?v=16"></script>
+  <script src="horitzontal.js?v=2"></script>
 </body>
 </html>
 

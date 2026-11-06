@@ -1,4 +1,4 @@
-/* ===== PROVA: vista horitzontal per a ordinador (només amb ?horitzontal) =====
+/* ===== Vista horitzontal per a ordinador (1024 px o més) =====
    Cada secció és un panell de pantalla completa. La roda del ratolí llegeix el panell cap avall
    i, quan arribes al final, la pàgina llisca cap a la dreta fins al següent.
    El menú lateral passa a ser un moll a la part de baix. */
@@ -71,12 +71,6 @@
   .h-next-fill { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: #edbf56; transform-origin: 0 50%; transform: scaleX(0); }
   .h-next small { display: block; color: #b9c3d1; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 
-  .h-exit {
-    position: fixed; z-index: 121; top: 16px; right: 16px; padding: 8px 14px; border: 1px solid rgba(38,53,74,.2);
-    border-radius: 999px; color: #26354a; background: rgba(255,253,247,.95); font: inherit; font-size: .78rem; font-weight: 850; cursor: pointer;
-    transition: transform 160ms cubic-bezier(.23,1,.32,1);
-  }
-  .h-exit:active { transform: scale(.97); }
 
   /* Entrada suau del contingut de cada panell en arribar-hi */
   html.layout-h #main-content > section > .wrap { transition: transform 600ms cubic-bezier(.23,1,.32,1), opacity 600ms ease; }
@@ -86,4 +80,4 @@
   html.layout-h #main-content > section > .wrap { transition: none; }
   html.layout-h #main-content > section.h-away > .wrap { transform: none; opacity: 1; }
 }
-@media (max-width: 1023px) { .h-meter, .h-next, .h-exit { display: none !important; } }
+@media (max-width: 1023px) { .h-meter, .h-next { display: none !important; } }

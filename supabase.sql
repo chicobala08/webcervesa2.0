@@ -12,9 +12,13 @@ create table if not exists public.intro_responses (
   guess_yeast text check (guess_yeast in ('color','fermenta','amargor','nsnc')),
   guess_origin text check (guess_origin in ('200','1000','milers','nsnc')),
   guess_nonalcoholic text check (guess_nonalcoholic in ('si','no','nsnc')),
+  guess_hops text check (guess_hops in ('flor','cereal','llevat','nsnc')),
+  guess_cereal text check (guess_cereal in ('ordi','arros','blat_moro','nsnc')),
   interest_part text check (interest_part in ('historia','ciencia','ingredients','tot')),
   interest_discover text check (interest_discover in ('origen','fermentacio','recepta','curiositats')),
   interest_level text check (interest_level in ('inici','mitja','aprofundir')),
+  learn_style text check (learn_style in ('llegint','jocs','imatges','experimentant')),
+  science_interest smallint check (science_interest between 1 and 5),
   wish text check (char_length(wish) <= 200)
 );
 

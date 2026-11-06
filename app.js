@@ -1829,7 +1829,10 @@
         'found_via:qr': 'El codi QR funciona! Que bé.',
         'found_via': 'Gràcies per passar per aquí!',
         'nsnc': 'Cap problema: per això hi som!',
-        'guess': 'Interessant… ho comprovarem durant el recorregut.'
+        'guess': 'Interessant… ho comprovarem durant el recorregut.',
+        'learn_style:jocs': 'Doncs tinc un concurs i un simulador esperant-te!',
+        'learn_style': 'Apuntat! Hi ha una mica de tot a la web.',
+        'science_interest': "Gràcies! Intentaré que t'interessi encara més."
       };
       const STEP_LINES = {
         1: "Hola! Sóc en Malt. Abans de començar, t'acompanyo en tres passos ràpids.",
@@ -1904,7 +1907,9 @@
           age_range: val('age_range'), role: val('role'), found_via: val('found_via'),
           guess_ingredients: val('guess_ingredients'), guess_yeast: val('guess_yeast'),
           guess_origin: val('guess_origin'), guess_nonalcoholic: val('guess_nonalcoholic'),
+          guess_hops: val('guess_hops'), guess_cereal: val('guess_cereal'),
           interest_part: val('interestPart'), interest_discover: val('interestDiscover'), interest_level: val('interestLevel'),
+          learn_style: val('learn_style'), science_interest: val('science_interest') ? Number(val('science_interest')) : null,
           wish
         };
         if (Object.entries(row).every(([k, v]) => k === 'lang' || v == null)) return;   // no ha respost res

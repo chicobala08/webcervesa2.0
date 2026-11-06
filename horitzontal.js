@@ -1,9 +1,11 @@
-// ===== PROVA: vista horitzontal per a ordinador =====
-// S'activa amb ?horitzontal a l'adreça i es desactiva amb ?vertical o amb el botó de dalt.
+// ===== Vista horitzontal per a ordinador =====
+// Vista oficial per a pantalles d'ordinador (1024 px o més). Al mòbil i la tauleta, la web és vertical.
 (() => {
   const root = document.documentElement;
-  if (!root.classList.contains('layout-h')) return;
   const mq = window.matchMedia('(min-width: 1024px)');
+  // Si la finestra creua el límit (p. ex. es fa més petita), es torna a carregar amb la vista que toca
+  mq.addEventListener?.('change', () => location.reload());
+  if (!root.classList.contains('layout-h')) return;
   const main = document.getElementById('main-content');
   if (!main) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -25,16 +27,10 @@
   const next = document.createElement('button');
   next.type = 'button'; next.className = 'h-next';
   next.innerHTML = '<span><small>Continua</small><span class="h-next-name"></span></span><span class="h-next-arrow" aria-hidden="true">→</span><span class="h-next-fill"></span>';
-  const exit = document.createElement('button');
-  exit.type = 'button'; exit.className = 'h-exit'; exit.textContent = 'Torna a la vista vertical';
-  document.body.append(meter, next, exit);
+  document.body.append(meter, next);
   const count = meter.querySelector('.h-meter-count'), fill = meter.querySelector('.h-meter-fill');
   const nextName = next.querySelector('.h-next-name'), nextFill = next.querySelector('.h-next-fill');
 
-  exit.addEventListener('click', () => {
-    try { localStorage.removeItem('cervesa-layout'); } catch (e) {}
-    location.href = location.pathname;
-  });
 
   const width = () => main.clientWidth;
   const index = () => Math.round(main.scrollLeft / width());

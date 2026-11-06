@@ -3036,3 +3036,6 @@ body.onboarding-active #inici .glass .b { animation: none !important; opacity: 0
   .ob-nav { width: 100%; }
   .ob-nav .ob-go { flex: 1; }
 }
+.ob-chips--scale { position: relative; padding-bottom: 20px; }
+.ob-chips--scale .ob-chip { min-width: 58px; justify-content: center; }
+.ob-scale-ends { position: absolute; left: 4px; right: 4px; bottom: 0; display: flex; justify-content: space-between; color: #93a3a1; font-size: .72rem; font-weight: 800; max-width: 340px; }
