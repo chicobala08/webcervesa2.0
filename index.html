@@ -19,7 +19,7 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <noscript><style>.reveal, .ingredient-icon { opacity: 1 !important; translate: none !important; scale: 1 !important; }.beer-onboarding{display:none!important}body.onboarding-active{overflow:auto!important}</style></noscript>
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body class="onboarding-active">
 
@@ -705,9 +705,33 @@
             
             <div class="guide-mascot-wrap">
               <div class="guide-mascot">
-                <img class="malt-presenter" src="malt-presenter.webp?v=11" alt="Malt, el presentador del gran concurs" width="511" height="476" decoding="async">
-                <span class="malt-react malt-react--stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-                <svg class="malt-react malt-react--sweat" viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2C13 9 18 13 18 19a8 8 0 0 1-16 0c0-6 5-10 8-17z" fill="#8fd3f4" stroke="#2b2118" stroke-width="2"/><path d="M7 18q0 4 3 5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                <img class="malt-body" src="malt.svg?v=7" alt="" width="260" height="300" decoding="async">
+                <svg class="malt-faces" viewBox="0 0 260 300" role="img" aria-labelledby="maltTitle maltDesc">
+                <title id="maltTitle">Malt, el presentador del gran concurs</title>
+                <desc id="maltDesc">Personatge de cap rodó amb cabells d'escuma de cervesa, vestit taronja i corbata, que aixeca una gerra i reacciona a cada resposta.</desc>
+                <!-- Expressió neutral: segur de si mateix -->
+                <g class="malt-face-neutral">
+                  <path d="M114 136l24 9" stroke="#2b2118" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M160 142l26-2" stroke="#2b2118" stroke-width="6" stroke-linecap="round"/>
+                  <ellipse cx="129" cy="154" rx="5.5" ry="7" fill="#2b2118"/><ellipse cx="172" cy="153" rx="5.5" ry="7" fill="#2b2118"/>
+                  <circle cx="131" cy="151" r="1.8" fill="#fff"/><circle cx="174" cy="150" r="1.8" fill="#fff"/>
+                  <path d="M138 172q12 12 26 0" fill="none" stroke="#2b2118" stroke-width="5" stroke-linecap="round"/>
+                </g>
+                <!-- Expressió de celebració -->
+                <g class="malt-face-happy">
+                  <path d="M116 134q12-8 24-1M160 133q12-7 24 1" fill="none" stroke="#2b2118" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M119 156q10-12 21 0M161 156q10-12 21 0" fill="none" stroke="#2b2118" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M132 168q18 26 38 0z" fill="#2b2118" stroke="#2b2118" stroke-width="4" stroke-linejoin="round"/>
+                  <path d="M143 179q8 5 16 0" fill="none" stroke="#f0765a" stroke-width="5" stroke-linecap="round"/>
+                </g>
+                <!-- Expressió quan cal repassar -->
+                <g class="malt-face-worried">
+                  <path d="M116 142l22-8M162 134l22 8" stroke="#2b2118" stroke-width="6" stroke-linecap="round"/>
+                  <ellipse cx="129" cy="155" rx="6.5" ry="8" fill="#2b2118"/><ellipse cx="171" cy="155" rx="6.5" ry="8" fill="#2b2118"/>
+                  <circle cx="131" cy="152" r="2" fill="#fff"/><circle cx="173" cy="152" r="2" fill="#fff"/>
+                  <path d="M134 178q8-7 16 0t16 0" fill="none" stroke="#2b2118" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                </svg>
               </div>
               <div class="guide-name">MALT <span>· presentador oficial</span></div>
             </div>
