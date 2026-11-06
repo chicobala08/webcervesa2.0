@@ -2640,6 +2640,9 @@
     html:lang(zh-Hans) .hero h1 { font-size: clamp(2.4rem, 5.2vw, 4.4rem) !important; line-height: 1.2 !important; max-width: none !important; }
     html:lang(zh-Hans) .hero h1 em { white-space: nowrap; }
     html:lang(zh-Hans) h2 { line-height: 1.25; }
+    .lang-menu button { display: flex; align-items: center; gap: 10px; }
+    .lang-flag { width: 1.4em; display: inline-grid; place-items: center; font-size: 1.15rem; line-height: 1; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+    .lang-flag svg { width: 1.3em; height: .87em; border-radius: 2px; box-shadow: 0 0 0 1px rgba(38,53,74,.15); }
   </style>
 </head>
 <body>
@@ -5079,7 +5082,11 @@
         LANGS.forEach(([code, name]) => {
           const b = document.createElement('button');
           b.type = 'button'; b.setAttribute('role', 'menuitemradio'); b.dataset.lang = code;
-          b.lang = code === 'zh' ? 'zh-Hans' : code; b.textContent = name;
+          b.lang = code === 'zh' ? 'zh-Hans' : code;
+          const flag = document.createElement('span'); flag.className = 'lang-flag'; flag.setAttribute('aria-hidden', 'true');
+          if (code === 'ca') flag.innerHTML = '<svg viewBox="0 0 9 6"><rect width="9" height="6" fill="#fcdd09"/><path d="M0 1.17h9M0 2.5h9M0 3.83h9M0 5.17h9" stroke="#da121a" stroke-width=".67"/></svg>';
+          else flag.textContent = { es: '🇪🇸', en: '🇬🇧', de: '🇩🇪', zh: '🇨🇳' }[code];
+          b.append(flag, document.createTextNode(name));
           b.addEventListener('click', () => { setLang(code, true); close(); btn.focus(); });
           menu.appendChild(b);
         });
