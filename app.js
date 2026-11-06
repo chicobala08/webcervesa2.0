@@ -1741,12 +1741,12 @@
         document.body.classList.remove('onboarding-active');
         ['.skip-link', '.topbar', '#main-content'].forEach(sel => document.querySelector(sel)?.removeAttribute('inert'));
       };
-      const remember = () => { try { localStorage.setItem(KEY, '1'); } catch (e) {} };
+      const remember = () => { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} };   // l'entrada surt a cada visita nova
 
       // Torna a veure la introducció (enllaç del peu de pàgina)
       document.getElementById('replayIntro')?.addEventListener('click', event => {
         event.preventDefault();
-        try { localStorage.removeItem(KEY); } catch (e) {}
+        try { sessionStorage.removeItem(KEY); } catch (e) {}
         window.scrollTo(0, 0);
         location.reload();
       });
