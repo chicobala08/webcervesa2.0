@@ -3109,3 +3109,70 @@ body.onboarding-active #inici .glass .b { animation: none !important; opacity: 0
   .ob-copy .ob-note-time { margin-top: 8px; }
   .ob-hint { margin-top: 8px; }
 }
+
+/* =====================================================================
+   MÒBIL: que sembli una app (toc, entrades, zones segures) + passada "bolder"
+   ===================================================================== */
+html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; }
+button, a, [role="button"], label, summary { touch-action: manipulation; }
+button, [role="button"], .chip, .ob-chip, .glossary-filter, .quiz-level-btn, .sim-style { -webkit-user-select: none; user-select: none; }
+@media (pointer: coarse) { input, select, textarea { font-size: 16px !important; } }
+.btn:active, .answer:active:not(:disabled), .sim-style:active, .glossary-filter:active, .quiz-level-btn:active, .icon-btn:active { transform: scale(.97); }
+
+@media (max-width: 760px) {
+  /* La línia del temps sortia 3 px per la dreta i deixava moure la pàgina de costat */
+  .history-notes { margin: 0 -15px !important; padding-inline: 15px !important; scroll-padding-inline: 15px; }
+}
+
+@media (max-width: 700px) {
+  /* Barra inferior: respecta la zona del botó d'inici de l'iPhone i el toc no s'enganxa */
+  .topbar { height: calc(76px + env(safe-area-inset-bottom, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px)); }
+  .navlinks { scroll-snap-type: x proximity; scroll-padding-inline: 6px; mask-image: linear-gradient(90deg, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .navlinks a { scroll-snap-align: start; }
+  .navlinks a.active { transform: translateY(-5px) rotate(-2deg); border-color: #26354a; box-shadow: 0 6px 0 rgba(38,53,74,.18); }
+
+  /* Comptador d'exploració: insígnia petita a la dreta, sense tapar el text */
+  .journey { left: auto; right: 10px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); padding: 6px 10px 6px 8px; gap: 6px; box-shadow: 2px 3px 0 rgba(38,53,74,.15); }
+  .journey svg { width: 18px; height: 24px; }
+  .journey-label { display: none; }
+  .journey-count { font-size: .9rem; }
+
+  /* ---- Bolder: cada secció obre amb un cop fort ---- */
+  main > section { padding-top: 64px; }
+  .section-head { margin-bottom: 28px; }
+  .section-head .section-number {
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 6px 12px 6px 10px;
+    border: 2px solid currentColor; border-radius: 999px; font-size: .7rem; letter-spacing: .14em; background: rgba(255,255,255,.55);
+  }
+  .section-head .section-number::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .section-head h2 { font-size: clamp(2.4rem, 11vw, 3rem); line-height: .98; letter-spacing: -.045em; padding-bottom: 16px; }
+  .section-head h2::after { width: 92px; height: 8px; }
+  .section-intro { font-size: 1.04rem; line-height: 1.65; color: #3f5753; }
+  #quiz .section-head .section-number { background: rgba(244,204,112,.12); }
+  #quiz .section-intro { color: #d6dde8; }
+
+  /* Ingredients: icona i títol en una fila, el text a tota l'amplada (es llegeix millor) */
+  .ingredients { gap: 14px; }
+  .ingredients .ingredient { grid-template-columns: 58px minmax(0,1fr); column-gap: 14px; row-gap: 0; padding: 18px; }
+  .ingredients .ingredient .ingredient-icon { grid-row: 1 / span 2; width: 58px; height: 58px; }
+  .ingredients .ingredient .small-label { align-self: end; }
+  .ingredients .ingredient h3 { align-self: start; font-size: 1.45rem; line-height: 1.1; }
+  .ingredients .ingredient > p { grid-column: 1 / -1; margin-top: 12px; font-size: .98rem; }
+
+  /* Botons principals: més grans i fàcils de tocar */
+  .btn { min-height: 52px; padding-inline: 22px; font-size: 1rem; }
+  .hero .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 700px) and (hover: none) {
+  .navlinks a:hover:not(.active) { transform: none; }
+}
+@media (max-width: 700px) {
+  .ingredients .ingredient { grid-template-columns: auto minmax(0,1fr); }
+  .ingredients .ingredient .ingredient-icon { width: 64px !important; height: 64px !important; min-width: 0; margin: 0 !important; }
+  .ingredients .ingredient .ingredient-icon svg { width: 100%; height: 100%; }
+}
+@media (max-width: 700px) {
+  .journey { transition: transform 260ms cubic-bezier(.23,1,.32,1), opacity 200ms ease, background-color .3s ease; }
+  .journey.is-tucked { transform: translateX(calc(100% + 16px)); opacity: 0; }
+}

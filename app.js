@@ -1786,11 +1786,26 @@
     })();
 
 
+    // Mòbil: el comptador d'exploració s'amaga mentre llisques i torna quan pares (no tapa el text)
+    (() => {
+      const badge = document.getElementById('journey');
+      if (!badge) return;
+      const mq = window.matchMedia('(max-width: 700px)');
+      let t = 0;
+      window.addEventListener('scroll', () => {
+        if (!mq.matches) return;
+        badge.classList.add('is-tucked');
+        clearTimeout(t);
+        t = setTimeout(() => badge.classList.remove('is-tucked'), 900);
+      }, { passive: true });
+    })();
+
 // ===== Entrada guiada: omple el got, l'onada et porta a MALT i les respostes trien per on comences =====
     (() => {
       const KEY = 'cervesa-intro-vista';
       const onboarding = document.getElementById('beerOnboarding');
       const openPage = () => {
+        document.getElementById('themeColor')?.setAttribute('content', '#fcf8f1');   // barra del mòbil: fosca a l'entrada, clara a la web
         document.body.classList.remove('onboarding-active');
         ['.skip-link', '.topbar', '#main-content'].forEach(sel => document.querySelector(sel)?.removeAttribute('inert'));
       };
