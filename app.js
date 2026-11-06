@@ -1804,7 +1804,7 @@
       // ----- Enquesta en tres passos: respostes anònimes per al Treball de Recerca -----
       // Supabase: posa aquí la URL del projecte i la clau pública (publishable / anon).
       // La clau pública es pot veure al navegador; la taula només deixa AFEGIR files, no llegir-les.
-      const SURVEY_DB = { url: '', key: '' };
+      const SURVEY_DB = { url: 'https://sbxtgsdddtzsyhbtimfc.supabase.co', key: 'sb_publishable_dF1eFPQTPJ2dmc1pAKs0vQ_RXs64YQE' };
       const SENT_KEY = 'cervesa-enquesta-enviada';
       const hasDb = !!(SURVEY_DB.url && SURVEY_DB.key);
       form.querySelectorAll('[data-needs-db]').forEach(el => { el.hidden = !hasDb; });
