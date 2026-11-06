@@ -1596,8 +1596,8 @@
         glass.classList.add('is-filling');
         status.textContent = "El got s'està omplint...";
 
-        const fillTime = reducedMotion ? 40 : 1550;
-        const pourTime = reducedMotion ? 80 : 780;
+        const fillTime = reducedMotion ? 30 : 1800;
+        const pourTime = reducedMotion ? 50 : 1650;
         window.setTimeout(() => {
           welcome.classList.add('is-pouring');
           status.textContent = 'El got és ple! El recorregut continua.';
@@ -1628,7 +1628,7 @@
           onboarding.remove();
           const main = document.getElementById('main-content');
           if (main) main.focus({ preventScroll: true });
-          document.getElementById('inici')?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
+          document.getElementById('historia')?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
         }, reducedMotion ? 20 : 620);
       });
     })();

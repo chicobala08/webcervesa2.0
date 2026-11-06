@@ -2910,3 +2910,79 @@ body.onboarding-active { overflow: hidden; }
 body.onboarding-active #inici .glass .liquid { animation: none !important; transform: translateY(300px); }
 body.onboarding-active #inici .glass .crest { animation: none !important; opacity: 0; }
 body.onboarding-active #inici .glass .b { animation: none !important; opacity: 0; }
+
+
+/* ===== Entrada integrada V9: vaso que se llena, se derrama y presenta a MALT ===== */
+.onboarding-screen--welcome {
+  display:block; width:100%; max-width:none; height:100%; min-height:100svh;
+  margin:0; padding:0; overflow:hidden; transition:none;
+}
+.onboarding-screen--welcome.is-pouring { transform:none; }
+.onboarding-copy {
+  position:absolute; z-index:3; left:max(7vw,calc((100vw - 1240px)/2));
+  top:50%; width:min(500px,42vw); transform:translateY(-50%);
+}
+.onboarding-copy h1 { max-width:520px; margin:20px 0; color:#fbf1df; font-family:"Young Serif",Georgia,serif; font-size:clamp(2.8rem,5.7vw,5.7rem); font-weight:400; line-height:1.04; letter-spacing:-.045em; }
+.onboarding-copy h1 em { color:#e9b45b; font-style:normal; }
+.onboarding-copy p { max-width:470px; margin:0; color:#c2ccca; font-size:clamp(1rem,1.45vw,1.2rem); line-height:1.8; }
+.onboarding-instruction { display:flex; align-items:center; gap:12px; margin-top:30px; color:#f9e5bf; font-size:.9rem; font-weight:850; }
+.onboarding-instruction-dot { display:grid; place-items:center; width:36px; height:36px; border:1px solid rgba(233,180,91,.55); border-radius:50%; color:#e9b45b; font-size:1.2rem; animation:onboardingHintBob 1.7s ease-in-out infinite; }
+@keyframes onboardingHintBob { 50% { transform:translateY(-5px); } }
+.onboarding-beer-art { position:absolute; right:2vw; top:0; width:min(55vw,700px); height:100%; overflow:visible; filter:drop-shadow(0 28px 36px rgba(0,0,0,.42)); }
+.onboarding-glass {
+  position:absolute; inset:0; display:block; width:100%; height:100%; padding:0; border:0;
+  border-radius:0; background:transparent; cursor:pointer; isolation:isolate; filter:none;
+  transition:none; z-index:2;
+}
+.onboarding-glass svg { position:relative; display:block; width:100%; height:100%; overflow:visible; }
+.onboarding-glass:focus-visible { outline:3px solid #f4d49a; outline-offset:-12px; border-radius:28px; }
+.onboarding-glass:disabled { cursor:default; }
+.onboarding-liquid { transform-box:fill-box; transform-origin:center bottom; transform:scaleY(0); transition:transform 1.8s cubic-bezier(.2,.78,.2,1); }
+.onboarding-glass.is-filling .onboarding-liquid { transform:scaleY(1); }
+.onboarding-foam-top { opacity:0; transform:translateY(20px); transform-origin:center; transition:opacity .5s ease 1.25s,transform .65s ease 1.25s; }
+.onboarding-glass.is-filling .onboarding-foam-top { opacity:1; transform:translateY(0); }
+.onboarding-bubbles { opacity:0; transition:opacity .4s ease 1.3s; }
+.onboarding-glass.is-filling .onboarding-bubbles { opacity:.75; }
+.onboarding-glass.is-filling { animation:onboardingGlassTilt 1.1s ease-in-out 1.45s both; }
+@keyframes onboardingGlassTilt { 0%,100% { rotate:0deg; } 30% { rotate:2deg; } 65% { rotate:-1deg; } }
+.onboarding-screen--welcome.is-pouring .onboarding-glass { animation:onboardingGlassSpillTilt 1.1s ease-in-out forwards; }
+@keyframes onboardingGlassSpillTilt { 0% { transform:rotate(0); } 35% { transform:rotate(3deg) translateY(-5px); } 70%,100% { transform:rotate(0); } }
+.onboarding-spill-path { fill:none; stroke:url(#onboardingBeerFlow); stroke-width:29; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1200; stroke-dashoffset:1200; opacity:0; filter:drop-shadow(0 0 9px rgba(233,180,91,.4)); }
+.onboarding-spill-highlight { fill:none; stroke:#fff1c4; stroke-width:4; stroke-linecap:round; stroke-dasharray:1200; stroke-dashoffset:1200; opacity:0; }
+.onboarding-screen--welcome.is-pouring .onboarding-spill-path,
+.onboarding-screen--welcome.is-pouring .onboarding-spill-highlight { opacity:1; animation:onboardingBeerFlowDown 1.65s cubic-bezier(.35,.05,.25,1) forwards; }
+.onboarding-screen--welcome.is-pouring .onboarding-spill-highlight { animation-delay:.08s; }
+@keyframes onboardingBeerFlowDown { from { stroke-dashoffset:1200; } to { stroke-dashoffset:0; } }
+.onboarding-spill-symbol { opacity:0; }
+.onboarding-screen--welcome.is-pouring .onboarding-spill-symbol { opacity:1; transition:opacity .35s ease .5s; }
+.onboarding-glass-status { position:absolute; z-index:5; left:50%; bottom:4vh; transform:translateX(-50%); width:max-content; max-width:90%; margin:0; color:#f9e5bf; font-size:.9rem; text-shadow:0 2px 8px rgba(0,0,0,.7); pointer-events:none; }
+.onboarding-malt-column img { width:min(100%,300px); max-height:42vh; object-fit:contain; filter:drop-shadow(0 20px 22px rgba(0,0,0,.3)); }
+body.journey-started #inici { display:none !important; }
+@media (max-width:800px) {
+  .onboarding-screen--welcome { display:block; width:100%; }
+  .onboarding-copy { top:7vh; left:0; width:100%; padding:0 22px; text-align:center; transform:none; }
+  .onboarding-copy h1 { margin:13px auto; max-width:620px; font-size:clamp(2.4rem,9vw,4.1rem); }
+  .onboarding-copy p { margin:0 auto; max-width:570px; font-size:.95rem; line-height:1.55; }
+  .onboarding-instruction { justify-content:center; margin-top:14px; font-size:.8rem; }
+  .onboarding-instruction-dot { width:30px; height:30px; }
+  .onboarding-beer-art { right:0; top:auto; bottom:-7vh; width:100vw; height:66svh; max-height:640px; }
+  .onboarding-glass-status { bottom:1.5vh; font-size:.8rem; }
+  .onboarding-screen--interests { place-items:start center; padding:18px 15px 28px; }
+  .onboarding-interests-layout { grid-template-columns:1fr; gap:8px; width:min(650px,100%); }
+  .onboarding-malt-column { gap:5px; }
+  .onboarding-malt-column img { width:clamp(130px,19vh,190px); max-height:21vh; }
+  .onboarding-malt-tag { padding:7px 12px; font-size:.68rem; }
+  .onboarding-interests-content h2 { font-size:clamp(1.65rem,6vw,2.3rem); }
+}
+@media (max-width:520px) {
+  .onboarding-copy { top:6vh; padding-inline:17px; }
+  .onboarding-copy h1 { font-size:clamp(2.1rem,10vw,3.2rem); }
+  .onboarding-question-grid,.onboarding-options,.onboarding-options--stacked { grid-template-columns:1fr; }
+  .onboarding-question:last-child { grid-column:auto; }
+  .onboarding-form-footer { align-items:stretch; flex-direction:column; }
+  .onboarding-start-button { width:100%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .onboarding-instruction-dot,.onboarding-glass.is-filling,.onboarding-screen--welcome.is-pouring .onboarding-glass { animation:none !important; }
+  .onboarding-liquid,.onboarding-foam-top,.onboarding-spill-path,.onboarding-spill-highlight { transition-duration:.01ms !important; animation-duration:.01ms !important; }
+}
