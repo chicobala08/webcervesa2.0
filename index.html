@@ -2,6 +2,7 @@
 <html lang="ca">
 <head>
   <meta charset="utf-8">
+  <script>try{if(localStorage.getItem('cervesa-intro-vista')==='1')document.documentElement.classList.add('ob-seen')}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fcf8f1">
   <meta name="description" content="Un recorregut educatiu per la història, la química i la ciència relacionades amb la cervesa.">
@@ -18,94 +19,128 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <noscript><style>.reveal, .ingredient-icon { opacity: 1 !important; translate: none !important; scale: 1 !important; }.beer-onboarding{display:none!important}body.onboarding-active{overflow:auto!important}</style></noscript>
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body class="onboarding-active">
 
   <div class="beer-onboarding" id="beerOnboarding" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
-    <section class="onboarding-screen onboarding-screen--welcome" id="onboardingWelcome">
-      <div class="onboarding-copy">
-        <span class="onboarding-kicker">UNA EXPERIÈNCIA INTERACTIVA</span>
-        <h1 id="onboardingTitle">La cervesa,<br><em>més que una beguda.</em></h1>
-        <p>Abans de començar el recorregut, omple el got. Quan la cervesa arribi a dalt, es vessarà i t'obrirà el pas a MALT.</p>
-        <div class="onboarding-instruction"><span class="onboarding-instruction-dot" aria-hidden="true">↓</span><span>Prem el got per omplir-lo</span></div>
+    <button class="ob-skip" id="onboardingSkip" type="button"><span>Salta la introducció</span> <span aria-hidden="true">→</span></button>
+
+    <section class="ob-screen ob-welcome" id="onboardingWelcome">
+      <div class="ob-copy">
+        <span class="ob-kicker ob-in" style="--i:0">UNA EXPERIÈNCIA INTERACTIVA</span>
+        <h1 id="onboardingTitle"><span class="ob-line ob-in" style="--i:1">La cervesa,</span> <span class="ob-line ob-line--gold ob-in" style="--i:2">més que una beguda.</span></h1>
+        <p class="ob-in" style="--i:3">Omple el got per començar. Quan vessi, en Malt t'esperarà a l'altra banda.</p>
+        <div class="ob-hint ob-in" style="--i:4" aria-hidden="true"><span class="ob-hint-ring"></span><span class="ob-hint-dot">↓</span><span>Toca el got per omplir-lo</span></div>
       </div>
-      <div class="onboarding-beer-art" aria-label="Got de cervesa interactiu">
-        <button class="onboarding-glass" id="onboardingGlass" type="button" aria-label="Prem el got per omplir-lo">
-          <svg viewBox="0 0 420 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Un got de cervesa que s'omple i es vessa">
+
+      <div class="ob-art">
+        <button class="ob-glass" id="onboardingGlass" type="button" aria-label="Omple el got de cervesa" aria-describedby="onboardingGlassStatus">
+          <svg viewBox="0 0 400 560" aria-hidden="true" focusable="false">
             <defs>
-              <clipPath id="onboardingCupClip"><path d="M91 218 L292 218 L267 535 Q265 555 245 555 L139 555 Q119 555 117 535 Z"/></clipPath>
-              <linearGradient id="onboardingBeerGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd36e"/><stop offset=".42" stop-color="#e99a31"/><stop offset="1" stop-color="#a94e16"/></linearGradient>
-              <linearGradient id="onboardingBeerFlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".4" stop-color="#eda33d"/><stop offset="1" stop-color="#c46a20"/></linearGradient>
-              <linearGradient id="onboardingGlassShine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".5" stop-color="#fff" stop-opacity=".03"/><stop offset="1" stop-color="#fff" stop-opacity=".23"/></linearGradient>
-              <filter id="onboardingSoftGlow"><feGaussianBlur stdDeviation="18"/></filter>
+              <clipPath id="obGlassClip"><path d="M95 112H305L281 484Q279 500 263 500H137Q121 500 119 484Z"/></clipPath>
+              <clipPath id="obStreamClip"><rect x="0" y="-140" width="400" height="636"/></clipPath>
+              <linearGradient id="obStreamFadeG" gradientUnits="userSpaceOnUse" x1="0" y1="-140" x2="0" y2="-30"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient>
+              <mask id="obStreamFade" maskUnits="userSpaceOnUse" x="0" y="-140" width="400" height="640"><rect x="0" y="-140" width="400" height="640" fill="url(#obStreamFadeG)"/></mask>
+              <linearGradient id="obBeer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd977"/><stop offset=".35" stop-color="#f2a93a"/><stop offset="1" stop-color="#b85a17"/></linearGradient>
+              <linearGradient id="obStream" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e99a31"/><stop offset=".45" stop-color="#ffd677"/><stop offset="1" stop-color="#d27f24"/></linearGradient>
+              <radialGradient id="obShadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+              <radialGradient id="obGlow"><stop offset="0" stop-color="#f2b14e" stop-opacity=".34"/><stop offset="1" stop-color="#f2b14e" stop-opacity="0"/></radialGradient>
             </defs>
-            <ellipse cx="195" cy="580" rx="130" ry="20" fill="#000" opacity=".25" filter="url(#onboardingSoftGlow)"/>
-            <path d="M285 280 L316 280 Q374 280 366 345 L350 470 Q345 512 302 512 L270 512" fill="none" stroke="#fbf1df" stroke-width="22" stroke-linecap="round"/>
-            <path d="M292 301 L314 301 Q348 301 344 345 L330 465 Q326 487 301 487 L274 487" fill="none" stroke="#8b9895" stroke-opacity=".65" stroke-width="7" stroke-linecap="round"/>
-            <g clip-path="url(#onboardingCupClip)">
-              <rect x="84" y="210" width="220" height="360" fill="#080f14" opacity=".56"/>
-              <rect class="onboarding-liquid" x="87" y="215" width="215" height="345" fill="url(#onboardingBeerGold)"/>
-              <g class="onboarding-bubbles" fill="#fff3cd">
-                <circle cx="140" cy="488" r="5"/><circle cx="205" cy="448" r="4"/><circle cx="252" cy="395" r="5"/><circle cx="167" cy="355" r="3"/><circle cx="235" cy="310" r="4"/>
+            <ellipse class="ob-glow" cx="200" cy="310" rx="230" ry="250" fill="url(#obGlow)"/>
+            <ellipse cx="200" cy="516" rx="140" ry="22" fill="url(#obShadow)"/>
+            <!-- Raig de cervesa que cau de dalt -->
+            <g clip-path="url(#obStreamClip)" mask="url(#obStreamFade)">
+              <g class="ob-stream">
+                <rect x="187" y="-1300" width="26" height="1300" rx="13" fill="url(#obStream)"/>
+                <rect x="195" y="-1300" width="5" height="1300" rx="2.5" fill="#fff3c4" opacity=".7"/>
               </g>
-              <rect x="111" y="230" width="14" height="295" rx="7" fill="url(#onboardingGlassShine)"/>
-              <path d="M88 221H295" stroke="#fff6dd" stroke-opacity=".4" stroke-width="8"/>
             </g>
-            <path class="onboarding-foam-top" d="M91 232 C69 220 68 192 88 179 C91 147 128 134 151 151 C171 114 218 118 235 150 C266 137 299 157 296 190 C316 207 301 235 277 239 C261 255 235 250 223 237 C203 256 177 250 166 236 C143 253 113 251 105 235 Z" fill="#fbf1df" stroke="#fff9ec" stroke-width="7" stroke-linejoin="round"/>
-            <path d="M91 218 L292 218 L267 535 Q265 555 245 555 L139 555 Q119 555 117 535 Z" fill="none" stroke="#fbf1df" stroke-width="13" stroke-linejoin="round"/>
-            <path d="M108 240 L126 517" stroke="#fff" stroke-opacity=".4" stroke-width="9" stroke-linecap="round"/>
-            <path class="onboarding-spill-path" d="M270 220 C329 231 319 289 286 350 C253 412 319 462 292 533 C266 601 325 655 296 716 C276 757 303 805 282 875"/>
-            <path class="onboarding-spill-highlight" d="M270 220 C329 231 319 289 286 350 C253 412 319 462 292 533 C266 601 325 655 296 716 C276 757 303 805 282 875"/>
-            <g class="onboarding-spill-symbol" fill="#fce8bd"><circle cx="283" cy="868" r="24" opacity=".23"/><path d="M283 840v55M255 868h56" stroke="#fce8bd" stroke-width="4" stroke-linecap="round"/></g>
+            <!-- Interior del got: la cervesa puja amb una onada -->
+            <g clip-path="url(#obGlassClip)">
+              <rect x="80" y="100" width="240" height="420" fill="#09131a" opacity=".55"/>
+              <g class="ob-liquid">
+                <g class="ob-wave"><path d="M-160 112q30-14 60 0t60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0V560H-160Z" fill="url(#obBeer)"/></g>
+                <g class="ob-wave ob-wave--back" opacity=".5"><path d="M-160 106q30 12 60 0t60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0 60 0V140H-160Z" fill="#ffe08f"/></g>
+                <g class="ob-bubbles" fill="#fff4cf">
+                  <circle class="ob-bub" cx="150" cy="480" r="4" style="--d:0s;--x:4px"/>
+                  <circle class="ob-bub" cx="182" cy="470" r="3" style="--d:.5s;--x:-5px"/>
+                  <circle class="ob-bub" cx="214" cy="488" r="5" style="--d:.9s;--x:3px"/>
+                  <circle class="ob-bub" cx="246" cy="476" r="3.5" style="--d:.25s;--x:-3px"/>
+                  <circle class="ob-bub" cx="168" cy="492" r="2.5" style="--d:1.2s;--x:6px"/>
+                  <circle class="ob-bub" cx="232" cy="494" r="3" style="--d:1.5s;--x:-6px"/>
+                </g>
+              </g>
+              <rect x="114" y="126" width="13" height="350" rx="6.5" fill="#fff" opacity=".16"/>
+            </g>
+            <!-- Escuma: puja, rebota i vessa per les parets -->
+            <g class="ob-foam">
+              <path d="M84 126c-14-10-10-34 10-36 2-22 30-32 46-18 12-20 44-22 56-2 14-16 44-12 50 8 22-6 40 10 34 30 16 6 16 26 2 32-6 10-22 12-32 4-10 12-32 12-42 2-12 10-32 10-44 0-12 10-34 10-44-2-12 8-30 6-36-6z" fill="#fbf0d7"/>
+              <ellipse cx="130" cy="96" rx="12" ry="7" fill="#fff"/><ellipse cx="196" cy="84" rx="10" ry="6" fill="#fff"/><ellipse cx="262" cy="98" rx="9" ry="5.5" fill="#fff"/>
+              <circle cx="160" cy="118" r="4" fill="#ead7ad"/><circle cx="238" cy="120" r="3.5" fill="#ead7ad"/><circle cx="104" cy="124" r="3" fill="#ead7ad"/>
+            </g>
+            <g class="ob-drips" fill="#fbf0d7">
+              <path class="ob-drip" style="--o:96px 122px;--d:0s" d="M88 120q-6 40-3 84 1 12 9 12t8-12q0-40-2-82z"/>
+              <path class="ob-drip" style="--o:300px 122px;--d:.12s" d="M296 120q6 56 4 120-1 12-9 12t-8-12q-1-62 1-118z"/>
+              <path class="ob-drip" style="--o:200px 132px;--d:.22s" d="M232 128q4 26 2 50-1 9-7 9t-6-9q0-24 2-48z"/>
+            </g>
+            <!-- Vidre -->
+            <path d="M95 112H305L281 484Q279 500 263 500H137Q121 500 119 484Z" fill="none" stroke="#fbf1df" stroke-width="10" stroke-linejoin="round"/>
+            <path d="M104 150l18 300" stroke="#fff" stroke-opacity=".35" stroke-width="7" stroke-linecap="round"/>
+            <path d="M286 170l-4 70" stroke="#fff" stroke-opacity=".22" stroke-width="5" stroke-linecap="round"/>
           </svg>
         </button>
-        <p class="onboarding-glass-status" id="onboardingGlassStatus" aria-live="polite">Got buit. Prem per començar.</p>
+        <p class="ob-status" id="onboardingGlassStatus" aria-live="polite">Got buit.</p>
       </div>
     </section>
 
-    <section class="onboarding-screen onboarding-screen--interests" id="onboardingInterests" hidden aria-labelledby="onboardingMaltTitle">
-      <div class="onboarding-interests-layout">
-        <div class="onboarding-malt-column">
-          <img src="malt-onboarding-transparent.webp?v=3" alt="MALT, el presentador de la web" width="220" height="205" loading="eager" decoding="async">
-          <span class="onboarding-malt-tag">MALT T'ACOMPANYA</span>
+    <!-- Onada de cervesa que fa la transició entre pantalles -->
+    <div class="ob-flood" id="onboardingFlood" aria-hidden="true">
+      <svg class="ob-flood-edge ob-flood-edge--top" viewBox="0 0 1200 90" preserveAspectRatio="none"><path d="M0 60q75-40 150 0t150 0 150 0 150 0 150 0 150 0 150 0 150 0V90H0z" fill="#fbf0d7"/><path d="M0 78q75-30 150 0t150 0 150 0 150 0 150 0 150 0 150 0 150 0V90H0z" fill="#f6c25c"/></svg>
+      <div class="ob-flood-body"><i style="--x:12%;--s:10px;--d:0s"></i><i style="--x:28%;--s:6px;--d:.2s"></i><i style="--x:47%;--s:12px;--d:.1s"></i><i style="--x:63%;--s:7px;--d:.3s"></i><i style="--x:80%;--s:9px;--d:.05s"></i><i style="--x:91%;--s:5px;--d:.25s"></i></div>
+      <svg class="ob-flood-edge ob-flood-edge--bottom" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0 0H1200V20q-75 30-150 0t-150 0-150 0-150 0-150 0-150 0-150 0-150 0z" fill="#c7671c"/></svg>
+    </div>
+
+    <section class="ob-screen ob-interests" id="onboardingInterests" hidden aria-labelledby="onboardingMaltTitle">
+      <div class="ob-layout">
+        <div class="ob-malt">
+          <img class="ob-malt-img" src="malt.svg?v=10" alt="Malt, el presentador de la web, aixecant una gerra" width="260" height="300" decoding="async">
+          <div class="ob-bubble" role="status"><span class="ob-bubble-name">MALT, EL TEU GUIA</span><span class="ob-bubble-text" id="onboardingMaltSays">Hola! Sóc en Malt. Digues-me què t'agrada i et porto directe on toca.</span></div>
         </div>
-        <div class="onboarding-interests-content">
-          <span class="onboarding-kicker">ABANS DE COMENÇAR</span>
-          <h2 id="onboardingMaltTitle" tabindex="-1">Abans de continuar, explica'ns què t'interessa.</h2>
-          <p class="onboarding-form-intro">Respon aquestes preguntes per orientar el teu recorregut.</p>
-          <form class="onboarding-form" id="onboardingInterestForm">
-            <div class="onboarding-question-grid">
-              <fieldset class="onboarding-question">
-                <legend>Quina part de la cervesa t'interessa més?</legend>
-                <div class="onboarding-options">
-                  <label class="onboarding-option"><input type="radio" name="interestPart" value="historia"><span>La història i les cultures</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestPart" value="ciencia"><span>La ciència i la fermentació</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestPart" value="elaboracio"><span>Els ingredients i l'elaboració</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestPart" value="tot"><span>Una mica de tot</span></label>
-                </div>
-              </fieldset>
-              <fieldset class="onboarding-question">
-                <legend>Què t'agradaria descobrir?</legend>
-                <div class="onboarding-options">
-                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="origen"><span>Com va començar la cervesa</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="fermentacio"><span>Què passa durant la fermentació</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="recepta"><span>Com es crea una recepta</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestDiscover" value="curiositats"><span>Curiositats i mites</span></label>
-                </div>
-              </fieldset>
-              <fieldset class="onboarding-question">
-                <legend>Quin és el teu nivell de coneixement?</legend>
-                <div class="onboarding-options onboarding-options--stacked">
-                  <label class="onboarding-option"><input type="radio" name="interestLevel" value="inici"><span>Començo de zero</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestLevel" value="mitja"><span>Ja en sé una mica</span></label>
-                  <label class="onboarding-option"><input type="radio" name="interestLevel" value="aprofundir"><span>Vull aprofundir</span></label>
-                </div>
-              </fieldset>
-            </div>
-            <div class="onboarding-form-footer">
-              <p>Les respostes són opcionals i no es guarden.</p>
-              <button class="btn btn-primary onboarding-start-button" id="onboardingContinue" type="submit">Comença el recorregut <span aria-hidden="true">↓</span></button>
+        <div class="ob-content">
+          <span class="ob-kicker ob-rise" style="--i:0">ABANS DE COMENÇAR</span>
+          <h2 class="ob-rise" style="--i:1" id="onboardingMaltTitle" tabindex="-1">Què et ve de gust descobrir?</h2>
+          <p class="ob-intro ob-rise" style="--i:2">Tria una resposta de cada pregunta, o les que vulguis. En Malt t'obrirà el camí.</p>
+          <form class="ob-form" id="onboardingInterestForm">
+            <fieldset class="ob-q ob-rise" style="--i:3">
+              <legend>Quina part t'interessa més?</legend>
+              <div class="ob-chips">
+                <label class="ob-chip"><input type="radio" name="interestPart" value="historia"><span>La història</span></label>
+                <label class="ob-chip"><input type="radio" name="interestPart" value="ciencia"><span>La ciència</span></label>
+                <label class="ob-chip"><input type="radio" name="interestPart" value="ingredients"><span>Els ingredients</span></label>
+                <label class="ob-chip"><input type="radio" name="interestPart" value="tot"><span>Una mica de tot</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="ob-q ob-rise" style="--i:4">
+              <legend>Què t'agradaria fer primer?</legend>
+              <div class="ob-chips">
+                <label class="ob-chip"><input type="radio" name="interestDiscover" value="origen"><span>Saber com va començar</span></label>
+                <label class="ob-chip"><input type="radio" name="interestDiscover" value="fermentacio"><span>Veure la fermentació</span></label>
+                <label class="ob-chip"><input type="radio" name="interestDiscover" value="recepta"><span>Crear la meva cervesa</span></label>
+                <label class="ob-chip"><input type="radio" name="interestDiscover" value="curiositats"><span>Llegir curiositats</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="ob-q ob-rise" style="--i:5">
+              <legend>Quant en saps?</legend>
+              <div class="ob-chips">
+                <label class="ob-chip"><input type="radio" name="interestLevel" value="inici"><span>Començo de zero</span></label>
+                <label class="ob-chip"><input type="radio" name="interestLevel" value="mitja"><span>Ja en sé una mica</span></label>
+                <label class="ob-chip"><input type="radio" name="interestLevel" value="aprofundir"><span>Vull aprofundir</span></label>
+              </div>
+            </fieldset>
+            <div class="ob-footer ob-rise" style="--i:6">
+              <p>Les respostes només serveixen per triar per on comences. No es guarden enlloc.</p>
+              <button class="ob-go" id="onboardingContinue" type="submit"><span id="onboardingGoText">Comença el recorregut</span> <span class="ob-go-arrow" aria-hidden="true">↓</span></button>
             </div>
           </form>
         </div>
@@ -117,7 +152,7 @@
   <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
   <nav class="topbar" aria-label="Navegació principal" inert>
     <div class="wrap nav">
-      <a class="brand" href="#historia" aria-label="Tornar a l'inici" title="Inici"><span class="brand-mark">C.</span><span>CERVESA<span>.</span></span></a>
+      <a class="brand" href="#inici" aria-label="Tornar a l'inici" title="Inici"><span class="brand-mark">C.</span><span>CERVESA<span>.</span></span></a>
       <div class="navlinks" id="desktopNav">
         <a href="#historia" aria-label="Història" title="Història" data-label="Història"><span aria-hidden="true">📜</span></a>
         <a href="#ingredients" aria-label="Ingredients" title="Ingredients" data-label="Ingredients"><span aria-hidden="true">🌾</span></a>
@@ -1053,7 +1088,7 @@
   </div>
 
   <footer>
-    <div class="wrap footer-inner"><div><div class="footer-brand">CERVESA. · HISTÒRIA, QUÍMICA I CIÈNCIA</div><div>Projecte educatiu vinculat al Treball de Recerca d'Àlex López.</div></div><a class="backtop" href="#inici">Tornar a l'inici ↑</a></div>
+    <div class="wrap footer-inner"><div><div class="footer-brand">CERVESA. · HISTÒRIA, QUÍMICA I CIÈNCIA</div><div>Projecte educatiu vinculat al Treball de Recerca d'Àlex López.</div><a class="footer-replay" id="replayIntro" href="#">Torna a veure la introducció</a></div><a class="backtop" href="#inici">Tornar a l'inici ↑</a></div>
   </footer>
 
   
@@ -1061,8 +1096,8 @@
     <svg viewBox="0 0 40 52" aria-hidden="true"><defs><clipPath id="jgClip"><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z"/></clipPath></defs><g clip-path="url(#jgClip)"><rect x="0" y="0" width="40" height="52" fill="#f1d9a0"/><rect class="jl" x="0" y="0" width="40" height="52" fill="#edbf56"/></g><path d="M8 7h23l-3 38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z" fill="none" stroke="#26354a" stroke-width="3" stroke-linejoin="round"/><path d="M30 15h3a4.5 4.5 0 0 1 0 12h-4" fill="none" stroke="#26354a" stroke-width="3" stroke-linecap="round"/></svg>
     <span class="journey-text"><span class="journey-count" id="journeyCount">0/0</span><span class="journey-label">explorat</span></span>
   </div>
-<script src="app.js?v=9"></script>
-  <script src="i18n.js?v=8"></script>
+<script src="app.js?v=10"></script>
+  <script src="i18n.js?v=10"></script>
 </body>
 </html>
 

@@ -1458,6 +1458,10 @@
       let timer;
       const hide = () => { tip.classList.remove('is-in'); clearTimeout(timer); timer = setTimeout(() => { tip.hidden = true; }, 220); };
       function show(id) {
+        // Just després de l'entrada, deixa respirar la pàgina abans de parlar
+        const calm = (window.__journeyStart || 0) + 2600 - Date.now();
+        if (document.body.classList.contains('onboarding-active')) { seen.delete(id); return; }
+        if (calm > 0) { setTimeout(() => show(id), calm); return; }
         if (document.documentElement.classList.contains('presenting') || document.body.classList.contains('quiz-victory-open')) return;
         clearTimeout(timer);
         text.textContent = lines[id];
@@ -1576,59 +1580,137 @@
     })();
 
 
-    // ===== Entrada guiada: omple el got, coneix MALT i comença el recorregut =====
+// ===== Entrada guiada: omple el got, l'onada et porta a MALT i les respostes trien per on comences =====
     (() => {
+      const KEY = 'cervesa-intro-vista';
       const onboarding = document.getElementById('beerOnboarding');
+      const openPage = () => {
+        document.body.classList.remove('onboarding-active');
+        ['.skip-link', '.topbar', '#main-content'].forEach(sel => document.querySelector(sel)?.removeAttribute('inert'));
+      };
+      const remember = () => { try { localStorage.setItem(KEY, '1'); } catch (e) {} };
+
+      // Torna a veure la introducció (enllaç del peu de pàgina)
+      document.getElementById('replayIntro')?.addEventListener('click', event => {
+        event.preventDefault();
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        window.scrollTo(0, 0);
+        location.reload();
+      });
+
+      if (!onboarding) { openPage(); return; }
+      if (document.documentElement.classList.contains('ob-seen')) { onboarding.remove(); openPage(); return; }
+
       const glass = document.getElementById('onboardingGlass');
       const welcome = document.getElementById('onboardingWelcome');
       const interests = document.getElementById('onboardingInterests');
-      const interestForm = document.getElementById('onboardingInterestForm');
+      const form = document.getElementById('onboardingInterestForm');
       const status = document.getElementById('onboardingGlassStatus');
-      if (!onboarding || !glass || !welcome || !interests || !interestForm) return;
+      const flood = document.getElementById('onboardingFlood');
+      const says = document.getElementById('onboardingMaltSays');
+      const bubble = says?.closest('.ob-bubble');
+      const maltImg = onboarding.querySelector('.ob-malt-img');
+      const goBtn = document.getElementById('onboardingContinue');
+      const goText = document.getElementById('onboardingGoText');
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const wait = ms => new Promise(r => setTimeout(r, reduced ? Math.min(ms, 60) : ms));
+      const EASE_INOUT = 'cubic-bezier(.77,0,.175,1)';
 
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let transitionStarted = false;
+      const showInterests = () => {
+        welcome.hidden = true;
+        interests.hidden = false;
+        document.getElementById('onboardingSkip')?.remove();
+        requestAnimationFrame(() => {
+          interests.classList.add('is-in');
+          document.getElementById('onboardingMaltTitle')?.focus({ preventScroll: true });
+        });
+      };
 
-      glass.addEventListener('click', () => {
-        if (transitionStarted) return;
-        transitionStarted = true;
+      let started = false;
+      glass.addEventListener('click', async () => {
+        if (started) return;
+        started = true;
         glass.disabled = true;
-        glass.classList.add('is-filling');
-        status.textContent = "El got s'està omplint...";
-
-        const fillTime = reducedMotion ? 30 : 1800;
-        const pourTime = reducedMotion ? 50 : 1650;
-        window.setTimeout(() => {
-          welcome.classList.add('is-pouring');
-          status.textContent = 'El got és ple! El recorregut continua.';
-        }, fillTime);
-
-        window.setTimeout(() => {
-          welcome.hidden = true;
-          interests.hidden = false;
-          requestAnimationFrame(() => {
-            interests.classList.add('is-visible');
-            const title = document.getElementById('onboardingMaltTitle');
-            if (title) title.focus({ preventScroll: true });
-          });
-        }, fillTime + pourTime);
+        welcome.classList.add('is-filling');
+        status.textContent = "S'està omplint…";
+        await wait(1300);
+        welcome.classList.add('is-full');
+        status.textContent = 'Ple! Ja vessa.';
+        await wait(260);
+        welcome.classList.add('is-spilling');
+        await wait(520);
+        if (reduced || !flood.animate) { showInterests(); return; }
+        // L'onada puja, tapa la pantalla, canvia d'escena i continua cap amunt
+        flood.classList.add('is-on');
+        await flood.animate([{ transform: 'translateY(110%)' }, { transform: 'translateY(0)' }], { duration: 640, easing: EASE_INOUT, fill: 'forwards' }).finished;
+        showInterests();
+        await flood.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-118%)' }], { duration: 620, easing: EASE_INOUT, fill: 'forwards' }).finished;
+        flood.remove();
       });
 
-      interestForm.addEventListener('submit', event => {
-        event.preventDefault();
-        onboarding.classList.add('is-leaving');
+      // ----- Les respostes fan alguna cosa -----
+      const LINES = {
+        historia: "Viatjarem milers d'anys enrere!",
+        ciencia: 'Llevat, sucre i bombolles: la meva especialitat.',
+        ingredients: 'Només quatre ingredients, i quantes cerveses diferents!',
+        tot: 'Doncs farem el recorregut sencer!',
+        origen: 'Començarem pel principi de tot.',
+        fermentacio: 'Anirem directes on el llevat fa la feina.',
+        recepta: "Prepara't: tindràs el teu propi simulador.",
+        curiositats: "Tinc un munt d'històries per explicar-te.",
+        inici: 'Cap problema: el concurs serà de nivell inicial.',
+        mitja: 'Perfecte, anirem al teu ritme.',
+        aprofundir: 'Et deixo el concurs en nivell expert!'
+      };
+      const DEST = {
+        historia: ['historia', 'Comença per la història'],
+        tot: ['historia', 'Comença per la història'],
+        origen: ['historia', 'Comença per la història'],
+        ciencia: ['ciencia', 'Comença per la ciència'],
+        fermentacio: ['ciencia', 'Comença per la ciència'],
+        ingredients: ['ingredients', 'Comença pels ingredients'],
+        recepta: ['simulador', 'Comença pel simulador'],
+        curiositats: ['curiositats', 'Comença per les curiositats']
+      };
+      const destination = () => {
+        const v = name => form.querySelector(`input[name="${name}"]:checked`)?.value;
+        return DEST[v('interestDiscover')] || DEST[v('interestPart')] || ['historia', 'Comença el recorregut'];
+      };
+      const replay = (el, cls) => { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+
+      form.addEventListener('change', event => {
+        const value = event.target.value;
+        if (LINES[value] && says) { says.textContent = LINES[value]; replay(bubble, 'is-talking'); }
+        if (maltImg?.animate && !reduced) {
+          maltImg.animate([{ transform: 'none' }, { transform: 'translateY(-10px) rotate(-4deg)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.34,1.56,.64,1)' });
+        }
+        const label = destination()[1];
+        if (goText.textContent !== label) { goText.textContent = label; replay(goBtn, 'is-updated'); }
+      });
+
+      const finish = (target, level) => {
+        remember();
+        if (level) document.querySelector(`.quiz-level-btn[data-level="${level}"]`)?.click();
+        openPage();
+        window.__journeyStart = Date.now();
+        const section = target && document.getElementById(target);
+        // La pàgina ja és al lloc correcte quan la cortina de cervesa puja
+        if (section) section.scrollIntoView({ behavior: 'instant', block: 'start' });
         onboarding.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('onboarding-active');
-        document.body.classList.add('journey-started');
-        document.querySelector('.skip-link')?.removeAttribute('inert');
-        document.querySelector('.topbar')?.removeAttribute('inert');
-        document.getElementById('main-content')?.removeAttribute('inert');
-
-        window.setTimeout(() => {
+        onboarding.classList.add('is-leaving');
+        const done = () => {
           onboarding.remove();
-          const main = document.getElementById('main-content');
-          if (main) main.focus({ preventScroll: true });
-          document.getElementById('historia')?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
-        }, reducedMotion ? 20 : 620);
+          const heading = section?.querySelector('h2');
+          if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+          else document.getElementById('main-content')?.focus({ preventScroll: true });
+        };
+        setTimeout(done, reduced ? 220 : 600);
+      };
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const level = form.querySelector('input[name="interestLevel"]:checked')?.value;
+        finish(destination()[0], level === 'inici' ? 'inicial' : level === 'aprofundir' ? 'expert' : null);
       });
+      document.getElementById('onboardingSkip')?.addEventListener('click', () => finish(null, null));
     })();
