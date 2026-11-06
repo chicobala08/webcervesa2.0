@@ -1574,3 +1574,61 @@
       if (!hero || !('IntersectionObserver' in window)) return;
       new IntersectionObserver(([entry]) => hero.classList.toggle('is-offscreen', !entry.isIntersecting)).observe(hero);
     })();
+
+
+    // ===== Entrada guiada: omple el got, coneix MALT i comença el recorregut =====
+    (() => {
+      const onboarding = document.getElementById('beerOnboarding');
+      const glass = document.getElementById('onboardingGlass');
+      const welcome = document.getElementById('onboardingWelcome');
+      const interests = document.getElementById('onboardingInterests');
+      const interestForm = document.getElementById('onboardingInterestForm');
+      const status = document.getElementById('onboardingGlassStatus');
+      if (!onboarding || !glass || !welcome || !interests || !interestForm) return;
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let transitionStarted = false;
+
+      glass.addEventListener('click', () => {
+        if (transitionStarted) return;
+        transitionStarted = true;
+        glass.disabled = true;
+        glass.classList.add('is-filling');
+        status.textContent = "El got s'està omplint...";
+
+        const fillTime = reducedMotion ? 40 : 1550;
+        const pourTime = reducedMotion ? 80 : 780;
+        window.setTimeout(() => {
+          welcome.classList.add('is-pouring');
+          status.textContent = 'El got és ple! El recorregut continua.';
+        }, fillTime);
+
+        window.setTimeout(() => {
+          welcome.hidden = true;
+          interests.hidden = false;
+          requestAnimationFrame(() => {
+            interests.classList.add('is-visible');
+            const title = document.getElementById('onboardingMaltTitle');
+            if (title) title.focus({ preventScroll: true });
+          });
+        }, fillTime + pourTime);
+      });
+
+      interestForm.addEventListener('submit', event => {
+        event.preventDefault();
+        onboarding.classList.add('is-leaving');
+        onboarding.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('onboarding-active');
+        document.body.classList.add('journey-started');
+        document.querySelector('.skip-link')?.removeAttribute('inert');
+        document.querySelector('.topbar')?.removeAttribute('inert');
+        document.getElementById('main-content')?.removeAttribute('inert');
+
+        window.setTimeout(() => {
+          onboarding.remove();
+          const main = document.getElementById('main-content');
+          if (main) main.focus({ preventScroll: true });
+          document.getElementById('inici')?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
+        }, reducedMotion ? 20 : 620);
+      });
+    })();
