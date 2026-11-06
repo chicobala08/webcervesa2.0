@@ -3068,3 +3068,26 @@ body.onboarding-active #inici .glass .b { animation: none !important; opacity: 0
   transition: opacity 260ms ease; }
 .ob-malt-tilt.is-hover .ob-malt-shine { opacity: 1; }
 @media (max-width: 800px) { .ob-malt-tilt { width: 96px; } }
+
+/* Clica en Malt */
+.ob-malt-hit { position: absolute; inset: 0; z-index: 2; padding: 0; border: 0; border-radius: 40%; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ob-malt-hit:focus-visible { outline: 3px solid #f4d49a; outline-offset: 4px; }
+.ob-click-hint {
+  position: absolute; z-index: 3; top: 4%; right: -6%; padding: 6px 11px; border-radius: 12px 12px 12px 4px;
+  color: #211a13; background: #ffd25a; box-shadow: 0 6px 16px rgba(0,0,0,.3); font-size: .78rem; font-weight: 900; white-space: nowrap; pointer-events: none;
+  transform-origin: 0 100%; opacity: 0; animation: obHintIn 420ms cubic-bezier(.34,1.56,.64,1) 1.3s forwards, obHintBob 1.6s ease-in-out 1.8s infinite;
+  transition: opacity 200ms ease, transform 200ms cubic-bezier(.23,1,.32,1);
+}
+.ob-click-hint::after { content: ""; position: absolute; left: 10px; bottom: -7px; border: 7px solid transparent; border-bottom: 0; border-top-color: #ffd25a; }
+.ob-click-hint.is-gone { animation: none; opacity: 0; transform: scale(.8); }
+@keyframes obHintIn { from { opacity: 0; transform: scale(.6) rotate(-8deg); } to { opacity: 1; transform: rotate(-4deg); } }
+@keyframes obHintBob { 0%, 100% { opacity: 1; transform: rotate(-4deg) translateY(0); } 50% { opacity: 1; transform: rotate(-4deg) translateY(-5px); } }
+@media (max-width: 800px) { .ob-click-hint { top: -10%; right: -30%; font-size: .68rem; padding: 4px 8px; } }
+@media (prefers-reduced-motion: reduce) { .ob-click-hint { animation: none; opacity: 1; transform: rotate(-4deg); } }
+.ob-malt-tilt { aspect-ratio: 511 / 476; }
+.ob-malt-tilt .ob-malt-img { height: 100%; object-fit: contain; }
+@media (max-width: 800px) {
+  .ob-click-hint { top: auto; bottom: -4%; right: auto; left: 18%; }
+  .ob-click-hint::after { display: none; }
+}
+@media (min-width: 801px) { .ob-bubble { min-height: 112px; align-content: start; } }

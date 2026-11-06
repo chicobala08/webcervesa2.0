@@ -917,6 +917,59 @@
       });
     }
 
+    // So d'omplir el got a l'entrada: raig que puja de to, bombolles, escuma i un "clinc" final
+    function playPourSound() {
+      withMaltAudio(context => {
+        try {
+          const now = context.currentTime + .02;
+          const out = context.createGain(); out.gain.value = .9; out.connect(context.destination);
+          // Raig: soroll filtrat que s'agudeix a mesura que el got s'omple
+          const stream = context.createBufferSource(); stream.buffer = makeAudienceNoise(context, 1.6);
+          const bp = context.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 2.2;
+          bp.frequency.setValueAtTime(520, now + .2); bp.frequency.exponentialRampToValueAtTime(1900, now + 1.45);
+          const sg = context.createGain();
+          sg.gain.setValueAtTime(.0001, now); sg.gain.exponentialRampToValueAtTime(.32, now + .25);
+          sg.gain.setValueAtTime(.32, now + 1.15); sg.gain.exponentialRampToValueAtTime(.0001, now + 1.5);
+          stream.connect(bp); bp.connect(sg); sg.connect(out); stream.start(now); stream.stop(now + 1.6);
+          // "Glu-glu": bombolles que esclaten
+          for (let i = 0; i < 16; i++) {
+            const at = now + .3 + Math.random() * 1.05, f = 380 + Math.random() * 520 + i * 18;
+            const o = context.createOscillator(), g = context.createGain();
+            o.type = 'sine'; o.frequency.setValueAtTime(f, at); o.frequency.exponentialRampToValueAtTime(f * 1.9, at + .05);
+            g.gain.setValueAtTime(.0001, at); g.gain.exponentialRampToValueAtTime(.045, at + .006); g.gain.exponentialRampToValueAtTime(.0001, at + .07);
+            o.connect(g); g.connect(out); o.start(at); o.stop(at + .08);
+          }
+          // Escuma: xiuxiueig agut quan el got és ple
+          const fizz = context.createBufferSource(); fizz.buffer = makeAudienceNoise(context, 1);
+          const hp = context.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 4200;
+          const fg = context.createGain();
+          fg.gain.setValueAtTime(.0001, now + 1.25); fg.gain.exponentialRampToValueAtTime(.09, now + 1.35); fg.gain.exponentialRampToValueAtTime(.0001, now + 2.2);
+          fizz.connect(hp); hp.connect(fg); fg.connect(out); fizz.start(now + 1.25); fizz.stop(now + 2.25);
+          // Clinc del vidre
+          [[2637, .07], [3951, .035], [5274, .015]].forEach(([f, v]) => {
+            const o = context.createOscillator(), g = context.createGain();
+            o.type = 'sine'; o.frequency.value = f;
+            g.gain.setValueAtTime(.0001, now + 1.32); g.gain.exponentialRampToValueAtTime(v, now + 1.325); g.gain.exponentialRampToValueAtTime(.0001, now + 2.1);
+            o.connect(g); g.connect(out); o.start(now + 1.32); o.stop(now + 2.15);
+          });
+        } catch (error) {}
+      });
+    }
+
+    // "Boing" curt quan en Malt canvia de cara
+    function playMaltBoing() {
+      withMaltAudio(context => {
+        try {
+          const now = context.currentTime + .01;
+          const o = context.createOscillator(), g = context.createGain();
+          o.type = 'triangle';
+          o.frequency.setValueAtTime(260, now); o.frequency.exponentialRampToValueAtTime(620, now + .09); o.frequency.exponentialRampToValueAtTime(420, now + .22);
+          g.gain.setValueAtTime(.0001, now); g.gain.exponentialRampToValueAtTime(.09, now + .01); g.gain.exponentialRampToValueAtTime(.0001, now + .26);
+          o.connect(g); g.connect(context.destination); o.start(now); o.stop(now + .28);
+        } catch (error) {}
+      });
+    }
+
     // Capa d'efectes a pantalla completa (només transform i opacity: van fluids al mòbil)
     function fxLayer() {
       let layer = document.getElementById('fxLayer');
@@ -1784,6 +1837,7 @@
         if (started) return;
         started = true;
         glass.disabled = true;
+        unlockMaltAudio(); playPourSound();
         welcome.classList.add('is-filling');
         status.textContent = "S'està omplint…";
         await wait(1300);
@@ -1822,6 +1876,30 @@
           tilt.classList.add('is-hover'); kick();
         });
         zone.addEventListener('pointerleave', () => { tx = 0; ty = 0; tz = 0; tilt.classList.remove('is-hover'); kick(); });
+      }
+
+      // Clica en Malt: canvia d'expressió uns segons i torna a la cara de sempre
+      const poke = document.getElementById('onboardingMaltPoke');
+      const hint = document.getElementById('onboardingClickHint');
+      if (poke && maltImg) {
+        const original = maltImg.getAttribute('src');
+        const FACES = [
+          ['malt-sorpres.webp?v=1', "Oh! M'has agafat desprevingut!"],
+          ['malt-preocupat.webp?v=1', 'Ai, ai… no em pressionis, que vesso la cervesa!'],
+          ['malt-xulo.webp?v=1', 'Ja ho saps: sóc el millor presentador.']
+        ];
+        FACES.forEach(([src]) => { const im = new Image(); im.src = src; });
+        let last = -1, backTimer = 0;
+        const pop = () => { if (maltImg.animate && !reduced) maltImg.animate([{ transform: 'scale(.9,1.08)' }, { transform: 'scale(1.06,.95)' }, { transform: 'none' }], { duration: 300, easing: 'cubic-bezier(.34,1.56,.64,1)' }); };
+        poke.addEventListener('click', () => {
+          let i; do { i = Math.floor(Math.random() * FACES.length); } while (i === last && FACES.length > 1);
+          last = i;
+          maltImg.src = FACES[i][0]; pop(); playMaltBoing();
+          if (says) { says.textContent = FACES[i][1]; replay(bubble, 'is-talking'); }
+          if (hint && !hint.hidden) { hint.classList.add('is-gone'); setTimeout(() => { hint.hidden = true; }, 250); }
+          clearTimeout(backTimer);
+          backTimer = setTimeout(() => { maltImg.src = original; pop(); }, 2400);
+        });
       }
 
       // ----- Enquesta en tres passos: respostes anònimes per al Treball de Recerca -----
@@ -1962,12 +2040,20 @@
         setTimeout(done, reduced ? 220 : 600);
       };
 
-      form.addEventListener('submit', event => {
-        event.preventDefault();
+      // El botó final no depèn d'enviar el formulari (dins d'un iframe protegit, els formularis poden estar bloquejats)
+      let finished = false;
+      const complete = () => {
+        if (finished) return;
         if (step < steps.length) { goTo(step + 1); return; }   // Enter a mig formulari: passa al següent pas
-        sendSurvey();
+        finished = true;
+        try { sendSurvey(); } catch (e) {}
         const level = form.querySelector('input[name="interestLevel"]:checked')?.value;
         finish(destination()[0], level === 'inici' ? 'inicial' : level === 'aprofundir' ? 'expert' : null);
+      };
+      goBtn.addEventListener('click', complete);
+      form.addEventListener('submit', event => { event.preventDefault(); complete(); });
+      form.addEventListener('keydown', event => {
+        if (event.key === 'Enter' && event.target.matches('input[type="radio"], input[type="checkbox"]')) { event.preventDefault(); complete(); }
       });
       document.getElementById('onboardingSkip')?.addEventListener('click', () => finish(null, null));
     })();
