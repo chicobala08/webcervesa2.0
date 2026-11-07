@@ -34,6 +34,16 @@ window.__I18N_DICT = (() => {
   V.en.push(...["Explore me when you have time — it's not an easy path!"]);
   V.de.push(...["Erforsche mich, wenn du Zeit hast – es ist kein einfacher Weg!"]);
   V.zh.push(...["有空的时候再来探索我吧，这可不是一条简单的路！"]);
+  K.push(...["Activar la música de fons", "Aturar la música de fons"]);
+  V.es.push(...["Activar la música de fondo", "Parar la música de fondo"]);
+  V.en.push(...["Turn on background music", "Turn off background music"]);
+  V.de.push(...["Hintergrundmusik einschalten", "Hintergrundmusik ausschalten"]);
+  V.zh.push(...["打开背景音乐", "关闭背景音乐"]);
+  K.push(...["Opcions de so", "Àudio", "Desactiva la música", "Activa la música", "Música", "Efectes", "Veuràs com el llevat fa la feina!"]);
+  V.es.push(...["Opciones de sonido", "Audio", "Desactivar la música", "Activar la música", "Música", "Efectos", "¡Verás cómo la levadura hace su trabajo!"]);
+  V.en.push(...["Sound settings", "Audio", "Turn music off", "Turn music on", "Music", "Sound effects", "You'll see how the yeast does its job!"]);
+  V.de.push(...["Toneinstellungen", "Audio", "Musik ausschalten", "Musik einschalten", "Musik", "Soundeffekte", "Du wirst sehen, wie die Hefe arbeitet!"]);
+  V.zh.push(...["声音设置", "音频", "关闭音乐", "打开音乐", "音乐", "音效", "你会看到酵母是怎么工作的！"]);
   const D = {};
   for (const l in V) { D[l] = {}; K.forEach((k, i) => { if (V[l][i] !== k) D[l][k] = V[l][i]; }); }
   return D;

@@ -3176,3 +3176,40 @@ button, [role="button"], .chip, .ob-chip, .glossary-filter, .quiz-level-btn, .si
   .journey { transition: transform 260ms cubic-bezier(.23,1,.32,1), opacity 200ms ease, background-color .3s ease; }
   .journey.is-tucked { transform: translateX(calc(100% + 16px)); opacity: 0; }
 }
+
+/* Botó de música de fons: un petit equalitzador que balla quan sona */
+.music-btn { position: relative; }
+.music-eq { display: inline-flex; align-items: flex-end; gap: 2.5px; height: 16px; }
+.music-eq i { display: block; width: 3px; height: 5px; border-radius: 2px; background: currentColor; transform-origin: 50% 100%; transition: height 200ms ease; }
+.music-btn.is-playing .music-eq i { animation: musicEq 900ms ease-in-out infinite alternate; }
+.music-btn.is-playing .music-eq i:nth-child(1) { height: 14px; animation-delay: -.2s; }
+.music-btn.is-playing .music-eq i:nth-child(2) { height: 16px; animation-delay: -.6s; }
+.music-btn.is-playing .music-eq i:nth-child(3) { height: 12px; animation-delay: -.4s; }
+.music-btn.is-playing .music-eq i:nth-child(4) { height: 15px; animation-delay: -.8s; }
+@keyframes musicEq { from { transform: scaleY(.3); } to { transform: scaleY(1); } }
+.music-btn:not(.is-playing)::after { content: ""; position: absolute; left: 50%; top: 50%; width: 22px; height: 2px; border-radius: 2px; background: currentColor; transform: translate(-50%, -50%) rotate(-40deg); opacity: .8; }
+@media (prefers-reduced-motion: reduce) { .music-btn.is-playing .music-eq i { animation: none; } }
+
+/* Panell de so (música i efectes) */
+.sound-panel {
+  position: fixed; z-index: 240; width: 248px; padding: 14px 16px 16px; border: 2px solid #26354a; border-radius: 18px;
+  color: #26354a; background: #fffdf7; box-shadow: 4px 6px 0 rgba(38,53,74,.16), 0 18px 40px rgba(38,53,74,.18);
+  opacity: 0; transform: scale(.94) translateY(6px); transition: opacity 160ms ease, transform 200ms cubic-bezier(.23,1,.32,1);
+}
+.sound-panel.is-open { opacity: 1; transform: none; }
+.sound-panel[hidden] { display: none; }
+.sound-title { margin: 0 0 10px; font-family: var(--heading-font); font-size: 1.1rem; }
+.sound-toggle { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; margin-bottom: 12px; padding: 8px 12px; border: 2px solid #26354a; border-radius: 12px; color: #26354a; background: #fff0c4; font: inherit; font-weight: 850; cursor: pointer; transition: transform 140ms cubic-bezier(.23,1,.32,1), background-color 200ms ease; }
+.sound-toggle[aria-pressed="false"] { background: #eef1f4; }
+.sound-toggle:active { transform: scale(.97); }
+.sound-toggle:focus-visible { outline: 3px solid #e9b45b; outline-offset: 2px; }
+.sound-toggle-dot { width: 12px; height: 12px; border-radius: 50%; background: #3b9a6a; box-shadow: 0 0 0 3px rgba(59,154,106,.2); }
+.sound-toggle[aria-pressed="false"] .sound-toggle-dot { background: #a5aeb8; box-shadow: none; }
+.sound-row { display: grid; gap: 6px; margin-top: 8px; font-size: .82rem; font-weight: 850; color: #3f5753; }
+.sound-row input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer; touch-action: pan-y; }
+.sound-row input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 99px; background: linear-gradient(90deg, #f39320 0, #edbf56 var(--val, 50%), #e3e7ea var(--val, 50%)); }
+.sound-row input[type="range"]::-moz-range-track { height: 8px; border-radius: 99px; background: linear-gradient(90deg, #f39320 0, #edbf56 var(--val, 50%), #e3e7ea var(--val, 50%)); }
+.sound-row input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -7px; border: 2px solid #26354a; border-radius: 50%; background: #fffdf7; box-shadow: 1px 2px 0 rgba(38,53,74,.2); }
+.sound-row input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 2px solid #26354a; border-radius: 50%; background: #fffdf7; }
+.sound-row input[type="range"]:focus-visible { outline: 3px solid #e9b45b; outline-offset: 2px; border-radius: 8px; }
+@media (prefers-reduced-motion: reduce) { .sound-panel { transition: opacity 120ms ease; transform: none; } }

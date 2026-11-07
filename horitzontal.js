@@ -124,7 +124,7 @@
     const offset = target === panel ? 0 : target.getBoundingClientRect().top - panel.getBoundingClientRect().top + panel.scrollTop - 24;
     if (i !== index()) panel.scrollTop = Math.max(0, offset);
     glideTo(i).then(() => { if (target !== panel) panel.scrollTo({ top: Math.max(0, offset), behavior: reduced ? 'instant' : 'smooth' }); });
-    history.replaceState(null, '', a.getAttribute('href'));
+    try { history.replaceState(null, '', a.getAttribute('href')); } catch (e) {}   // dins d'una vista prèvia (iframe) no es pot canviar l'adreça
   }, true);
 
   // La resta de la web escolta el "scroll" de la finestra (línia del temps, efectes…)

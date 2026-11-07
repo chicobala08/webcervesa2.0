@@ -584,6 +584,56 @@
       }).catch(() => {});
     }
 
+    // Tots els efectes passen per aquí: així el regulador "Efectes" en controla el volum
+    let fxVolume = .8;
+    try { const v = parseFloat(localStorage.getItem('cervesa-efectes')); if (!Number.isNaN(v)) fxVolume = Math.min(1, Math.max(0, v)); } catch (e) {}
+    let fxGain = null;
+    function fxOut(context) {
+      if (!fxGain || fxGain.context !== context) { fxGain = context.createGain(); fxGain.gain.value = fxVolume; fxGain.connect(context.destination); }
+      return fxGain;
+    }
+    window.__setFxVolume = v => {
+      fxVolume = Math.min(1, Math.max(0, v));
+      try { localStorage.setItem('cervesa-efectes', String(fxVolume)); } catch (e) {}
+      if (fxGain) fxGain.gain.setTargetAtTime(fxVolume, fxGain.context.currentTime, .03);
+    };
+    window.__getFxVolume = () => fxVolume;
+
+    // ===== So de clic: suau, curt i sempre una mica diferent (no cansa) =====
+    // Botons: "pop" rodó · opcions/xips: "tic" agut · enllaços: "toc" de fusta. Notes d'una escala pentatònica a l'atzar.
+    const CLICK_SKIP = '#desktopNav a, #mobileNav a, #textSizeBtn, #answerList button, #onboardingGlass, #onboardingMaltPoke, input[type="range"], textarea, input[type="text"], input[type="number"], input[type="email"], select';
+    const CLICK_NOTES = [1046.5, 1174.7, 1318.5, 1568, 1760, 2093];
+    let lastClickNote = -1, lastClickAt = 0;
+    function playClick(kind) {
+      const nowMs = performance.now();
+      if (nowMs - lastClickAt < 45) return;
+      lastClickAt = nowMs;
+      withMaltAudio(context => {
+        try {
+          const t = context.currentTime + .005;
+          let i; do { i = Math.floor(Math.random() * CLICK_NOTES.length); } while (i === lastClickNote);
+          lastClickNote = i;
+          const base = CLICK_NOTES[i] * (kind === 'link' ? .5 : kind === 'tick' ? 1.5 : 1) * (1 + (Math.random() - .5) * .02);
+          const o = context.createOscillator(), g = context.createGain(), f = context.createBiquadFilter();
+          o.type = kind === 'link' ? 'triangle' : 'sine';
+          o.frequency.setValueAtTime(base * 1.6, t);
+          o.frequency.exponentialRampToValueAtTime(base, t + .025);
+          f.type = 'lowpass'; f.frequency.value = kind === 'tick' ? 6000 : 3800;
+          const vol = (kind === 'tick' ? .045 : .06) * (.8 + Math.random() * .4);
+          const len = kind === 'tick' ? .05 : kind === 'link' ? .09 : .075;
+          g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .003); g.gain.exponentialRampToValueAtTime(.0001, t + len);
+          o.connect(f); f.connect(g); g.connect(fxOut(context)); o.start(t); o.stop(t + len + .02);
+        } catch (error) {}
+      });
+    }
+    document.addEventListener('click', event => {
+      const el = event.target.closest && event.target.closest('button, a[href], label, summary, [role="button"], [role="tab"], input[type="radio"], input[type="checkbox"]');
+      if (!el || el.matches(CLICK_SKIP) || el.disabled) return;
+      if (el.matches('label') && event.target !== el && event.target.matches('input')) return;   // el clic al label ja sona una vegada
+      const kind = el.matches('.ob-chip, label, input, .chip, .glossary-filter, [role="tab"]') ? 'tick' : el.matches('a[href]') ? 'link' : 'pop';
+      playClick(kind);
+    }, true);
+
     function makeAudienceNoise(context, duration) {
       const length = Math.max(1, Math.floor(context.sampleRate * duration));
       const buffer = context.createBuffer(1, length, context.sampleRate);
@@ -591,6 +641,31 @@
       for (let i=0; i<length; i++) data[i]=(Math.random()*2-1)*(1-i/length);
       return buffer;
     }
+
+    // "Micròfon" de presentador: banda estreta de veu, una mica de saturació i el ressò curt d'un plató
+    let micNode = null;
+    function micIn(context) {
+      if (micNode && micNode.context === context) return micNode;
+      const input = context.createGain();
+      const hp = context.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 380;
+      const presence = context.createBiquadFilter(); presence.type = 'peaking'; presence.frequency.value = 2400; presence.Q.value = 1.1; presence.gain.value = 7;
+      const shaper = context.createWaveShaper();
+      const curve = new Float32Array(1024);
+      for (let i = 0; i < 1024; i++) { const x = i / 511.5 - 1; curve[i] = Math.tanh(x * 3.2) / Math.tanh(3.2); }
+      shaper.curve = curve;
+      const lp = context.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3800;
+      const out = context.createGain(); out.gain.value = .8;
+      const slap = context.createDelay(.5); slap.delayTime.value = .085;
+      const fb = context.createGain(); fb.gain.value = .25;
+      const wet = context.createGain(); wet.gain.value = .3;
+      const slapLp = context.createBiquadFilter(); slapLp.type = 'lowpass'; slapLp.frequency.value = 2200;
+      input.connect(hp); hp.connect(presence); presence.connect(shaper); shaper.connect(lp); lp.connect(out);
+      lp.connect(slap); slap.connect(slapLp); slapLp.connect(fb); fb.connect(slap); slapLp.connect(wet);
+      out.connect(fxOut(context)); wet.connect(fxOut(context));
+      micNode = input;
+      return input;
+    }
+
 
     function playMaltBlip(character) {
       if (!guideAudioContext || /\\s/.test(character) || /[.,;:!?¿¡]/.test(character)) return;
@@ -604,9 +679,9 @@
           oscillator.frequency.setValueAtTime(pitch*1.08,now);
           oscillator.frequency.exponentialRampToValueAtTime(pitch*.86,now+.045);
           gain.gain.setValueAtTime(.0001,now);
-          gain.gain.exponentialRampToValueAtTime(.018,now+.006);
+          gain.gain.exponentialRampToValueAtTime(.03,now+.006);
           gain.gain.exponentialRampToValueAtTime(.0001,now+.052);
-          oscillator.connect(gain); gain.connect(context.destination);
+          oscillator.connect(gain); gain.connect(micIn(context));
           oscillator.start(now); oscillator.stop(now+.055);
         } catch(error) {}
       });
@@ -625,7 +700,7 @@
           gain.gain.setValueAtTime(.0001,now);
           gain.gain.exponentialRampToValueAtTime(.075,now+.035);
           gain.gain.exponentialRampToValueAtTime(.0001,now+.32);
-          source.connect(filter); filter.connect(gain); gain.connect(context.destination);
+          source.connect(filter); filter.connect(gain); gain.connect(fxOut(context));
           source.start(now); source.stop(now+.34);
 
           const tick=context.createOscillator(), tickGain=context.createGain();
@@ -635,7 +710,7 @@
           tickGain.gain.setValueAtTime(.0001,now);
           tickGain.gain.exponentialRampToValueAtTime(.018,now+.03);
           tickGain.gain.exponentialRampToValueAtTime(.0001,now+.12);
-          tick.connect(tickGain); tickGain.connect(context.destination);
+          tick.connect(tickGain); tickGain.connect(fxOut(context));
           tick.start(now+.02); tick.stop(now+.13);
         } catch(error) {}
       });
@@ -657,7 +732,7 @@
               gain.gain.setValueAtTime(.0001,at);
               gain.gain.exponentialRampToValueAtTime(volume,at+.006);
               gain.gain.exponentialRampToValueAtTime(.0001,at+.075);
-              source.connect(filter); filter.connect(gain); gain.connect(context.destination);
+              source.connect(filter); filter.connect(gain); gain.connect(fxOut(context));
               source.start(at); source.stop(at+.09);
             }
           } catch(error) {}
@@ -674,7 +749,7 @@
               gain.gain.exponentialRampToValueAtTime(index===1?.018:.013,now+.12);
               gain.gain.setValueAtTime(index===1?.018:.013,now+.72);
               gain.gain.exponentialRampToValueAtTime(.0001,now+1.12);
-              oscillator.connect(filter); filter.connect(gain); gain.connect(context.destination);
+              oscillator.connect(filter); filter.connect(gain); gain.connect(fxOut(context));
               oscillator.start(now); oscillator.stop(now+1.14);
             });
           } catch(error) {}
@@ -706,8 +781,8 @@
             overtoneGain.gain.setValueAtTime(.0001,start);
             overtoneGain.gain.exponentialRampToValueAtTime(.009,start+.04);
             overtoneGain.gain.exponentialRampToValueAtTime(.0001,end-.001);
-            osc.connect(gain); gain.connect(context.destination);
-            overtone.connect(overtoneGain); overtoneGain.connect(context.destination);
+            osc.connect(gain); gain.connect(fxOut(context));
+            overtone.connect(overtoneGain); overtoneGain.connect(fxOut(context));
             osc.start(start); osc.stop(end+.02);
             overtone.start(start); overtone.stop(end+.02);
           });
@@ -718,7 +793,7 @@
             gain.gain.setValueAtTime(.0001,chordStart);
             gain.gain.exponentialRampToValueAtTime(index===0?.026:.018,chordStart+.1);
             gain.gain.exponentialRampToValueAtTime(.0001,chordStart+1.25);
-            osc.connect(gain); gain.connect(context.destination);
+            osc.connect(gain); gain.connect(fxOut(context));
             osc.start(chordStart); osc.stop(chordStart+1.28);
           });
         } catch(error) {}
@@ -762,7 +837,7 @@
             gain.gain.exponentialRampToValueAtTime(.0001,start+1.38);
             osc.connect(formant);
             formant.connect(gain);
-            gain.connect(context.destination);
+            gain.connect(fxOut(context));
             osc.start(start);
             vibrato.start(start);
             osc.stop(start+1.4);
@@ -783,7 +858,7 @@
           crowdGain.gain.exponentialRampToValueAtTime(.0001,now+1.08);
           noise.connect(filter);
           filter.connect(crowdGain);
-          crowdGain.connect(context.destination);
+          crowdGain.connect(fxOut(context));
           noise.start(now);
           noise.stop(now+1.1);
         } catch(error) {}
@@ -824,7 +899,7 @@
           const now = context.currentTime + .01;
           const master = context.createGain();
           master.gain.value = .9;
-          master.connect(context.destination);
+          master.connect(fxOut(context));
           // Arpegi brillant tipus "ding-ding-ding!" (Do major que puja)
           [[1046.5, 0], [1318.5, .085], [1568, .17], [2093, .255]].forEach(([freq, at], i) => {
             [1, 2.01, 3.02].forEach((mult, h) => {
@@ -849,15 +924,6 @@
           gain.gain.exponentialRampToValueAtTime(.0001, now + .9);
           source.connect(filter); filter.connect(gain); gain.connect(master);
           source.start(now + .22); source.stop(now + .92);
-          // Picarols de públic content
-          const noise = makeAudienceNoise(context, .07);
-          for (let i = 0; i < 16; i++) {
-            const clap = context.createBufferSource(), bp = context.createBiquadFilter(), g = context.createGain();
-            clap.buffer = noise; bp.type = 'bandpass'; bp.frequency.value = 1300 + Math.random() * 1200; bp.Q.value = 1;
-            const at = now + .3 + Math.random() * .8;
-            g.gain.setValueAtTime(.0001, at); g.gain.exponentialRampToValueAtTime(.03 + Math.random() * .025, at + .005); g.gain.exponentialRampToValueAtTime(.0001, at + .06);
-            clap.connect(bp); bp.connect(g); g.connect(master); clap.start(at); clap.stop(at + .08);
-          }
         } catch (error) {}
       });
     }
@@ -869,7 +935,7 @@
           const filter = context.createBiquadFilter();
           filter.type = 'lowpass'; filter.frequency.value = 1100; filter.Q.value = 2;
           const master = context.createGain(); master.gain.value = .9;
-          filter.connect(master); master.connect(context.destination);
+          filter.connect(master); master.connect(fxOut(context));
           // "Uah-uah-uah-uaaah": quatre notes que baixen, l'última amb vibrato
           const notes = [[392, 0, .3], [370, .32, .3], [349, .64, .3], [330, .96, .9]];
           notes.forEach(([freq, at, len], i) => {
@@ -907,12 +973,12 @@
           source.buffer = makeAudienceNoise(context, .25);
           filter.type = 'lowpass'; filter.frequency.setValueAtTime(1800, at); filter.frequency.exponentialRampToValueAtTime(180, at + .2);
           gain.gain.setValueAtTime(.0001, at); gain.gain.exponentialRampToValueAtTime(.22, at + .006); gain.gain.exponentialRampToValueAtTime(.0001, at + .22);
-          source.connect(filter); filter.connect(gain); gain.connect(context.destination);
+          source.connect(filter); filter.connect(gain); gain.connect(fxOut(context));
           source.start(at); source.stop(at + .25);
           const thump = context.createOscillator(), tg = context.createGain();
           thump.frequency.setValueAtTime(140, at); thump.frequency.exponentialRampToValueAtTime(55, at + .12);
           tg.gain.setValueAtTime(.0001, at); tg.gain.exponentialRampToValueAtTime(.12, at + .005); tg.gain.exponentialRampToValueAtTime(.0001, at + .14);
-          thump.connect(tg); tg.connect(context.destination); thump.start(at); thump.stop(at + .15);
+          thump.connect(tg); tg.connect(fxOut(context)); thump.start(at); thump.stop(at + .15);
         } catch (error) {}
       });
     }
@@ -922,7 +988,7 @@
       withMaltAudio(context => {
         try {
           const now = context.currentTime + .02;
-          const out = context.createGain(); out.gain.value = .9; out.connect(context.destination);
+          const out = context.createGain(); out.gain.value = .9; out.connect(fxOut(context));
           // Raig: soroll filtrat que s'agudeix a mesura que el got s'omple
           const stream = context.createBufferSource(); stream.buffer = makeAudienceNoise(context, 1.6);
           const bp = context.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 2.2;
@@ -965,7 +1031,7 @@
           o.type = 'triangle';
           o.frequency.setValueAtTime(260, now); o.frequency.exponentialRampToValueAtTime(620, now + .09); o.frequency.exponentialRampToValueAtTime(420, now + .22);
           g.gain.setValueAtTime(.0001, now); g.gain.exponentialRampToValueAtTime(.09, now + .01); g.gain.exponentialRampToValueAtTime(.0001, now + .26);
-          o.connect(g); g.connect(context.destination); o.start(now); o.stop(now + .28);
+          o.connect(g); g.connect(fxOut(context)); o.start(now); o.stop(now + .28);
         } catch (error) {}
       });
     }
@@ -1932,7 +1998,7 @@
         ingredients: 'Només quatre ingredients, i quantes cerveses diferents!',
         tot: 'Doncs farem el recorregut sencer!',
         origen: 'Començarem pel principi de tot.',
-        fermentacio: 'Anirem directes on el llevat fa la feina.',
+        fermentacio: 'Veuràs com el llevat fa la feina!',
         recepta: "Prepara't: tindràs el teu propi simulador.",
         curiositats: "Tinc un munt d'històries per explicar-te.",
         inici: 'Cap problema: el concurs serà de nivell inicial.',
@@ -1966,7 +2032,8 @@
         curiositats: ['curiositats', 'Comença per les curiositats']
       };
       const val = name => form.querySelector(`input[name="${name}"]:checked`)?.value || null;
-      const destination = () => DEST[val('interestDiscover')] || DEST[val('interestPart')] || ['historia', 'Comença el recorregut'];
+      // Tothom comença pel principi, triï el que triï (les respostes només s'envien per al treball)
+      const destination = () => ['inici', 'Comença el recorregut'];
       const replay = (el, cls) => { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
       const maltSay = line => {
         if (!line || !says) return;
