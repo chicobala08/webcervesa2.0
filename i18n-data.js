@@ -44,6 +44,12 @@ window.__I18N_DICT = (() => {
   V.en.push(...["Sound settings", "Audio", "Turn music off", "Turn music on", "Music", "Sound effects", "You'll see how the yeast does its job!"]);
   V.de.push(...["Toneinstellungen", "Audio", "Musik ausschalten", "Musik einschalten", "Musik", "Soundeffekte", "Du wirst sehen, wie die Hefe arbeitet!"]);
   V.zh.push(...["声音设置", "音频", "关闭音乐", "打开音乐", "音乐", "音效", "你会看到酵母是怎么工作的！"]);
+  // Sobre el treball: part pràctica (experiment de fermentació) i estructura completa.
+  K.push(...["<strong>Part pràctica.</strong> Un experiment per estudiar com afecta la temperatura a la velocitat de fermentació del llevat, mesurant amb globus el CO₂ que es produeix, i comparar els resultats amb la teoria.", "Part pràctica", "Experiment: efecte de la temperatura en la fermentació", "Desenvolupament de l'aplicació web", "Conclusions"]);
+  V.es.push(...["<strong>Parte práctica.</strong> Un experimento para estudiar cómo afecta la temperatura a la velocidad de fermentación de la levadura, midiendo con globos el CO₂ que se produce, y comparar los resultados con la teoría.", "Parte práctica", "Experimento: efecto de la temperatura en la fermentación", "Desarrollo de la aplicación web", "Conclusiones"]);
+  V.en.push(...["<strong>Practical part.</strong> An experiment to study how temperature affects the fermentation rate of yeast, measuring the CO₂ produced with balloons, and to compare the results with the theory.", "Practical part", "Experiment: the effect of temperature on fermentation", "Development of the web app", "Conclusions"]);
+  V.de.push(...["<strong>Praktischer Teil.</strong> Ein Experiment, das untersucht, wie die Temperatur die Gärgeschwindigkeit der Hefe beeinflusst – das entstehende CO₂ wird mit Luftballons gemessen –, und das die Ergebnisse mit der Theorie vergleicht.", "Praktischer Teil", "Experiment: Einfluss der Temperatur auf die Gärung", "Entwicklung der Web-App", "Schlussfolgerungen"]);
+  V.zh.push(...["<strong>实践部分。</strong>通过一个实验研究温度如何影响酵母的发酵速度：用气球测量产生的 CO₂，并把结果与理论进行比较。", "实践部分", "实验：温度对发酵的影响", "网页应用的开发", "结论"]);
   const D = {};
   for (const l in V) { D[l] = {}; K.forEach((k, i) => { if (V[l][i] !== k) D[l][k] = V[l][i]; }); }
   return D;
